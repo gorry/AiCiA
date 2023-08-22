@@ -1,0 +1,439 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Last-modified" content="<!--#echo var='LAST_MODIFIED'-->">
+<LINK REV=MADE HREF="mailto:gorry@hauN.org">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Content-Language" CONTENT="ja">
+<LINK REL="stylesheet" TYPE="text/css" HREF="basic.css">
+<LINK REL="stylesheet" TYPE="text/css" HREF="local.css">
+<TITLE>ヘルプ - AiCiA - Android IRC Client</TITLE>
+</HEAD>
+<BODY BGCOLOR="#D0E0F0" TEXT="#000080" LINK="#008000" VLINK="#FF8080" ALINK="#FF40C0">
+<DIV ALIGN="center" class="titleframe">
+<DIV ALIGN="center" class="title">
+<BIG class="big_title"><B>ヘルプ - AiCiA - Android IRC Client</B></BIG><BR>
+<SPAN class="x68spirit">...X680x0 spirit inside...</SPAN>
+</DIV>
+</DIV>
+
+<DIV class="twitter" align="right">
+<A HREF="http://twitter.com/gorry5">[Twitter: @gorry5]</A>
+<A HREF="http://twitter.com/search/%23AiCiAIRC">[Hashtag: #AiCiAIRC]</A>
+</DIV>
+
+<DIV class="shortcut">
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+<A HREF="http://GORRY.hauN.org/diary/digestdiary.html">[日記]</A>
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="pagebody">
+
+<DIV class="rightpicture"><IMG src="pic/aicia_portrait.png"><BR>AiCiA</DIV>
+
+<P>AiCiAをご利用いただき、ありがとうございます。本ページは、「AiCiA - Android IRC Client」のヘルプトップページとなります。</P>
+
+<H2 class="noclear" id="index">目次</H2>
+
+<TABLE border>
+
+<TR>
+<TH><A HREF="feature.html">特長</A></TH>
+<TD>AiCiAの特長を説明します。</TD>
+</TR>
+
+<TR>
+<TH><A HREF="boot.html">メイン画面</A></TH>
+<TD>AiCiAの起動方法と、メイン画面の使用方法を説明します。</TD>
+</TR>
+
+<TR>
+<TH><A HREF="operate.html">操作方法</A></TH>
+<TD>AiCiAでIRCサーバに接続した後の操作方法を説明します。</TD>
+</TR>
+
+<TR>
+<TH><A HREF="ircmode.html">IRCモード</A></TH>
+<TD>AiCiAでIRCを行うときに扱う「IRCモード」の操作方法を説明します。</TD>
+</TR>
+
+<TR>
+<TH><A HREF="tigmode.html">TIGモード</A></TH>
+<TD>AiCiAでTwitterを扱う「TIGモード」の操作方法を説明します。</TD>
+</TR>
+
+<TR>
+<TH><A HREF="server.html">サーバの設定</A></TH>
+<TD>AiCiAで接続するIRCサーバの設定方法を説明します。</TD>
+</TR>
+
+<TR>
+<TH><A HREF="channel.html">チャンネル</A></TH>
+<TD>AiCiAで接続したIRCサーバ内の各チャンネル動作の設定方法を説明します。</TD>
+</TR>
+
+<TR>
+<TH><A HREF="system.html">環境設定</A></TH>
+<TD>AiCiAの動作環境の設定方法を説明します。</TD>
+</TR>
+
+<TR>
+<TH><A HREF="faq.html">よくある質問</A></TH>
+<TD>AiCiAについてよくある質問をまとめたものです。</TD>
+</TR>
+
+<TR>
+<TH><A HREF="license.html">ライセンス</A></TH>
+<TD>AiCiAのライセンスについて説明します。</TD>
+</TR>
+
+</TABLE>
+
+
+
+
+<H2 class="noclear" id="comment">コメント</H2>
+
+<P>コメントを受け付けています。</P>
+
+<UL class="jump">
+<LI><A HREF="http://gorry.haun.org/pw/?aicia_comment">「AiCiA - Android IRC Client」コメント欄</A>
+</UL>
+
+
+
+
+<H2 class="noclear" id="update">更新履歴</H2>
+
+<DL class="item">
+
+<DT>2018.0410.2</DT>
+<DD>
+<UL>
+<LI>Android Studio用にプロジェクトを再構成。
+<LI>OS8.0に対応（および、minSdkVersionを14(OS4.0)に変更）。
+
+</UL>
+
+</DD>
+
+
+
+
+<DT>2015.0314.1</DT>
+<DD>
+<UL>
+<LI>キーワード通知をOSシステム通知化できるようにしました。
+<LI>OS5.0におけるoom killer耐性を改善しました。
+<LI>ログウィンドウが縦分割配置のとき、ダブルタップで意図した移動にならないことがあったバグを再度修正しました。
+
+</UL>
+
+</DD>
+
+
+
+
+<DT>2014.1114.2</DT>
+<DD>
+<UL>
+<LI>サーバ設定を終了するときに接続状態が異常になることがあったのを修正しました。
+<LI>自動再接続が正常に動作していなかったのを修正しました。
+
+</UL>
+
+</DD>
+
+
+
+
+<DT>2014.1114.1</DT>
+<DD>
+<UL>
+<LI>OS5.0でサーバ編集時にエラーが発生して落ちるのを修正しました。
+<LI>SSLでの接続時、IRCサーバへのテキストやコマンド送信が失敗することがあったのを修正しました。
+<LI>IRCサーバやチャンネル設定の変更が反映されないことがあったのを修正しました。
+<LI>[接続]ボタンの連打でエラーが発生して落ちることがあったのを修正しました。
+
+</UL>
+
+</DD>
+
+
+
+
+<DT>2014.1106.2</DT>
+<DD>
+<UL>
+<LI>Android OS5.0に対応しました。
+<LI>メニューボタンの位置をシステムバーからアクションバーに変更しました。このため、OS3.0以降では「タイトルバーを消す」が使用できなくなります。
+
+</UL>
+
+</DD>
+
+
+
+
+<DT>2012.1224.1</DT>
+<DD>
+<UL>
+<LI>横画面時にチャンネル選択ダイアログのレイアウトが正しくなくなっていたのを修正しました。
+</UL>
+
+</DD>
+
+
+
+
+<DT>2012.1216.1</DT>
+<DD>
+<UL>
+<LI>PART（チャンネルから出る）時のメッセージ出力が、チャンネル側でなくシステム側に出ていたのを修正しました。
+<LI>サーバ設定・チャンネル設定ダイアログに[システムメッセージをサブログにも出力]を追加しました。
+  <UL class="tablejump">
+  <LI><A HREF="server.html#systemmessagetosublog">サーバの設定</A>
+  <LI><A HREF="channel.html#config_systemmessagetosublog">チャンネル設定の編集</A>
+  </UL>
+<LI>ウィンドウの縦スライドでスクロールを始めたあとは、指を離すまで横スライド判定（チャンネル移動）をしないようにしました。
+<LI>チャンネル選択ダイアログでサーバボタンを長押ししたとき、そのサーバのシステムチャンネルへ移動するようにしました。
+<LI>[更新/通知チャンネルの一覧]ダイアログのリストをボタン付きに変更しました。
+<LI>[更新/通知チャンネルの一覧]ダイアログで、「更新/通知のクリア」をリスト先頭へ移動しました。
+<LI>CTCP-queryを含む行をシステムメッセージ扱いにするようにしました。現時点ではCTCP-queryに対する反応を行いません。
+</UL>
+
+</DD>
+
+<DT>2012.1008.1</DT>
+<DD>
+<UL>
+<LI>Android2.3以降の端末で、画面の上下反転に対応しました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#upsidedown">環境設定 - 180度自動回転</A>
+  </UL>
+<LI>コマンドボタンの大きさを変更できるようにしました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#commandbutton">環境設定 - コマンドボタン</A>
+  </UL>
+</UL>
+
+</DD>
+
+
+
+
+<DT>2012.0220.1</DT>
+<DD>
+<UL>
+<LI>Android3.0以降の端末で、[アプリ一覧の編集]・[ウェブサイト一覧の編集]がダイアログが正常に開かない症状に対応しました。
+<LI>[チャンネルの一覧]ダイアログが横画面で表示されるとき、サーバボタンの縦幅分しか一覧が表示されなかったのを修正しました。
+</UL>
+
+</DD>
+
+
+
+
+<DT>2012.0211.1</DT>
+<DD>
+<UL>
+<LI>ログウィンドウが縦分割配置のとき、ダブルタップで意図した移動にならないことがあったバグを修正しました。
+<LI>IRCコマンドの処理方法を変更し、より意図した結果が得られるようにしました。
+</UL>
+
+</DD>
+
+
+
+
+<DT>2012.0117.1</DT>
+<DD>
+<UL>
+
+<LI>ログウィンドウのダブルタップで、ウィンドウ内のテキスト先頭／末尾への移動が可能になりました。
+  <UL class="tablejump">
+  <LI><A HREF="operate.html#mainlog">操作方法 - メインログウィンドウ</A>
+  <LI><A HREF="operate.html#sublog">操作方法 - サブログウィンドウ</A>
+  </UL>
+<LI>「IRCサービスの強制停止」が発生した場合、その後のIRCサービス再起動時に「接続されていたIRCサーバ」へ自動再接続を行うようにしました。
+<LI>ログウィンドウを縦分割しているとき、分割比率が設定通りにならないことがあったバグを再度修正しました。
+<LI>ログウィンドウ左右フリックでのチャンネル変更が正常に動作しないことがあったバグを修正しました。
+<LI>環境設定のインポート後、アプリケーションの強制停止を行うまで正常動作しないことがあったバグを修正しました。
+</UL>
+
+</DD>
+
+
+
+
+<DT>2011.0622.1</DT>
+<DD>
+<UL>
+
+<LI>ログウィンドウのレイアウトで、メインログとサブログの位置を入れ替えることが可能になりました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#layout">環境設定 - レイアウト</A>
+  </UL>
+<LI>ステータスバー・タイトルバーを非表示にすることが可能になりました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#showstatusbar">環境設定 - ステータスバー表示</A>
+  <LI><A HREF="system.html#showtitlebar">環境設定 - タイトルバー表示</A>
+  </UL>
+<LI>ログウィンドウを縦分割しているとき、分割比率が設定通りにならないことがあったバグを修正しました。
+<LI>AiCiAの[アプリ]メニューに登録したアプリをシステムから削除すると、[アプリ]メニュー表示時にAiCiAが不正終了するバグを修正しました。
+</UL>
+
+</DD>
+
+
+
+
+<DT>2011.0613.1</DT>
+<DD>
+<UL>
+
+<LI>ログウィンドウの長押し（ロングタップ）で、チャンネル移動やコマンド発行などの作業が可能になりました。
+  <UL class="tablejump">
+  <LI><A HREF="operate.html#mainlog">操作方法 - メインログウィンドウ</A>
+  <LI><A HREF="operate.html#sublog">操作方法 - サブログウィンドウ</A>
+  </UL>
+<LI>チャンネル選択ダイアログで、サーバを選択できるショートカットボタンを追加しました。
+  <UL class="tablejump">
+  <LI><A HREF="channel.html#select">チャンネル - チャンネルの選択</A>
+  </UL>
+<LI>各種設定をSDカードなどへバックアップできるようにしました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#export">設定の書き出し</A>
+  </UL>
+</UL>
+
+</DD>
+
+
+
+
+<DT>2011.0306.1</DT>
+<DD>
+<UL>
+
+<LI>「チャンネル設定の編集」機能をカットしてしまっていたのを復活しました。
+  <UL class="tablejump">
+  <LI><A HREF="channel.html">チャンネル</A>
+  </UL>
+</UL>
+
+</DD>
+
+
+
+
+<DT>2011.0227.1</DT>
+<DD>
+<UL>
+
+<LI>ログウィンドウのフォント変更・行間変更を可能にしました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#font_menu">文字と行間</A>
+  <LI><A HREF="system.html#extfont">外部フォントファイル</A>
+  </UL>
+<LI>表示中はスリープモードに入らない設定ができるようになりました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#action_0">アクション</A>
+  </UL>
+<LI>パスワード付きのチャンネルにJoinできるようになりました。
+  <UL class="tablejump">
+  <LI><A HREF="ircmode.html#join">IRCモード</A>
+  <LI><A HREF="server.html#join">サーバの設定</A>
+  </UL>
+<LI>IRCサーバに接続していないときに環境設定を行うと、異常終了することがあったバグを修正しました。
+</UL>
+
+</DD>
+
+
+
+
+<DT>2011.0123.1</DT>
+<DD>
+<UL>
+
+<LI>通知キーワードで鳴る音声を変更しました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#buzzer">通知キーワード</A>
+  </UL>
+<LI>通知キーワードによる通知の一覧を、システムチャンネルのログで確認できるようにしました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#copytosystemchannel">通知キーワード</A>
+  </UL>
+<LI>[Ch]ボタンの長押し（ロングタップ）を「通知チャンネルの一覧」に変更できるようにしました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#longtabchbutton">通知キーワード</A>
+  </UL>
+<LI>チャンネルリストで表示される一覧で、チャンネルの状態を表示するようにしました。
+  <UL class="tablejump">
+  <LI><A HREF="operate.html#channel">[Ch]ボタン（チャンネル一覧）</A>
+  </UL>
+<LI>入力履歴を参照して、再入力できるようにしました。
+  <UL class="tablejump">
+  <LI><A HREF="operate.html#inputbox">入力エリア</A>
+  </UL>
+<LI>英語リソースの全メッセージの翻訳を完了しました。
+</UL>
+
+</DD>
+
+
+
+
+<DT>2011.0107.1</DT>
+<DD>
+<UL>
+
+<LI><SPAN class="ctrl">[A]</SPAN>（アプリ）・<SPAN class="ctrl">[W]</SPAN>（ウェブサイト）を新しいコマンドボタンとして設置できるようになりました。
+  <UL class="tablejump">
+  <LI><A HREF="operate.html#command">コマンドボタン</A>
+  </UL>
+
+<LI>必要なコマンドボタンだけを表示することができるようになりました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#commandbutton">コマンドボタン</A>
+  </UL>
+
+<LI>通知キーワードを含む行を強調表示するかどうかが選択可能になりました。
+  <UL class="tablejump">
+  <LI><A HREF="system.html#notify_menu">通知キーワード</A>
+  </UL>
+
+<LI>IRCメニューに<SPAN class="ctrl">[オペレータ権限を得る(/oper)]</SPAN>を追加しました。
+  <UL class="tablejump">
+  <LI><A HREF="ircmode.html#oper">オペレータ権限を得る</A>
+  </UL>
+
+<LI>IRCチャンネル名として<SPAN class="ctrl">"!!channel"</SPAN>・<SPAN class="ctrl">"+channel"</SPAN>形式を正しく受け付けられるようになりました。
+
+</UL>
+
+</DD>
+
+</DL>
+
+
+
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+<P class="mailtobox"><SPAN class="mailto">
+メールはこちらへ...[<A HREF="mailto:gorry@hauN.org">後藤浩昭 / Hiroaki GOTO / GORRY / gorry@hauN.org</A>]
+</SPAN></P>
+
+<DIV class="shortcut">
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+<A HREF="http://GORRY.hauN.org/diary/digestdiary.html">[日記]</A>
+</DIV>
+
+</BODY>
+</HTML>

@@ -1,0 +1,3 @@
+include ':libaicia'
+include ':aicia'
+include ':aicia_donate'

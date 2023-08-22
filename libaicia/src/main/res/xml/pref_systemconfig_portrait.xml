@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory	android:title="@string/pref_sys_view_category">
+		<ListPreference android:key="pref_sys_view_rotatemode"
+			android:title="@string/pref_sys_view_rotatemode_title"
+			android:summary="@string/pref_sys_view_rotatemode_summary"
+			android:entries="@array/entries_pref_sys_view_rotatemode"
+			android:entryValues="@array/entryvalues_pref_sys_view_rotatemode"
+			android:dialogTitle="@string/pref_sys_view_rotatemode_dialogtitle"
+		/>
+		<CheckBoxPreference android:key="pref_sys_view_canrotate180"
+			android:title="@string/pref_sys_view_canrotate180_title"
+			android:summary="@string/pref_sys_view_canrotate180_summary"
+		/>
+		<ListPreference android:key="pref_sys_view_colorset"
+			android:title="@string/pref_sys_view_colorset_title"
+			android:summary="@string/pref_sys_view_colorset_summary"
+			android:entries="@array/entries_pref_sys_view_colorset"
+			android:entryValues="@array/entryvalues_pref_sys_view_colorset"
+			android:dialogTitle="@string/pref_sys_view_colorset_dialogtitle"
+		/>
+		<PreferenceScreen
+			android:title="@string/pref_sys_view_portrait_title"
+			android:summary="@string/pref_sys_view_portrait_summary"
+		>
+			<!--
+			<PreferenceCategory	android:title="@string/pref_sys_view_colorset_category">
+				<ListPreference android:key="pref_sys_view_colorset"
+					android:title="@string/pref_sys_view_colorset_title"
+					android:summary="@string/pref_sys_view_colorset_summary"
+					android:entries="@array/entries_pref_sys_view_colorset"
+					android:entryValues="@array/entryvalues_pref_sys_view_colorset"
+					android:dialogTitle="@string/pref_sys_view_colorset_dialogtitle"
+				/>
+			</PreferenceCategory>
+			-->
+			<PreferenceCategory	android:title="@string/pref_sys_view_font_category">
+				<PreferenceScreen
+					android:title="@string/pref_sys_view_font_title"
+					android:summary="@string/pref_sys_view_font_summary"
+				>
+					<PreferenceCategory	android:title="@string/pref_sys_view_edit_font_category">
+						<ListPreference android:key="pref_sys_view_edit_fontface"
+							android:title="@string/pref_sys_view_edit_font_title"
+							android:summary="@string/pref_sys_view_edit_font_summary"
+							android:entries="@array/entries_pref_sys_view_font"
+							android:entryValues="@array/entryvalues_pref_sys_view_font"
+							android:dialogTitle="@string/pref_sys_view_edit_font_dialogtitle"
+						/>
+						<EditTextPreference android:key="pref_sys_view_edit_fontsize"
+							android:title="@string/pref_sys_view_edit_fontsize_title"
+							android:summary="@string/pref_sys_view_edit_fontsize_summary"
+							android:dialogTitle="@string/pref_sys_view_edit_fontsize_dialogtitle"
+							android:singleLine="true"
+							android:numeric="integer"
+						/>
+					</PreferenceCategory>
+					<PreferenceCategory	android:title="@string/pref_sys_view_mainlog_font_category">
+						<ListPreference android:key="pref_sys_view_mainlog_fontface"
+							android:title="@string/pref_sys_view_mainlog_font_title"
+							android:summary="@string/pref_sys_view_mainlog_font_summary"
+							android:entries="@array/entries_pref_sys_view_font"
+							android:entryValues="@array/entryvalues_pref_sys_view_font"
+							android:dialogTitle="@string/pref_sys_view_mainlog_font_dialogtitle"
+						/>
+						<EditTextPreference android:key="pref_sys_view_mainlog_fontsize"
+							android:title="@string/pref_sys_view_mainlog_fontsize_title"
+							android:summary="@string/pref_sys_view_mainlog_fontsize_summary"
+							android:dialogTitle="@string/pref_sys_view_mainlog_fontsize_dialogtitle"
+							android:singleLine="true"
+							android:numeric="integer"
+						/>
+						<EditTextPreference android:key="pref_sys_view_mainlog_linespacing"
+							android:title="@string/pref_sys_view_mainlog_linespacing_title"
+							android:summary="@string/pref_sys_view_mainlog_linespacing_summary"
+							android:dialogTitle="@string/pref_sys_view_mainlog_linespacing_dialogtitle"
+							android:singleLine="true"
+							android:numeric="integer"
+						/>
+					</PreferenceCategory>
+					<PreferenceCategory	android:title="@string/pref_sys_view_sublog_font_category">
+						<ListPreference android:key="pref_sys_view_sublog_fontface"
+							android:title="@string/pref_sys_view_sublog_font_title"
+							android:summary="@string/pref_sys_view_sublog_font_summary"
+							android:entries="@array/entries_pref_sys_view_font"
+							android:entryValues="@array/entryvalues_pref_sys_view_font"
+							android:dialogTitle="@string/pref_sys_view_sublog_font_dialogtitle"
+						/>
+						<EditTextPreference android:key="pref_sys_view_sublog_fontsize"
+							android:title="@string/pref_sys_view_sublog_fontsize_title"
+							android:summary="@string/pref_sys_view_sublog_fontsize_summary"
+							android:dialogTitle="@string/pref_sys_view_sublog_fontsize_dialogtitle"
+							android:singleLine="true"
+							android:numeric="integer"
+						/>
+						<EditTextPreference android:key="pref_sys_view_sublog_linespacing"
+							android:title="@string/pref_sys_view_sublog_linespacing_title"
+							android:summary="@string/pref_sys_view_sublog_linespacing_summary"
+							android:dialogTitle="@string/pref_sys_view_sublog_linespacing_dialogtitle"
+							android:singleLine="true"
+							android:numeric="integer"
+						/>
+					</PreferenceCategory>
+				</PreferenceScreen>
+			</PreferenceCategory>
+			<PreferenceCategory	android:title="@string/pref_sys_view_window_category">
+				<ListPreference android:key="pref_sys_view_layout"
+					android:title="@string/pref_sys_view_layout_title"
+					android:summary="@string/pref_sys_view_layout_summary"
+					android:entries="@array/entries_pref_sys_view_layout"
+					android:entryValues="@array/entryvalues_pref_sys_view_layout"
+					android:dialogTitle="@string/pref_sys_view_layout_dialogtitle"
+				/>
+				<ListPreference android:key="pref_sys_view_windowsize"
+					android:title="@string/pref_sys_view_windowsize_title"
+					android:summary="@string/pref_sys_view_windowsize_summary"
+					android:entries="@array/entries_pref_sys_view_windowsize"
+					android:entryValues="@array/entryvalues_pref_sys_view_windowsize"
+					android:dialogTitle="@string/pref_sys_view_windowsize_dialogtitle"
+				/>
+				<PreferenceScreen
+					android:title="@string/pref_sys_view_button_title"
+					android:summary="@string/pref_sys_view_button_summary"
+				>
+					<EditTextPreference android:key="pref_sys_view_button_size"
+						android:title="@string/pref_sys_view_button_size_title"
+						android:summary="@string/pref_sys_view_button_size_summary"
+						android:dialogTitle="@string/pref_sys_view_button_size_dialogtitle"
+						android:singleLine="true"
+						android:numeric="integer"
+					/>
+					<CheckBoxPreference android:key="pref_sys_view_button_wide"
+						android:title="@string/pref_sys_view_button_wide_title"
+						android:summary="@string/pref_sys_view_button_wide_summary"
+					/>
+					<CheckBoxPreference android:key="pref_sys_view_button_chmove"
+						android:title="@string/pref_sys_view_button_chmove_title"
+						android:summary="@string/pref_sys_view_button_chmove_summary"
+					/>
+					<CheckBoxPreference android:key="pref_sys_view_button_ch"
+						android:title="@string/pref_sys_view_button_ch_title"
+						android:summary="@string/pref_sys_view_button_ch_summary"
+					/>
+					<CheckBoxPreference android:key="pref_sys_view_button_u"
+						android:title="@string/pref_sys_view_button_u_title"
+						android:summary="@string/pref_sys_view_button_u_summary"
+					/>
+					<CheckBoxPreference android:key="pref_sys_view_button_appli"
+						android:title="@string/pref_sys_view_button_appli_title"
+						android:summary="@string/pref_sys_view_button_appli_summary"
+					/>
+					<CheckBoxPreference android:key="pref_sys_view_button_website"
+						android:title="@string/pref_sys_view_button_website_title"
+						android:summary="@string/pref_sys_view_button_website_summary"
+					/>
+				</PreferenceScreen>
+				<CheckBoxPreference android:key="pref_sys_view_show_statusbar"
+					android:title="@string/pref_sys_view_show_statusbar_title"
+					android:summary="@string/pref_sys_view_show_statusbar_summary"
+				/>
+				<CheckBoxPreference android:key="pref_sys_view_show_titlebar"
+					android:title="@string/pref_sys_view_show_titlebar_title"
+					android:summary="@string/pref_sys_view_show_titlebar_summary"
+				/>
+			</PreferenceCategory>
+		</PreferenceScreen>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_sys_input_category">
+		<PreferenceScreen
+			android:title="@string/pref_sys_input_title"
+			android:summary="@string/pref_sys_input_summary"
+		>
+			<CheckBoxPreference android:key="pref_sys_input_send_halfkana"
+				android:title="@string/pref_sys_input_send_halfkana_title"
+				android:summary="@string/pref_sys_input_send_halfkana_summary"
+			/>
+		</PreferenceScreen>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_sys_action_category">
+		<PreferenceScreen
+			android:title="@string/pref_sys_action_alert_title"
+			android:summary="@string/pref_sys_action_alert_summary"
+		>
+			<CheckBoxPreference android:key="pref_sys_action_alert_ring"
+				android:title="@string/pref_sys_action_alert_ring_title"
+				android:summary="@string/pref_sys_action_alert_ring_summary"
+			/>
+			<ListPreference android:key="pref_sys_action_alert_ring_level"
+				android:title="@string/pref_sys_action_alert_ring_level_title"
+				android:summary="@string/pref_sys_action_alert_ring_level_summary"
+				android:entries="@array/entries_pref_sys_action_alert_ring_level"
+				android:entryValues="@array/entryvalues_pref_sys_action_alert_ring_level"
+				android:dialogTitle="@string/pref_sys_action_alert_ring_level_dialogtitle"
+			/>
+			<CheckBoxPreference android:key="pref_sys_action_alert_vibrate"
+				android:title="@string/pref_sys_action_alert_vibrate_title"
+				android:summary="@string/pref_sys_action_alert_vibrate_summary"
+			/>
+			<CheckBoxPreference android:key="pref_sys_action_alert_highlight"
+				android:title="@string/pref_sys_action_alert_highlight_title"
+				android:summary="@string/pref_sys_action_alert_highlight_summary"
+			/>
+			<CheckBoxPreference android:key="pref_sys_action_alert_notify"
+				android:title="@string/pref_sys_action_alert_notify_title"
+				android:summary="@string/pref_sys_action_alert_notify_summary"
+			/>
+			<CheckBoxPreference android:key="pref_sys_action_alert_copytosystemchannel"
+				android:title="@string/pref_sys_action_alert_copytosystemchannel_title"
+				android:summary="@string/pref_sys_action_alert_copytosystemchannel_summary"
+			/>
+			<CheckBoxPreference android:key="pref_sys_action_alert_longpresschannel"
+				android:title="@string/pref_sys_action_alert_longpresschannel_title"
+				android:summary="@string/pref_sys_action_alert_longpresschannel_summary"
+			/>
+		</PreferenceScreen>
+		<CheckBoxPreference android:key="pref_sys_action_nosleep"
+			android:title="@string/pref_sys_action_nosleep_title"
+			android:summary="@string/pref_sys_action_nosleep_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_sys_icon_category">
+		<PreferenceScreen
+			android:title="@string/pref_sys_icon_title"
+			android:summary="@string/pref_sys_icon_summary"
+		>
+			<CheckBoxPreference android:key="pref_sys_icon_lowmemory"
+				android:title="@string/pref_sys_icon_lowmemory_title"
+				android:summary="@string/pref_sys_icon_lowmemory_summary"
+			/>
+			<CheckBoxPreference android:key="pref_sys_icon_showserver"
+				android:title="@string/pref_sys_icon_showserver_title"
+				android:summary="@string/pref_sys_icon_showserver_summary"
+			/>
+			<CheckBoxPreference android:key="pref_sys_icon_fixsystem"
+				android:title="@string/pref_sys_icon_fixsystem_title"
+				android:summary="@string/pref_sys_icon_fixsystem_summary"
+			/>
+		</PreferenceScreen>
+	</PreferenceCategory>
+	<PreferenceCategory  android:title="@string/pref_sys_advanced_category">
+		<PreferenceScreen
+			android:title="@string/pref_sys_advanced_title"
+			android:summary="@string/pref_sys_advanced_summary"
+		>
+			<PreferenceScreen
+				android:title="@string/pref_sys_advanced_log_title"
+				android:summary="@string/pref_sys_advanced_log_summary"
+			>
+				<EditTextPreference android:key="pref_sys_advanced_log_lines_mainlog"
+					android:title="@string/pref_sys_advanced_log_lines_mainlog_title"
+					android:summary="@string/pref_sys_advanced_log_lines_mainlog_summary"
+					android:dialogTitle="@string/pref_sys_advanced_log_lines_mainlog_dialogtitle"
+					android:singleLine="true"
+					android:numeric="integer"
+				/>
+				<EditTextPreference android:key="pref_sys_advanced_log_lines_sublog"
+					android:title="@string/pref_sys_advanced_log_lines_sublog_title"
+					android:summary="@string/pref_sys_advanced_log_lines_sublog_summary"
+					android:dialogTitle="@string/pref_sys_advanced_log_lines_sublog_dialogtitle"
+					android:singleLine="true"
+					android:numeric="integer"
+				/>
+				<EditTextPreference android:key="pref_sys_advanced_log_buffer_mainlog"
+					android:title="@string/pref_sys_advanced_log_buffer_mainlog_title"
+					android:summary="@string/pref_sys_advanced_log_buffer_mainlog_summary"
+					android:dialogTitle="@string/pref_sys_advanced_log_buffer_mainlog_dialogtitle"
+					android:singleLine="true"
+					android:numeric="integer"
+				/>
+				<EditTextPreference android:key="pref_sys_advanced_log_buffer_sublog"
+					android:title="@string/pref_sys_advanced_log_buffer_sublog_title"
+					android:summary="@string/pref_sys_advanced_log_buffer_sublog_summary"
+					android:dialogTitle="@string/pref_sys_advanced_log_buffer_sublog_dialogtitle"
+					android:singleLine="true"
+					android:numeric="integer"
+				/>
+			</PreferenceScreen>
+			<PreferenceScreen
+				android:title="@string/pref_sys_advanced_connection_title"
+				android:summary="@string/pref_sys_advanced_connection_summary"
+			>
+				<EditTextPreference android:key="pref_sys_advanced_keepalive_interval"
+					android:title="@string/pref_sys_advanced_keepalive_interval_title"
+					android:summary="@string/pref_sys_advanced_keepalive_interval_summary"
+					android:dialogTitle="@string/pref_sys_advanced_keepalive_interval_dialogtitle"
+					android:singleLine="true"
+					android:numeric="integer"
+				/>
+				<EditTextPreference android:key="pref_sys_advanced_reconnect_interval"
+					android:title="@string/pref_sys_advanced_reconnect_interval_title"
+					android:summary="@string/pref_sys_advanced_reconnect_interval_summary"
+					android:dialogTitle="@string/pref_sys_advanced_reconnect_interval_dialogtitle"
+					android:singleLine="true"
+					android:numeric="integer"
+				/>
+			</PreferenceScreen>
+			<PreferenceScreen
+				android:title="@string/pref_sys_advanced_tigmode_title"
+				android:summary="@string/pref_sys_advanced_tigmode_summary"
+			>
+				<EditTextPreference android:key="pref_sys_advanced_tigmode_oldrtcmd"
+					android:title="@string/pref_sys_advanced_tigmode_oldrtcmd_title"
+					android:summary="@string/pref_sys_advanced_tigmode_oldrtcmd_summary"
+					android:dialogTitle="@string/pref_sys_advanced_tigmode_oldrtcmd_dialogtitle"
+					android:singleLine="true"
+					android:inputType="textEmailAddress"
+				/>
+				<CheckBoxPreference android:key="pref_sys_advanced_tigmode_twittersiteismobile"
+					android:title="@string/pref_sys_advanced_tigmode_twittersiteismobile_title"
+					android:summary="@string/pref_sys_advanced_tigmode_twittersiteismobile_summary"
+				/>
+			</PreferenceScreen>
+			<!-- 
+			<EditTextPreference android:key="pref_sys_advanced_externalfontpath"
+				android:title="@string/pref_sys_advanced_externalfontpath_title"
+				android:summary="@string/pref_sys_advanced_externalfontpath_summary"
+				android:dialogTitle="@string/pref_sys_advanced_externalfontpath_dialogtitle"
+				android:singleLine="true"
+			/>
+			-->
+			<PreferenceScreen android:key="pref_sys_advanced_externalfontpath"
+				android:title="@string/pref_sys_advanced_externalfontpath_title"
+				android:summary="@string/pref_sys_advanced_externalfontpath_summary"
+			/>
+			<EditTextPreference android:key="pref_sys_advanced_verbose"
+				android:title="@string/pref_sys_advanced_verbose_title"
+				android:summary="@string/pref_sys_advanced_verbose_summary"
+				android:dialogTitle="@string/pref_sys_advanced_verbose_dialogtitle"
+				android:singleLine="true"
+				android:numeric="integer"
+			/>
+		</PreferenceScreen>
+		<PreferenceScreen android:key="pref_sys_advanced_export_config"
+			android:title="@string/pref_sys_advanced_export_config_title"
+			android:summary="@string/pref_sys_advanced_export_config_summary"
+		/>
+		<PreferenceScreen android:key="pref_sys_advanced_import_config"
+			android:title="@string/pref_sys_advanced_import_config_title"
+			android:summary="@string/pref_sys_advanced_import_config_summary"
+		/>
+	</PreferenceCategory>
+</PreferenceScreen>

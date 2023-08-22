@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="entries_pref_sys_view_colorset">
+		<item>黒背景・白文字</item>
+		<item>白背景・黒文字</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_colorset">
+		<item>0</item>
+		<item>1</item>
+	</string-array>
+	<string-array name="entries_pref_sys_view_layout">
+		<item>上（メインログ）, 下（サブログ）</item>
+		<item>下（メインログ）, 上（サブログ）</item>
+		<item>左（メインログ）, 右（サブログ）</item>
+		<item>右（メインログ）, 左（サブログ）</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_layout">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	<string-array name="entries_pref_sys_view_windowsize">
+		<item>なし</item>
+		<item>小さい</item>
+		<item>普通</item>
+		<item>大きい</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_windowsize">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	<string-array name="entries_pref_sys_view_rotatemode">
+		<item>常に画面の向きに合わせる</item>
+		<item>スタート時の画面の向きで固定</item>
+		<item>縦向き表示で固定</item>
+		<item>横向き表示で固定</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_rotatemode">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	<string-array name="entries_pref_sys_action_alert_ring_level">
+		<item>小さい</item>
+		<item>普通</item>
+		<item>大きい</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_action_alert_ring_level">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="entries_pref_sys_view_font">
+		<item>デフォルト</item>
+		<item>明朝（セリフ）</item>
+		<item>ゴシック（サンセリフ）</item>
+		<item>等幅</item>
+		<item>外部フォントファイル</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_font">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
+</resources>

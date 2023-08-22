@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory	android:title="@string/pref_exweblist_web1">
+		<net.gorry.aicia.WebListDialogPreference
+			android:key="pref_exweblist_web1"
+			android:title="@string/pref_exweblist_web1_title"
+			android:summary="@string/pref_exweblist_web1_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exweblist_web2">
+		<net.gorry.aicia.WebListDialogPreference
+			android:key="pref_exweblist_web2"
+			android:title="@string/pref_exweblist_web2_title"
+			android:summary="@string/pref_exweblist_web2_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exweblist_web3">
+		<net.gorry.aicia.WebListDialogPreference
+			android:key="pref_exweblist_web3"
+			android:title="@string/pref_exweblist_web3_title"
+			android:summary="@string/pref_exweblist_web3_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exweblist_web4">
+		<net.gorry.aicia.WebListDialogPreference
+			android:key="pref_exweblist_web4"
+			android:title="@string/pref_exweblist_web4_title"
+			android:summary="@string/pref_exweblist_web4_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exweblist_web5">
+		<net.gorry.aicia.WebListDialogPreference
+			android:key="pref_exweblist_web5"
+			android:title="@string/pref_exweblist_web5_title"
+			android:summary="@string/pref_exweblist_web5_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exweblist_web6">
+		<net.gorry.aicia.WebListDialogPreference
+			android:key="pref_exweblist_web6"
+			android:title="@string/pref_exweblist_web6_title"
+			android:summary="@string/pref_exweblist_web6_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exweblist_web7">
+		<net.gorry.aicia.WebListDialogPreference
+			android:key="pref_exweblist_web7"
+			android:title="@string/pref_exweblist_web7_title"
+			android:summary="@string/pref_exweblist_web7_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exweblist_web8">
+		<net.gorry.aicia.WebListDialogPreference
+			android:key="pref_exweblist_web8"
+			android:title="@string/pref_exweblist_web8_title"
+			android:summary="@string/pref_exweblist_web8_summary"
+		/>
+	</PreferenceCategory>
+</PreferenceScreen>

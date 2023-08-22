@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Last-modified" content="<!--#echo var='LAST_MODIFIED'-->">
+<LINK REV=MADE HREF="mailto:gorry@hauN.org">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Content-Language" CONTENT="ja">
+<LINK REL="stylesheet" TYPE="text/css" HREF="basic.css">
+<LINK REL="stylesheet" TYPE="text/css" HREF="local.css">
+<TITLE>チャンネル - AiCiA</TITLE>
+</HEAD>
+<BODY BGCOLOR="#D0E0F0" TEXT="#000080" LINK="#008000" VLINK="#FF8080" ALINK="#FF40C0">
+<DIV ALIGN="center" class="titleframe">
+<DIV ALIGN="center" class="title">
+<BIG class="big_title"><B>チャンネル - AiCiA</B></BIG><BR>
+</DIV>
+</DIV>
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="pagebody">
+
+<P>「チャンネル」は、IRCによる会話を行う場所の最小単位です。会話を行うには、１サーバにつき１チャンネル以上に入る（joinする）必要があります。</P>
+
+<H2 id="join">チャンネルに入る</H2>
+
+<DIV class="rightpicture"><IMG src="pic/dialog_join.png"><BR>入るチャンネル</DIV>
+
+<P>チャンネルに入るには、<SPAN class="ctrl">[U]ボタン</SPAN>をタップして「IRCメニュー」を表示し、<SPAN class="ctrl">[チャンネルに入る]</SPAN>を選びます。</P>
+<UL class="jump">
+<LI><A HREF="operate.html#utility">操作方法 - [U]ボタン</A>
+</UL>
+<P>チャンネル名を入力すると、そのチャンネルに入ることができます。チャンネルが存在しない場合は、新しいチャンネルが作られます。</P>
+<P>チャンネルの代わりに、ユーザー名を指定することもできます。この場合は、指定したユーザーと２人だけで会話を行う「トーク」となります。</P>
+<TABLE><TR><TD>
+<DIV class="fyi">パスワード付きのチャンネルに入りたいときは、チャンネル名の後に",パスワード"を追加します。</DIV>
+</TD></TR></TABLE>
+
+
+
+
+<H2 id="select">チャンネルの選択</H2>
+
+<DIV class="rightpicture"><IMG src="pic/dialog_channel.png"><BR>チャンネルの一覧</DIV>
+
+<P>すでに入っているチャンネルから発言先を選択するには、<SPAN class="ctrl">[Ch]ボタン</SPAN>をタップします。</P>
+<UL class="jump">
+<LI><A HREF="operate.html#channel">操作方法 - [Ch]ボタン</A>
+</UL>
+<P>チャンネルの一覧が表示されます。チャンネル名をタップすると、そのチャンネルへ移動します。</P>
+<DIV class="fyi">
+<DIV>ダイアログ下部（横向き表示のときは右側）のボタンは、指定したサーバ内の最初のチャンネルへリストを移動させるショートカットボタンです。右の図の場合では、４番目のサーバの一覧が表示されていますが、ここで<SPAN class="ctrl">[1]ボタン</SPAN>を押すと、１番目のサーバのチャンネル一覧へリストが移動します。</DIV>
+</DIV>
+<BR clear="all">
+
+<DL class="item">
+
+<DT id="select_marked">マーク付のチャンネル名</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_channel_mark.png"><BR>マーク付チャンネル</DIV>
+<DIV>チャンネル名の先頭に、<SPAN class="ctrl">[@]</SPAN>/<SPAN class="ctrl">[*]</SPAN>のマークが付くことがあります。</P>
+<TABLE border>
+<TR>
+<TH>[@]</TH>
+<TH>通知チャンネル</TH>
+<TD>「通知キーワードが含まれた発言があった」ことを示します。</TD>
+</TR>
+<TR>
+<TH>[*]</TH>
+<TH>更新チャンネル</TH>
+<TD>「新しい発言があった」ことを示します。</TD>
+</TR>
+</TABLE>
+<DIV><SPAN class="ctrl">[Ch]ボタン</SPAN>を長押し（ロングタップ）すると、どちらかのマークがあるチャンネルのみの一覧が表示されます。どちらの一覧を表示するかは、環境設定の<SPAN class="ctrl">[[Ch]長押しを通知チャンネル一覧にする]</SPAN>で設定することができます。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#notify_menu">環境設定 - 通知キーワード</A>
+</UL>
+</DD>
+
+</DL>
+
+
+<H2 id="part">チャンネルから出る</H2>
+
+<P>現在入っているチャンネルから退出するには、退出したいチャンネルで<SPAN class="ctrl">[U]ボタン</SPAN>をタップして「IRCメニュー」を表示し、<SPAN class="ctrl">[チャンネルから出る]</SPAN>を選びます。</P>
+<UL class="jump">
+<LI><A HREF="ircmode.html#u_part">IRCモード - チャンネルから出る</A>
+</UL>
+
+
+
+
+<H2 id="dialog">チャンネルダイアログ</H2>
+
+<P><SPAN class="ctrl">[U]ボタン</SPAN>をタップすると、現在メインログウィンドウで表示しているチャンネルに対して、操作を行うためのダイアログが表示されます。上の<SPAN class="ctrl">[チャンネルから出る]</SPAN>は、この操作のうちのひとつです。</P>
+<P>メインログウィンドウを長押し（ロングタップ）しても、このダイアログが表示されます。ただし、この操作で表示されるメニューは多少異なります。</P>
+<P>チャンネルダイアログは、そのチャンネルがTIGモードで動作しているかどうかで内容が変化します。</P>
+
+<UL class="jump">
+<LI><A HREF="ircmode.html#u_menu">IRCモード - [U]ボタンメニュー</A>
+<LI><A HREF="ircmode.html#l_menu">IRCモード - 長押しメニュー</A>
+<LI><A HREF="tigmode.html#u_menu">TIGモード - [U]ボタンメニュー</A>
+<LI><A HREF="tigmode.html#l_menu">TIGモード - 長押しメニュー</A>
+</UL>
+
+
+
+<H2 id="config">チャンネル設定の編集</H2>
+
+<DIV class="rightpicture"><IMG src="pic/dialog_channel_config.png"><BR>チャンネル設定の編集</DIV>
+
+<P><SPAN class="ctrl">[U]ボタン</SPAN>をタップして「IRCメニュー」を表示し、<SPAN class="ctrl">[チャンネル設定]</SPAN>を選ぶと、現在メインログウィンドウで表示しているチャンネルの動作設定を行うことができます。</P>
+
+<TABLE border>
+
+<TR>
+
+<TH id="config_channel">チャンネル名</TH>
+<TD>
+<DIV>設定を行うチャンネル名を表示しています。変更はできません。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH id="config_putonsublog">サブログに出力する</TH>
+<TD>
+<DIV>現在のチャンネルがメインログウィンドウに表示されていないとき、代わりにサブログウィンドウに出力します。</DIV>
+<DIV>このスイッチがOFFのときは、現在のチャンネルの内容はサブログウィンドウに出力されません。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH id="config_putonsublogalways">常にサブログに出力する</TH>
+<TD>
+<DIV>現在のチャンネルがメインログウィンドウに表示されていても、サブログウィンドウに出力します。<SPAN class="ctrl">[サブログに出力する]</SPAN>がONであることが前提です。</DIV>
+<DIV>このスイッチがOFFのときは、現在のチャンネルがメインログウィンドウに表示されていないときのみサブログに出力することを許可します。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH id="config_usealert">通知キーワードで通知する</TH>
+<TD>
+<DIV>設定された通知キーワードがチャンネルへの発言内から見つかった場合、通知を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="server.html#notify">サーバの設定 - 通知キーワード</A>
+<LI><A HREF="system.html#notify">環境設定 - 通知キーワード</A>
+</UL>
+<DIV>このスイッチがOFFのときは、通知を行いません。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH id="config_usealertalways">すべての発言を通知する</TH>
+<TD>
+<DIV>通知キーワードがチャンネルへの発言内から見つからなくても、常に通知を行います。「発言が少ないが反応は迅速に行いたい」チャンネルに対してONにしておくと便利です。</DIV>
+<DIV>このスイッチがOFFのときは、通知キーワードがチャンネルへの発言内から見つかった場合のみ通知を許可します。</DIV>
+<DIV>このスイッチは、上の<SPAN class="ctrl">[通知キーワードで通知する]</SPAN>がONであることが前提です。</DIV>
+</TR>
+
+<TR>
+<TH id="config_systemmessagetosublog">システムメッセージを<BR>サブログにも出力</TH>
+<TD><DIV>各チャンネルでIRCシステムにより表示されるメッセージ（薄い色で表示される）を、メインログウィンドウだけでなくサブログウィンドウにも出力します。</DIV>
+<DIV class="fyi">
+<DIV>このスイッチは、「サーバの設定」で<SPAN class="ctrl">[システムメッセージをサブログにも出力]</SPAN>がONであり、また上の<SPAN class="ctrl">[通知キーワードで通知する]</SPAN>がONであることが前提です。</DIV>
+<UL class="jump">
+<LI><A HREF="server.html#systemmessagetosublog">チャンネル</A>
+</UL>
+</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH id="config_alertnotify">通知行をOSの<BR>通知システムで表示</TH>
+<TD><DIV>通知が行われるとき、OSの通知システムにその行を表示します。通知をタップすることで、AiCiAで通知チャンネルを開くことができます。</DIV>
+<DIV class="centerpicture"><IMG src="pic/alertnotify.png"><BR>通知の例</DIV>
+<DIV class="fyi">
+<DIV>このスイッチは、「環境設定」「サーバの設定」のそれぞれの<SPAN class="ctrl">[OSの通知システムで表示]</SPAN>がONであることが前提です。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#alertnotify">環境設定</A>
+<LI><A HREF="server.html#alertnotify">サーバの設定</A>
+</UL>
+</DIV>
+</TD>
+</TR>
+
+</TABLE>
+
+
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+</BODY>
+</HTML>

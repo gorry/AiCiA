@@ -1,0 +1,794 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Last-modified" content="<!--#echo var='LAST_MODIFIED'-->">
+<LINK REV=MADE HREF="mailto:gorry@hauN.org">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Content-Language" CONTENT="ja">
+<LINK REL="stylesheet" TYPE="text/css" HREF="basic.css">
+<LINK REL="stylesheet" TYPE="text/css" HREF="local.css">
+<TITLE>環境設定 - AiCiA</TITLE>
+</HEAD>
+<BODY BGCOLOR="#D0E0F0" TEXT="#000080" LINK="#008000" VLINK="#FF8080" ALINK="#FF40C0">
+<DIV ALIGN="center" class="titleframe">
+<DIV ALIGN="center" class="title">
+<BIG class="big_title"><B>環境設定 - AiCiA</B></BIG><BR>
+</DIV>
+</DIV>
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="pagebody">
+
+<DIV class="rightpicture"><IMG src="pic/menu_system.png"><BR>[環境設定]メニュー</DIV>
+
+<P>メインメニューから<SPAN class="ctrl">[その他]-[環境設定]</SPAN>を選ぶと、AiCiAの環境設定を行うことができます。</P>
+
+
+<DL class="item">
+
+<DT id="logwindow_0">ログウィンドウ</DT>
+
+<DD>
+
+<DL class="item">
+
+<DT id="orientation">表示方向</DT>
+<DD>
+<DIV>表示方向の設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="#orientation_menu">表示方向</A>
+</UL>
+</DD>
+
+<DT id="upsidedown">180度自動回転</DT>
+<DD>
+<DIV>表示が上下逆さまになったとき、自動反転します。</DIV>
+<DIV>Android OS 2.3未満では非対応です。</DIV>
+</DD>
+
+<DT id="colorset">カラーセット</DT>
+<DD>
+<DIV>ログウィンドウの色を指定します。</DIV>
+<UL class="jump">
+<LI><A HREF="#colorset_menu">カラーセット</A>
+</UL>
+
+<TABLE border>
+
+<TR>
+<TH>黒背景・白文字</TH>
+<TD>
+<IMG src="pic/menu_system_window_colorset_black.png">
+</TD>
+</TR>
+
+<TR>
+<TH>白背景・黒文字</TH>
+<TD>
+<IMG src="pic/menu_system_window_colorset_white.png">
+</TD>
+</TR>
+
+</TABLE>
+
+<DT id="view">縦向き／横向き時の表示設定</DT>
+<DD>
+<DIV>画面表示内容の設定を行います。</DIV>
+<DIV>この項目は、「環境設定」メニューを表示させたときの方向に合わせて、「縦向き／横向き」どちらかのみが表示され、設定もそれぞれ個別に保存されます。</DIV>
+<UL class="jump">
+<LI><A HREF="#view_menu">表示設定</A>
+</UL>
+</DD>
+
+</DL>
+
+</DD>
+
+<DT id="input_0">入力</DT>
+
+<DD>
+
+<DL class="item">
+
+<DT id="inputarea">入力エリア</DT>
+<DD>
+<DIV>入力エリアの設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="#input_menu">入力エリア</A>
+</UL>
+</DD>
+
+</DL>
+
+</DD>
+
+<DT id="action_0">アクション</DT>
+
+<DD>
+
+<DL class="item">
+
+<DT id="notify">通知キーワード</DT>
+<DD>
+<DIV>発言内に通知キーワードを検知したときの動作設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="#notify_menu">通知キーワード</A>
+</UL>
+</DD>
+
+<DT id="nosleep">スリープを抑制する</DT>
+<DD>
+<DIV>AiCiAのウィンドウ表示中はスリープ状態に入らないようにします。</DIV>
+</DD>
+
+</DL>
+
+</DD>
+
+<DT id="icon_0">アイコン</DT>
+
+<DD>
+
+<DL class="item">
+
+<DT id="notifyicon">通知アイコン</DT>
+<DD>
+<DIV>画面上部のステータスエリアに表示される通知アイコンの動作設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="#icon_menu">通知アイコン</A>
+</UL>
+</DD>
+
+</DL>
+
+<DD>
+
+<DT id="advanced_0">高度な設定</DT>
+
+<DD>
+
+<DL class="item">
+
+<DT id="advanced">高度な設定</DT>
+<DD>
+<DIV>通常の使用では変更する必要がない設定、豊富な知識が必要な設定などを行います。</DIV>
+<UL class="jump">
+<LI><A HREF="#advanced_menu">高度な設定</A>
+</UL>
+</DD>
+
+<DT id="export">設定の書き出し</DT>
+<DD>
+<DIV>AiCiAの全設定を外部メモリ（通常はSDカード）に書き出します。設定のバックアップに使用します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>書き出した設定ファイルには、IRCサーバへの接続パスワードが含まれています。取り扱いにご注意ください。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="import">設定の読み込み</DT>
+<DD>
+<DIV><SPAN class="ctrl">[設定の書き込み]</SPAN>で書き出したファイルを読み込み、設定を復元します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>設定ファイルが正常に読み込まれると、AiCiAは一旦終了します。次回の起動時に、AiCiAは復元された設定で起動します。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+</DL>
+
+</DD>
+
+</DL>
+
+
+
+
+<H2 id="orientation_menu">表示方向</H2>
+
+<DIV class="rightpicture"><IMG src="pic/dialog_orientation.png"><BR>[表示方向]ダイアログ</DIV>
+<P>AiCiAの画面の向きを指定します。</P>
+<P>「設定：表示方向」メニューを選ぶと、表示されます。</P>
+
+<TABLE border>
+
+<TR>
+<TH>常に画面の<BR>向きに合わせる</TH>
+<TD>本体を回転させたとき、常にその方向に合わせて表示を回転させます。</TD>
+</TR>
+
+<TR>
+<TH>スタート時の<BR>画面の向きで固定</TH>
+<TD>AiCiAを起動したときの画面の向きで初期設定を行ったあと、本体を回転させても表示方向を変更しません。</TD>
+</TR>
+
+<TR>
+<TH>縦向き表示で固定</TH>
+<TD>本体の向きに関係なく、常に縦向きで表示します。</TD>
+</TR>
+
+<TR>
+<TH>横向き表示で固定</TH>
+<TD>本体の向きに関係なく、常に横向きで表示します。</TD>
+</TR>
+
+</TABLE>
+
+
+
+<H2 id="view_menu">表示設定</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_system_window.png"><BR>[表示設定]メニュー</DIV>
+
+<P>画面表示内容の設定を行います。</>
+<P>「設定：縦向き／横向き時の表示設定」メニューを選ぶと、表示されます。</P>
+<P>この設定は、「縦向き／横向き」のそれぞれで個別に保存することができます。</P>
+
+<DL class="item">
+
+<DT id="font">文字と行間</DT>
+<DD>文字フォントとログ表示行間の設定を行います。
+<UL class="jump">
+<LI><A HREF="#font_menu">文字と行間</A>
+</UL>
+</DD>
+
+<DT id="layout">レイアウト</DT>
+<DD>
+<DIV>メインログ／サブログのウィンドウの並び方を指定します。</DIV>
+
+<TABLE border>
+
+<TR>
+<TH>上（メインログ）、下（サブログ）<BR>下（メインログ）、上（サブログ）</TH>
+<TD>縦長画面での利用に適した配置となります。</TD>
+</TR>
+
+<TR>
+<TH>左（メインログ）、右（サブログ）<BR>右（メインログ）、左（サブログ）</TH>
+<TD>横長画面での利用にに適した配置となります。</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+<DT id="windowsize">サブログのサイズ</DT>
+<DD>
+<DIV>サブログウィンドウの大きさを指定します。</DIV>
+
+<TABLE border>
+
+<TR>
+<TH>最小</TH>
+<TD>サブログウィンドウは表示されません。</TD>
+</TR>
+
+<TR>
+<TH>小さい</TH>
+<TD>サブログウィンドウは画面の1/3となります。</TD>
+</TR>
+
+<TR>
+<TH>普通</TH>
+<TD>サブログウィンドウは画面の1/2となります。</TD>
+</TR>
+
+<TR>
+<TH>大きい</TH>
+<TD>サブログウィンドウは画面の2/3となります。</TD>
+</TR>
+
+</TABLE>
+
+<BR clear="all">
+
+</DD>
+
+<DT id="commandbutton">コマンドボタン</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/menu_system_window_commandbutton.png"><BR>[コマンドボタン]メニュー</DIV>
+<DIV>画面下部のボタンのサイズと表示/非表示を指定します。</DIV>
+
+<UL class="jump">
+<LI><A HREF="operate.html#command">コマンドボタン</A>
+</UL>
+
+
+<DL class="item">
+
+<DT id="button_size">サイズ</DT>
+<DD><DIV>ボタンサイズを指定します。</DIV>
+</DD>
+
+<DT id="button_wide">幅を広げる</DT>
+<DD><DIV>ボタンの幅を大きくします。</DIV>
+</DD>
+
+<DT id="button_chmove">[↑]/[↓]ボタン</DT>
+<DD><DIV>チャンネル移動ボタンを表示します。</DIV>
+</DD>
+
+<DT id="button_ch">[Ch]ボタン</DT>
+<DD><DIV>チャンネル一覧ボタンを表示します。</DIV>
+</DD>
+
+<DT id="button_u">[U]ボタン</DT>
+<DD><DIV>ユーティリティボタンを表示します。</DIV>
+</DD>
+
+<DT id="button_appli">[A]ボタン</DT>
+<DD><DIV>アプリボタンを表示します。</DIV>
+</DD>
+
+<DT id="button_website">[W]ボタン</DT>
+<DD><DIV>ウェブサイトボタンを表示します。</DIV>
+</DD>
+
+</DL>
+
+</DD>
+
+<DT id="showstatusbar">ステータスバー表示</DT>
+<DD>
+<DIV>ステータスバーの表示/非表示を指定します。ステータスバーを消すとフルスクリーンを使用できるようになるため、ログウィンドウを広くすることができます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>ログウィンドウを縦分割にした状態でフルスクリーンにした状態でソフトキーボードを表示すると、上側のログウィンドウが画面外へせり上がってしまい、操作できなくなることがあります。
+</DIV>
+</TD></TR></TABLE>
+
+</DD>
+
+<DT id="showtitlebar">タイトルバー表示</DT>
+<DD>
+<DIV>タイトルバーの表示/非表示を指定します。タイトルバーを消すと、ログウィンドウを広くすることができます。</DIV>
+<DIV>この設定の変更は、AiCiAの再起動後に有効となります。また、OS3.0以降ではメニューボタンの表示にタイトルバーが必要となるため、スイッチをOFFにしてもタイトルバーを消去することはできません。</DIV>
+
+</DD>
+
+</DL>
+
+</DD>
+
+</DL>
+
+
+<H2 id="font_menu">文字と行間</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_system_window_font.png"><BR>[文字と行間]メニュー</DIV>
+
+<P>文字と行間の設定を行います。</P>
+<P>「設定：表示設定：文字と行間」メニューを選ぶと、表示されます。</P>
+
+<DL class="item">
+
+<DT id="font_inputbox">入力エリア</DT>
+<DD>
+<DIV>入力エリアの文字を指定します。</DIV>
+
+</DD>
+
+<DT id="font_mainlog">メインログ</DT>
+<DD>
+<DIV>メインログウィンドウの文字と行間を指定します。</DIV>
+</DD>
+
+<DT id="font_sublog">サブログ</DT>
+<DD>
+<DIV>サブログウィンドウの文字と行間を指定します。</DIV>
+</DD>
+
+</DL>
+
+<P>それぞれについて、以下の項目を設定することができます。</P>
+
+<DL class="item">
+
+<DT id="font_face">フェイス</DT>
+<DD>
+<DIV>文字の字形を指定します。</DIV>
+<DIV><SPAN class="ctrl">[デフォルト]</SPAN>・<SPAN class="ctrl">[明朝（セリフ）]</SPAN>・<SPAN class="ctrl">[ゴシック（サンセリフ）]</SPAN>・<SPAN class="ctrl">[等幅]</SPAN>は、端末に内蔵されているフォントのいずれかに割り当てられます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>指定したフェイスが実際にどんな字形であるかは、端末により異なります。全てが同じフェイスに割り当てられているケースもあり、この場合はどれを選んでも字形は変化しません。</DIV>
+</DIV>
+</TD></TR></TABLE>
+<DIV><SPAN class="ctrl">[外部フォントファイル]</SPAN>を選ぶと、SDカードなどに入れたTrueTypeフォントファイルを読み込んで、その字形で表示することができます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>外部フォントファイルのパス名は、<SPAN class="ctrl">[高度な設定]</SPAN>で設定します。</DIV>
+<UL class="jump">
+<LI><A HREF="#extfont">外部フォントファイル</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+
+</DD>
+
+<DT id="font_size">サイズ</DT>
+<DD>
+<DIV>文字の大きさを指定します。</DIV>
+</DD>
+
+<DT id="font_linespace">行間</DT>
+<DD>
+<DIV>ログの行間を指定します。</DIV>
+</DD>
+
+</DL>
+
+
+
+
+
+
+<H2 id="input_menu">入力エリア</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_system_input.png"><BR>[入力エリア]メニュー</DIV>
+
+<P>入力エリアの動作設定を行います。</P>
+<P>「設定：入力エリア」メニューを選ぶと、表示されます。</P>
+
+<DL class="item">
+
+<DT id="halfkana">JIS半角カナを送信する</DT>
+<DD>
+<DIV>サーバ設定の文字コードを"ISO-2022-JP_with_halfkana"に設定したとき、半角カナを送信可能にします。</DIV>
+<DIV>このスイッチがOFFのとき、またサーバ設定の文字コードが"ISO-2022-JP"のときは、半角カナは全角カナに置換してから送信されます。</DIV>
+<UL class="jump">
+<LI><A HREF="server.html#encode">サーバの設定</A>
+</UL>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>JIS半角カナの送信は、一般的には推奨されません。他ユーザーとの合意のもとで行うことをおすすめします。</DIV>
+<DIV>"ISO-2022-JP_with_halfkana"・"ISO-2022-JP"のどちらでもないときは、半角カナ文字に対して特別な処理を行いません。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+</DL>
+
+
+<H2 id="notify_menu">通知キーワード</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_system_notify.png"><BR>[通知キーワード]メニュー</DIV>
+
+<P>メッセージ内に通知キーワードを検知したときの動作設定を行います。</P>
+<P>「設定：通知キーワード」メニューを選ぶと、表示されます。</P>
+
+<DL class="item">
+
+<DT id="buzzer">音声</DT>
+<DD>
+<DIV>通知キーワードを検出したとき、通知音を鳴らします。</DIV>
+<DIV>音声ファイルを"/sdcard/AiCiA/ring.ogg"というファイル名で配置すると、そのファイルを通知音として鳴らすことができます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>通知音のサンプルを、以下からダウンロードすることができます。</DIV>
+<UL class="jump">
+<LI><A HREF="http://GORRY.hauN.org/android/aicia/index.html#download">[AiCiA配布ページ]</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="volume">通知音量</DT>
+<DD>
+<DIV>通知音の大きさを指定します。</DIV>
+</DD>
+
+<DT id="vibrate">振動</DT>
+<DD>
+<DIV>通知キーワードを検出したとき、バイブレータを起動します。</DIV>
+</DD>
+
+<DT id="highlight">強調表示</DT>
+<DD>
+<DIV>通知キーワードを検出したとき、その行を強調表示します。</DIV>
+</DD>
+
+<DT id="alertnotify">OSの通知システムで表示</DT>
+<DD>
+<DIV>通知が行われるとき、OSの通知システムにその行を表示します。通知をタップすることで、AiCiAで通知チャンネルを開くことができます。</DIV>
+<DIV class="centerpicture"><IMG src="pic/alertnotify.png"><BR>通知の例</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>このスイッチをONにすることで、各IRCサーバ・各チャンネルに対して<SPAN class="ctrl">[通知行をOSの通知システムで表示]</SPAN>するかどうかを設定することができるようになります。</DIV>
+<UL class="jump">
+<LI><A HREF="server.html#systemmessagetosublog">IRCサーバ</A>
+<LI><A HREF="channel.html#config_alertnotify">チャンネル</A>
+</UL>
+<DIV>このスイッチをOFFにすると、全IRCサーバ・全チャンネルで「通知行をOSの通知システムで表示」は停止します。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="copytosystemchannel">通知をシステムチャンネルに転送する</DT>
+<DD>
+<DIV>通知キーワードを検出したとき、そのメッセージをシステムチャンネルでも表示するようにします。システムチャンネルのログで通知の一覧を確認することができるようになります。</DIV>
+</DD>
+
+<DT id="longtabchbutton">[Ch]長押しを通知チャンネル一覧にする</DT>
+<DD>
+<DIV>[Ch]ボタンを長押し（ロングタップ）したとき、「通知チャンネルの一覧」メニューを表示します。OFFのときは、[Ch]ボタンを長押ししたとき「更新チャンネルの一覧」メニューを表示します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV class="rightpicture"><IMG src="pic/dialog_channel_mark.png"><BR>マーク付チャンネル</DIV>
+<DIV>「通知チャンネル」や「更新チャンネル」は、チャンネル名の先頭に、以下のマークが表示されます。</P>
+<TABLE border>
+<TR>
+<TH>[@]</TH>
+<TH>通知チャンネル</TH>
+<TD>「通知キーワードが含まれた発言があった」ことを示します。</TD>
+</TR>
+<TR>
+<TH>[*]</TH>
+<TH>更新チャンネル</TH>
+<TD>「新しい発言があった」ことを示します。</TD>
+</TR>
+</TABLE>
+<BR clear="all">
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+</DL>
+
+
+<H2 id="icon_menu">通知アイコン</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_system_icon.png"><BR>[通知アイコン]メニュー</DIV>
+
+<P>画面上部のステータスエリアに表示される通知アイコンの動作設定を行います。</P>
+<P>「設定：通知アイコン」メニューを選ぶと、表示されます。</P>
+
+<UL class="jump">
+<LI><A HREF="operate.html#notify">操作方法</A>
+</UL>
+
+<DL class="item">
+
+<DT id="lowmemory">"Low Memory"通知を表示</DT>
+<DD>
+<DIV>メモリ不足によるIRC通信の強制終了の可能性があるとき、アイコンを表示します。</DIV>
+<UL class="jump">
+<LI><A HREF="faq.html#lowmemory">よくある質問</A>
+</UL>
+</DD>
+
+<DT id="servericon">サーバ通知を表示する</DT>
+<DD>
+<DIV>IRCサーバに対して接続や切断が発生したとき、アイコンを表示します。</DIV>
+</DD>
+
+<DT id="fixmainicon">メインアイコンを消さない</DT>
+<DD>
+<DIV>ユーザーによる「通知の削除」を行ったとき、メインアイコンは消されずに残るようにします。</DIV>
+</DD>
+
+
+</DL>
+
+
+<H2 id="advanced_menu">高度な設定</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_system_advanced.png"><BR>[高度な設定]メニュー</DIV>
+
+<P>通常の使用では変更する必要がない、高度な設定を行います。</P>
+<P>「設定：高度な設定」メニューを選ぶと、表示されます。</P>
+
+<DL class="item">
+
+<DT id="logsize">ログサイズ</DT>
+<DD>
+<DIV>AiCiAが保持するログのサイズを設定します。</DIV>
+<UL class="jump">
+<LI><A HREF="#logsize_menu">ログサイズ</A>
+</UL>
+</DD>
+
+<DT id="connect">接続</DT>
+<DD>
+<DIV>IRCサーバへの接続に関する設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="#connect_menu">接続</A>
+</UL>
+</DD>
+
+<DT id="tigmode">TweetIRCGatewayモード</DT>
+<DD>
+<DIV>TweetIRCGatewayサーバに接続するときの設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="#tigmode_menu">TweetIRCGatewayモード</A>
+</UL>
+</DD>
+
+<DT id="extfont">外部フォントファイル</DT>
+<DD>
+<DIV>ログ表示に使用するTrueTypeフォントファイルのパス名を指定します。</DIV>
+<DIV>この項目をタップすると、SDカード上にあるTrueTypeフォントファイル（*.ttf）を選ぶダイアログが表示されます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>ここで指定したフォントで表示するには、「文字と行間：フェイス」で<SPAN class="ctrl">[外部フォントファイル]</SPAN>を選びます。</DIV>
+<UL class="jump">
+<LI><A HREF="#font_face">文字と行間</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="verbose">Verboseモード</DT>
+<DD>
+<DIV>内部動作をログに出力します。0～5のレベルを指定することができ、大きいほど詳細な動作のログが表示されるようになります。</DIV>
+<TABLE border>
+<TR>
+<TH>0</TH>
+<TD>
+<DIV>初期値です。</DIV>
+</TD>
+</TR>
+<TR>
+<TH>1</TH>
+<TD>
+<UL class="nomargin">
+<LI>表示抑制されている多くのニューメリックリプライ
+</UL>
+</TD>
+</TR>
+<TR>
+<TH>2</TH>
+<TD>
+<UL class="nomargin">
+<LI>Keepaliveパケットの送信
+<LI>IRCサーバとのPing/Pong
+</UL>
+</TD>
+</TR>
+<TR>
+<TH>3</TH>
+<TD>
+<UL class="nomargin">
+<LI>AiCiAのUI部と常駐部の通信内容
+</UL>
+</TD>
+</TR>
+<TR>
+<TH>4</TH>
+<TD>
+<UL class="nomargin">
+<LI>AiCiAのUI部動作ログ
+</TD>
+</TR>
+<TR>
+<TH>5</TH>
+<TD>
+<UL class="nomargin">
+<LI>AiCiAのフリック動作などの座標情報ログ
+</UL>
+</TD>
+</TR>
+</TABLE>
+</DD>
+
+</DL>
+
+
+
+
+<H2 id="logsize_menu">ログサイズ</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_system_advance_log.png"><BR>[ログサイズ]メニュー</DIV>
+
+<P>AiCiAが保持するログのサイズを設定します。</P>
+<P>「設定：高度な設定：ログサイズ」メニューを選ぶと、表示されます。</P>
+
+<DL class="item">
+
+<DT id="mainlog_line">メインログ行数</DT>
+<DD>
+<DIV>IRC接続サービスが保持するメインログの行数を設定します。</DIV>
+<DIV>保持するログが指定した行数の２倍に達すると、古いログを廃棄します。</DIV>
+</DD>
+
+<DT id="sublog_line">サブログ行数</DT>
+<DD>
+<DIV>IRC接続サービスが保持するサブログの行数を設定します。</DIV>
+<DIV>保持するログが指定した行数の２倍に達すると、古いログを廃棄します。</DIV>
+</DD>
+
+<DT id="mainlogwindow_buf">メインログのウィンドウバッファ</DT>
+<DD>
+<DIV>メインログウィンドウに表示できる文字数を指定します。</DIV>
+<DIV>保持するログが指定した文字数の２倍に達すると、古いログを廃棄します。</DIV>
+</DD>
+
+<DT id="mainlogwindow_buf">サブログのウィンドウバッファ</DT>
+<DD>
+<DIV>サブログウィンドウに表示できる文字数を指定します。</DIV>
+<DIV>保持するログが指定した文字数の２倍に達すると、古いログを廃棄します。</DIV>
+</DD>
+
+</DL>
+
+
+
+
+<H2 id="connect_menu">接続</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_system_advance_connection.png"><BR>[接続]メニュー</DIV>
+
+<P>IRCサーバへの接続に関する設定を行います。</P>
+<P>「設定：高度な設定：接続」メニューを選ぶと、表示されます。</P>
+
+<DL class="item">
+
+<DT id="keepalive">KeepAlive送出間隔</DT>
+<DD>
+<DIV>IRCサーバ接続を維持するためのパケットの送信間隔を指定します。</DIV>
+<DIV>0を指定すると、KeepAliveパケットの送出を行いません。</DIV>
+</DD>
+
+<DT id="reconnect">自動再接続間隔</DT>
+<DD>
+<DIV>IRCサーバとの接続が切れたときの再接続までの待ち時間を指定します。</DIV>
+<DIV>0を指定すると、自動再接続を行いません。</DIV>
+</DD>
+
+</DL>
+
+
+
+
+<H2 id="tigmode_menu">TweetIRCGatewayモード</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_system_advance_tig.png"><BR>[TweetIRCGatewayモード]メニュー</DIV>
+
+<P>TweetIRCGatewayサーバに接続するときの設定を行います。</P>
+<P>「設定：高度な設定：TweetIRCGatewayモード」メニューを選ぶと、表示されます。</P>
+
+<DL class="item">
+
+<DT id="mrt">非公式RTコマンドの名前</DT>
+<DD>
+<DIV>TIGモードで非公式RTを行うときのコマンド名を指定します。</DIV>
+<UL class="jump">
+<LI><A HREF="tigmode.html#l_log_oldretweet">TIGモード - 非公式RT</A>
+</UL>
+
+</DD>
+
+<DT id="mobiletwitter">Twitterモバイルサイトを開く</DT>
+<DD>
+<DIV>TwitterサイトへのURLリンクを開くとき、 http://mobile.twitter.com/ へアクセスします。</DIV>
+<DIV>このスイッチがOFFのときは、 http://twitter.com/ へアクセスします。</DIV>
+</DD>
+
+</DL>
+
+<BR clear="all">
+
+
+
+
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+</BODY>
+</HTML>

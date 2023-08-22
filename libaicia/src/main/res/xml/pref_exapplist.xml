@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory	android:title="@string/pref_exapplist_app1">
+		<net.gorry.aicia.AppListDialogPreference
+			android:key="pref_exapplist_app1"
+			android:title="@string/pref_exapplist_app1_title"
+			android:summary="@string/pref_exapplist_app1_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exapplist_app2">
+		<net.gorry.aicia.AppListDialogPreference
+			android:key="pref_exapplist_app2"
+			android:title="@string/pref_exapplist_app2_title"
+			android:summary="@string/pref_exapplist_app2_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exapplist_app3">
+		<net.gorry.aicia.AppListDialogPreference
+			android:key="pref_exapplist_app3"
+			android:title="@string/pref_exapplist_app3_title"
+			android:summary="@string/pref_exapplist_app3_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exapplist_app4">
+		<net.gorry.aicia.AppListDialogPreference
+			android:key="pref_exapplist_app4"
+			android:title="@string/pref_exapplist_app4_title"
+			android:summary="@string/pref_exapplist_app4_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exapplist_app5">
+		<net.gorry.aicia.AppListDialogPreference
+			android:key="pref_exapplist_app5"
+			android:title="@string/pref_exapplist_app5_title"
+			android:summary="@string/pref_exapplist_app5_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exapplist_app6">
+		<net.gorry.aicia.AppListDialogPreference
+			android:key="pref_exapplist_app6"
+			android:title="@string/pref_exapplist_app6_title"
+			android:summary="@string/pref_exapplist_app6_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exapplist_app7">
+		<net.gorry.aicia.AppListDialogPreference
+			android:key="pref_exapplist_app7"
+			android:title="@string/pref_exapplist_app7_title"
+			android:summary="@string/pref_exapplist_app7_summary"
+		/>
+	</PreferenceCategory>
+	<PreferenceCategory	android:title="@string/pref_exapplist_app8">
+		<net.gorry.aicia.AppListDialogPreference
+			android:key="pref_exapplist_app8"
+			android:title="@string/pref_exapplist_app8_title"
+			android:summary="@string/pref_exapplist_app8_summary"
+		/>
+	</PreferenceCategory>
+</PreferenceScreen>

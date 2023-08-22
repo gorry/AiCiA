@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_ircchannelconfig_save_button" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_ircchannelconfig_cancel_button" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircchannelconfig_channelname_text" />
+
+                    <EditText
+                        android:id="@+id/channelname_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:editable="false"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+            </TableLayout>
+
+            <CheckBox
+                android:id="@+id/putonsublog_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircchannelconfig_putonsublog_checkbox" />
+
+            <CheckBox
+                android:id="@+id/putonsublogall_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircchannelconfig_putonsublogall_checkbox" />
+
+            <CheckBox
+                android:id="@+id/usealert_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircchannelconfig_usealert_checkbox" />
+
+            <CheckBox
+                android:id="@+id/usealertall_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircchannelconfig_usealertall_checkbox" />
+
+            <CheckBox
+                android:id="@+id/putpaletextonsublog_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircchannelconfig_putpaletextonsublog_checkbox" />
+
+            <CheckBox
+                android:id="@+id/alertnotify_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircchannelconfig_alertnotify_checkbox" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

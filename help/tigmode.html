@@ -1,0 +1,378 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Last-modified" content="<!--#echo var='LAST_MODIFIED'-->">
+<LINK REV=MADE HREF="mailto:gorry@hauN.org">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Content-Language" CONTENT="ja">
+<LINK REL="stylesheet" TYPE="text/css" HREF="basic.css">
+<LINK REL="stylesheet" TYPE="text/css" HREF="local.css">
+<TITLE>TIGモード - AiCiA</TITLE>
+</HEAD>
+<BODY BGCOLOR="#D0E0F0" TEXT="#000080" LINK="#008000" VLINK="#FF8080" ALINK="#FF40C0">
+<DIV ALIGN="center" class="titleframe">
+<DIV ALIGN="center" class="title">
+<BIG class="big_title"><B>TIGモード - AiCiA</B></BIG><BR>
+</DIV>
+</DIV>
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="pagebody">
+
+<P>TIGモードは、TweetIRCGateway(TIG)による「Twitterとの中継を行うIRCサーバ」に接続するときに使用するモードです。</P>
+<P>「サーバ設定」で、<SPAN class="ctrl">[TweetIRCGatewayコマンドを使用する]</SPAN>がONになっていると、そのサーバ内で作られるチャンネルはTIGモードとなります。</P>
+<UL class="jump">
+<LI><A HREF="server.html#tigmode">TweetIRCGatewayコマンドを使用</A>
+</UL>
+<P>TIGモードでは、操作メニューやチャンネルの動作がTweetIRCGateway用に最適化されます。</P>
+
+
+
+
+<H2 id="l_menu">長押しメニュー</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_log_tig.png"><BR>TIGチャンネルメニュー</DIV>
+
+<P>TIGモードでは、メインログウィンドウを長押し（ロングタップ）すると、「TIGチャンネルメニュー」が表示されます。メインログウィンドウでTIGモードのチャンネルを開いているときは、サブログウィンドウを長押し（ロングタップ）しても同じメニューが開きます。</P>
+
+<DL class="item">
+
+<DT id="l_channel">チャンネルを選択</DT>
+<DD>
+<DIV>チャンネルの一覧がダイアログで表示され、選択したチャンネルへ移動します。</DIV>
+<UL class="jump">
+<LI><A HREF="channel.html#select">チャンネル - チャンネルの選択</A>
+</UL>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_log">ログを選択</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/menu_log_tig_log.png"><BR>選択したログに対するメニュー</DIV>
+<DIV>ログの各行がリスト形式で表示され、選択した行（ツイート）に対して操作を行います。</DIV>
+
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>行を長押し（ロングタップ）で選択すると、以下の操作のショートカットとなります。</DIV>
+<TABLE border>
+<TR>
+<TH>メインログ</TH>
+<TD>選択したツイートに対するリプライ(re)</TD>
+</TR>
+<TR>
+<TH>サブログ</TH>
+<TD>選択したツイートが行われたチャンネルへ移動</TD>
+</TR>
+</TABLE>
+</DIV>
+</TD></TR></TABLE>
+
+<DL class="item">
+
+<DT id="l_log_reply">リプライ(re)</DT>
+<DD>
+<DIV>選択したツイートに返信するコマンドが入力エリアに挿入されます。TIGのreコマンドに相当します。</DIV>
+</DD>
+
+<DT id="l_log_retweet">公式RT(rt)</DT>
+<DD>
+<DIV>選択したツイートを公式リツイートするコマンドが入力エリアに挿入されます。TIGのrtコマンドに相当します。</DIV>
+</DD>
+
+<DT id="l_log_quotedtweet">引用返信(qt)</DT>
+<DD>
+<DIV>選択したツイートを引用して返信するコマンドが入力エリアに挿入されます。TIGのqtコマンドに相当します。</DIV>
+</DD>
+
+<DT id="l_log_oldretweet">非公式RT</DT>
+<DD>
+<DIV>選択したツイートを古い形式でリツイートするコマンドが入力エリアに挿入されます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>「非公式RT」はTIG本体ではなくプラグインで実装されている機能のため、プラグインの種類によってはコマンドが異なることがあります。AiCiAの初期設定では「mrt」というコマンド名になっていますが、変更したいときは「設定」メニューを使用します。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#mrt">環境設定 - 非公式RTコマンドの名前</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+
+<DT id="l_log_favorite">ふぁぼる(fav)</DT>
+<DD>
+<DIV>選択したツイートに「Favorite」を付けるコマンドが入力エリアに挿入されます。TIGのfavコマンドに相当します。</DIV>
+</DD>
+
+<DT id="l_log_opentweetweb">webでツイートを開く</DT>
+<DD>
+<DIV>選択したツイートをwebブラウザで開きます。TIGのuコマンドに相当します。</DIV>
+</DD>
+
+<DT id="l_log_insertname">IDを挿入</DT>
+<DD>
+<DIV>選択したツイートの発言者IDが入力エリアに挿入されます。ツイート内に他ユーザーのIDがある時は、それらのIDも挿入されます。</DIV>
+</DD>
+
+<DT id="l_log_openhomeweb">サイトを開く</DT>
+<DD>
+<DIV>選択したツイートの発言者のTwitterサイトをブラウザで開きます。TIGのhコマンドに相当します。</DIV>
+</DD>
+
+<DT id="l_log_directmessage">ダイレクトメッセージ</DT>
+<DD>
+<DIV>選択したツイートの発言者にダイレクトメッセージ(DM)を送るためのトークチャンネルを開きます。トークチャンネルで発言することで、ダイレクトメッセージとして相手に送信することができます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>他ユーザーから自分にダイレクトメッセージが届くと、送信相手とのトークチャンネルが開き、メッセージはその中で相手の発言として読むことができます。そのままそのチャンネルで発言することで、ダイレクトメッセージによる返信を送ることができます。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+</DL>
+
+</DD>
+
+<BR clear="all">
+
+<DT id="l_log_user">ユーザーを選択</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/menu_log_tig_user.png"><BR>選択したユーザーに対するメニュー</DIV>
+
+<DIV>チャンネルに所属しているユーザーの一覧がリストで表示され、選択したユーザーに対して作業をします。</DIV>
+
+<DL class="item">
+
+<DT id="l_user_directmessage">ダイレクトメッセージ</DT>
+<DD>
+<DIV>選択したユーザーにダイレクトメッセージ(DM)を送るためのトークチャンネルを開きます。トークチャンネルで発言することで、ダイレクトメッセージとして相手に送信することができます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>他ユーザーから自分にダイレクトメッセージが届くと、送信相手とのトークチャンネルが開き、メッセージはその中で相手の発言として読むことができます。そのままそのチャンネルで発言することで、ダイレクトメッセージによる返信を送ることができます。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="l_user_insertname">IDを挿入</DT>
+<DD>
+<DIV>選択したユーザーのIDが入力エリアに挿入されます。</DIV>
+</DD>
+
+<DT id="l_user_openhomeweb">サイトを開く</DT>
+<DD>
+<DIV>選択したユーザーのTwitterサイトをブラウザで開きます。TIGのhコマンドに相当します。</DIV>
+</DD>
+
+<DT id="l_user_kick">チャンネルから追い出す(/kick)</DT>
+<DD>
+<DIV>選択したユーザーをチャンネルから追い出します。入力エリアで「/kick [ユーザー名] [追い出す理由]」と入力しても、同じ結果が得られます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>TIG上で「ユーザーをチャンネルからkickする」ことは、「TIG上のローカルユーザーリストからそのユーザーを削除する」ことを意味します。Twitterアカウント上で何かが行われることはありません。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+</DL>
+
+</DD>
+
+<DT id="l_copy">ログからコピー</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/menu_log_tig_copy.png"><BR>メインログからコピー</DIV>
+<DIV>ログウィンドウのテキストをコピーして、クリップボードに入れることができます。</DIV>
+<DIV>メインログウィンドウを長押し（ロングタップ）したときはメインログ、サブログウィンドウを長押し（ロングタップ）したときはサブログの内容をコピーします。</DIV>
+</DD>
+
+<DT id="l_invite">チャンネルに招待する(/invite)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_invite.png"><BR>招待するユーザー</DIV>
+<DIV>指定したユーザーにチャンネルに追加します。入力エリアで「/invite [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>TIG上で「ユーザーをチャンネルにinviteする」ことは、「TIG上のローカルユーザーリストにそのユーザーを追加する」ことを意味します。Twitterアカウント上で何かが行われることはありません。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_config">チャンネル設定</DT>
+<DD>
+<DIV>現在メインログウィンドウで表示しているチャンネルの動作設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="channel.html#config">チャンネル - チャンネル設定</A>
+</UL>
+</DD>
+
+<DT id="l_ircmenu">IRCメニュー</DT>
+<DD>
+<DIV>IRCチャンネル用のメニューを表示します。<SPAN class="ctrl">[トピックの変更]</SPAN>が必要な場合などに使用します。</DIV>
+<UL class="jump">
+<LI><A HREF="ircmode.html#l_menu">IRCメニュー - 長押しメニュー</A>
+</UL>
+</DD>
+
+</DL>
+
+
+
+
+<H2 id="u_menu">[U]ボタンメニュー</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_tig.png"><BR>TIGメニュー</DIV>
+
+<P>TIGCモードでは、<SPAN class="ctrl">[U]ボタン</SPAN>をタップしたときに「TweetIRCGatewayメニュー」が表示されます。メインメニューから<SPAN class="ctrl">[その他]-[[U]ボタン]</SPAN>を選んでも同様です。</P>
+
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>IRCモードで動作している場合、またはTIGモードでも<SPAN class="ctrl">[U]ボタン</SPAN>を長押し（ロングタップ）すると、IRCメニューが表示されます。</DIV>
+<UL class="jump">
+<LI><A HREF="ircmode.html#u_menu">IRCメニュー - [U]ボタンメニュー</A>
+</UL>
+</TD></TR></TABLE>
+
+<DL class="item">
+
+<DT id="u_reply">リプライ(re)</DT>
+<DD>
+<DIV>メインログから選択したツイートに返信するコマンドが入力エリアに挿入されます。TIGのreコマンドに相当します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="u_retweet">公式RT(rt)</DT>
+<DD>
+<DIV>選択したツイートを公式リツイートするコマンドが入力エリアに挿入されます。TIGのrtコマンドに相当します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="u_quotedtweet">引用返信(qt)</DT>
+<DD>
+<DIV>選択したツイートを引用して返信するコマンドが入力エリアに挿入されます。TIGのqtコマンドに相当します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="u_oldretweet">非公式RT</DT>
+<DD>
+<DIV>選択したツイートを古い形式でリツイートするコマンドが入力エリアに挿入されます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>「非公式RT」はTIG本体ではなくプラグインで実装されている機能のため、プラグインの種類によってはコマンドが異なることがあります。AiCiAの初期設定では「mrt」というコマンド名になっていますが、変更したいときは「設定」メニューを使用します。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#mrt">環境設定 - 非公式RTコマンドの名前</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+
+<DT id="u_favorite">ふぁぼる(fav)</DT>
+<DD>
+<DIV>選択したツイートに「Favorite」を付けるコマンドが入力エリアに挿入されます。TIGのfavコマンドに相当します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="u_opentweetweb">webでツイートを開く</DT>
+<DD>
+<DIV>選択したツイートをwebブラウザで開きます。TIGのuコマンドに相当します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="u_insertname">IDを挿入（チャンネル内）</DT>
+<DD>
+<DIV>選択したユーザーのIDが入力エリアに挿入されます。</DIV>
+</DD>
+
+<DT id="u_insertname">IDを挿入（発言者）</DT>
+<DD>
+<DIV>選択したツイートの発言者IDが入力エリアに挿入されます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="u_insertname">IDを挿入（対象者）</DT>
+<DD>
+<DIV>選択したツイートの発言者IDが入力エリアに挿入されます。ツイート内に他ユーザーのIDがある時は、それらのIDも挿入されます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="u_openhomeweb_user">サイトを開く（ユーザー）</DT>
+<DD>
+<DIV>選択したユーザーのTwitterサイトをブラウザで開きます。TIGのhコマンドに相当します。</DIV>
+</DD>
+
+<DT id="u_openhomeweb_log">サイトを開く（ログ）</DT>
+<DD>
+<DIV>選択したツイートの発言者のTwitterサイトをブラウザで開きます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="u_directmessage_user">ダイレクトメッセージ（ユーザー）</DT>
+<DD>
+<DIV>選択したユーザーにダイレクトメッセージ(DM)を送るためのトークチャンネルを開きます。トークチャンネルで発言することで、ダイレクトメッセージとして相手に送信することができます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>他ユーザーから自分にダイレクトメッセージが届くと、送信相手とのトークチャンネルが開き、メッセージはその中で相手の発言として読むことができます。そのままそのチャンネルで発言することで、ダイレクトメッセージによる返信を送ることができます。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="l_user_directmessage">ダイレクトメッセージ</DT>
+<DD>
+<DIV>選択したツイートの発言者にダイレクトメッセージ(DM)を送るためのトークチャンネルを開きます。トークチャンネルで発言することで、ダイレクトメッセージとして相手に送信することができます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メニューを長押し（ロングタップ）で選択すると、ツイートをサブログから選択することができます。</DIV>
+</TD></TR></TABLE>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>他ユーザーから自分にダイレクトメッセージが届くと、送信相手とのトークチャンネルが開き、メッセージはその中で相手の発言として読むことができます。そのままそのチャンネルで発言することで、ダイレクトメッセージによる返信を送ることができます。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<DT id="l_ircmenu">IRCメニュー</DT>
+<DD>
+<DIV>IRCチャンネル用のメニューを表示します。<SPAN class="ctrl">[トピックの変更]</SPAN>が必要な場合などに使用します。</DIV>
+<UL class="jump">
+<LI><A HREF="ircmode.html#l_menu">IRCメニュー - 長押しメニュー</A>
+</UL>
+</DD>
+
+</DL>
+
+
+
+
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+</BODY>
+</HTML>

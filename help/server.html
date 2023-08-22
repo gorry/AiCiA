@@ -1,0 +1,234 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Last-modified" content="<!--#echo var='LAST_MODIFIED'-->">
+<LINK REV=MADE HREF="mailto:gorry@hauN.org">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Content-Language" CONTENT="ja">
+<LINK REL="stylesheet" TYPE="text/css" HREF="basic.css">
+<LINK REL="stylesheet" TYPE="text/css" HREF="local.css">
+<TITLE>サーバの設定 - AiCiA</TITLE>
+</HEAD>
+<BODY BGCOLOR="#D0E0F0" TEXT="#000080" LINK="#008000" VLINK="#FF8080" ALINK="#FF40C0">
+<DIV ALIGN="center" class="titleframe">
+<DIV ALIGN="center" class="title">
+<BIG class="big_title"><B>サーバの設定 - AiCiA</B></BIG><BR>
+</DIV>
+</DIV>
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="pagebody">
+
+<DIV class="rightpicture"><IMG src="pic/menu_servers.png"><BR>[サーバ設定の選択]メニュー</DIV>
+
+<P>メインメニューから<SPAN class="ctrl">[サーバ]</SPAN>を選ぶと、IRCサーバの登録を行うことができます。</P>
+<P>メニューには、これまで登録したIRCサーバの一覧と、<SPAN class="ctrl">[新しいサーバ設定の追加]</SPAN>がリスト表示されます。</P>
+
+<BR clear="all">
+
+<DL class="item">
+
+<DT id="new">新しいサーバ設定の追加</DT>
+<DD>
+<DIV>IRCサーバを新規登録します。</DIV>
+</DD>
+
+<DT id="servers">サーバリスト</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/menu_server.png"><BR>[サーバ設定]メニュー</DIV>
+<DIV>登録したサーバを選択すると、<SPAN class="ctrl">[サーバ設定]メニュー</SPAN>が表示されます。</DIV>
+<TABLE border>
+
+<TR>
+<TH>接続情報の編集</TH>
+<TD>登録したIRCサーバ情報の変更を行います。</TD>
+</TR>
+
+<TR>
+<TH>接続</TH>
+<TD>IRCサーバへの接続を行います。</TD>
+</TR>
+
+<TR>
+<TH>切断</TH>
+<TD>IRCサーバからの切断を行います。</TD>
+</TR>
+
+<TR>
+<TH>接続情報の削除</TH>
+<TD>このサーバ設定を削除します。</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+</DL>
+
+
+<H2 id="server">サーバ設定</H2>
+
+<DIV class="rightpicture"><IMG src="pic/dialog_server.png"><BR>[サーバ設定]ダイアログ</DIV>
+
+<P>IRCサーバ設定を編集することができます。</P>
+
+<TABLE border>
+
+<TR>
+<TH id="name">設定名</TH>
+<TD>このサーバ設定の名前を指定します。</TD>
+</TR>
+
+<TR>
+<TH id="host">ホスト名</TH>
+<TD>IRCサーバが稼動しているホスト名（irc.ircnet.ne.jpなど）を指定します。</TD>
+</TR>
+
+<TR>
+<TH id="port">ポート</TH>
+<TD>IRCサーバが稼動しているポート番号（6667など）を指定します。</TD>
+</TR>
+
+<TR>
+<TH id="pass">パスワード</TH>
+<TD>接続パスワードが必要なIRCサーバの場合、指定します。</TD>
+</TR>
+
+<TR>
+<TH id="nick">Nick</TH>
+<TD>IRC上で使用するユーザー名を指定します。</TD>
+</TR>
+
+<TR>
+<TH id="username">ユーザー名</TH>
+<TD>使用者の名前を任意に指定することができます。</TD>
+</TR>
+
+<TR>
+<TH id="realname">実名</TH>
+<TD>使用者の実名を任意に指定することができます。</TD>
+</TR>
+
+<TR>
+<TH id="encode">文字コード</TH>
+<TD>
+<DIV>接続するIRCサーバ内で使用されている文字コードを指定します。<SPAN class="ctrl">[選択]ボタン</SPAN>をクリックすると、AiCiAが使用可能な全ての文字コードから選択することができます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>JIS半角カナを受信可能にしたいときは、文字コードに"ISO-2022-JP_with_halfkana"を選びます。"ISO-2022-JP"では半角カナは規定されていないため、正しく受信することができません。</DIV>
+<DIV>また、JIS半角カナを送信したい場合は、「環境設定:入力エリア」で<SPAN class="ctrl">[JIS半角カナを送信する]</SPAN>をONにする必要があります。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#halfkana">環境設定</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+</TD>
+</TR>
+
+<TR>
+<TH id="join">Joinチャンネル</TH>
+<TD>
+<DIV>接続開始時に入るチャンネル名（#net.gorry.aiciaなど）を指定します。２つ以上のチャンネルに入る場合は、チャンネル名を半角スペースで区切って指定します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>パスワード付きのチャンネルに入りたいときは、チャンネル名の後に",パスワード"を追加します。</DIV>
+<DIV>このとき、","の前後にスペースを入れないよう注意してください。</DIV>
+</DIV>
+</TD></TR></TABLE>
+</TD>
+</TR>
+
+<TR>
+<TH id="notify">通知キーワード</TH>
+<TD>
+<DIV>指定された単語がチャンネル内の発言に含まれた場合、その部分を強調表示します。必要であれば、音声や振動などを発生させることもできます。<DIV>
+<DIV>単語は英大文字・小文字を区別しません。また、２つ以上の単語を半角スペースで区切って指定すると、それらのいずれか１つの単語が発言に含まれたときに通知を行います。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>音声や振動による通知の設定は、「環境設定 - 通知キーワード」で行います。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#notify_menu">環境設定 - 通知キーワード</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+</TD>
+</TR>
+
+<TR>
+<TH id="ssl">SSLで接続</TH>
+<TD>IRCサーバがSSL接続を要求する場合、ONにします。</TD>
+</TR>
+
+<TR>
+<TH id="autoconnect">自動接続</TH>
+<TD>メインメニューの<SPAN class="ctrl">[接続]ボタン</SPAN>で接続を開始したいとき、ONにします。</TD>
+</TR>
+
+<TR>
+<TH id="autoreconnect">自動再接続</TH>
+<TD>接続が途切れた場合に自動的に再接続を行いたいとき、ONにします。</TD>
+</TR>
+
+<TR>
+<TH id="tigmode">TweetIRCGateway<BR>コマンドを使用</TH>
+<TD><DIV>TIGモードで接続を行うとき、ONにします。</DIV>
+<UL class="jump">
+<LI><A HREF="tigmode.html">TIGモード</A>
+</UL>
+</TD>
+</TR>
+
+<TR>
+<TH id="systemmessagetosublog">システムメッセージを<BR>サブログにも出力</TH>
+<TD><DIV>各チャンネルでIRCシステムにより表示されるメッセージ（薄い色で表示される）を、メインログウィンドウだけでなくサブログウィンドウにも出力します。</DIV>
+<DIV class="fyi">
+<DIV>このスイッチをONにすることで、各チャンネルに対して「サブログにも出力」するかどうかを設定することができるようになります。</DIV>
+<UL class="jump">
+<LI><A HREF="channel.html#config_systemmessagetosublog">チャンネル</A>
+</UL>
+<DIV>このスイッチをOFFにすると、このサーバ内のすべてのチャンネルで「サブログへのシステムメッセージ出力」は停止します。</DIV>
+</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH id="alertnotify">通知行をOSの<BR>通知システムで表示</TH>
+<TD><DIV>通知が行われるとき、OSの通知システムにその行を表示します。通知をタップすることで、AiCiAで通知チャンネルを開くことができます。</DIV>
+<DIV class="centerpicture"><IMG src="pic/alertnotify.png"><BR>通知の例</DIV>
+<DIV class="fyi">
+<DIV>このスイッチをONにすることで、各チャンネルに対して「通知行をOSの通知システムで表示」するかどうかを設定することができるようになります。</DIV>
+<UL class="jump">
+<LI><A HREF="channel.html#config_alertnotify">チャンネル</A>
+</UL>
+<DIV>このスイッチをOFFにすると、このサーバ内のすべてのチャンネルで「通知行をOSの通知システムで表示」は停止します。</DIV>
+</DIV>
+<DIV class="fyi">
+<DIV>このスイッチは、「環境設定」の<SPAN class="ctrl">[OSの通知システムで表示]</SPAN>がONであることが前提です。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#alertnotify">環境設定</A>
+</UL>
+</DIV>
+</TD>
+</TR>
+
+</TABLE>
+
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+</BODY>
+</HTML>

@@ -1,0 +1,30 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    apply from: 'signingConfigs/debug.gradle', to: android
+    apply from: 'signingConfigs/release.gradle', to: android
+    defaultConfig {
+        applicationId "net.gorry.aicia_donate"
+        minSdkVersion 14
+        targetSdkVersion 26
+    }
+    buildTypes {
+        debug {
+            debuggable true
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    implementation project(':libaicia')
+}

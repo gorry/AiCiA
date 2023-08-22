@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/connect"
+		android:title="@string/menu_main_connect_title"
+		android:titleCondensed="@string/menu_main_connect_titlecondensed"
+		android:alphabeticShortcut="C"
+		android:numericShortcut="1"
+		android:icon="@android:drawable/ic_menu_call"
+		android:showAsAction="ifRoom|withText"
+	/>
+	<item android:id="@+id/exapp"
+		android:title="@string/menu_main_exapp_title"
+		android:titleCondensed="@string/menu_main_exapp_titlecondensed"
+		android:alphabeticShortcut="A"
+		android:numericShortcut="2"
+		android:icon="@android:drawable/ic_menu_agenda"
+	/>
+	<item android:id="@+id/exweb"
+		android:title="@string/menu_main_exweb_title"
+		android:titleCondensed="@string/menu_main_exweb_titlecondensed"
+		android:alphabeticShortcut="W"
+		android:numericShortcut="3"
+		android:icon="@android:drawable/ic_menu_mapmode"
+	/>
+	<item android:id="@+id/shutdown"
+		android:title="@string/menu_main_shutdown_title"
+		android:titleCondensed="@string/menu_main_shutdown_titlecondensed"
+		android:alphabeticShortcut="X"
+		android:numericShortcut="4"
+		android:icon="@android:drawable/ic_menu_close_clear_cancel"
+		android:showAsAction="ifRoom|withText"
+	/>
+	<item android:id="@+id/help"
+		android:title="@string/menu_main_help_title"
+		android:titleCondensed="@string/menu_main_help_titlecondensed"
+		android:alphabeticShortcut="H"
+		android:numericShortcut="5"
+		android:icon="@android:drawable/ic_menu_help"
+	/>
+	<item android:id="@+id/channel_edit"
+		android:title="@string/menu_main_channel_edit_title"
+		android:titleCondensed="@string/menu_main_channel_edit_titlecondensed"
+		android:alphabeticShortcut="N"
+		android:numericShortcut="6"
+		android:icon="@android:drawable/ic_menu_agenda"
+	/>
+	<item android:id="@+id/serverlist"
+		android:title="@string/menu_main_serverlist_title"
+		android:titleCondensed="@string/menu_main_serverlist_titlecondensed"
+		android:alphabeticShortcut="L"
+		android:icon="@android:drawable/ic_menu_agenda"
+	/>
+	<item android:id="@+id/exapp_edit"
+		android:title="@string/menu_main_exapp_edit_title"
+		android:titleCondensed="@string/menu_main_exapp_edit_titlecondensed"
+		android:alphabeticShortcut="P"
+		android:icon="@android:drawable/ic_menu_agenda"
+	/>
+	<item android:id="@+id/exweb_edit"
+		android:title="@string/menu_main_exweb_edit_title"
+		android:titleCondensed="@string/menu_main_exweb_edit_titlecondensed"
+		android:alphabeticShortcut="I"
+		android:icon="@android:drawable/ic_menu_mapmode"
+	/>
+	<item android:id="@+id/setting"
+		android:title="@string/menu_main_setting_title"
+		android:titleCondensed="@string/menu_main_setting_titlecondensed"
+		android:alphabeticShortcut="S"
+		android:numericShortcut="9"
+		android:icon="@android:drawable/ic_menu_preferences"
+	/>
+	<item android:id="@+id/chbutton"
+		android:title="@string/menu_main_chbutton_title"
+		android:titleCondensed="@string/menu_main_chbutton_titlecondensed"
+		android:alphabeticShortcut="Q"
+	/>
+	<item android:id="@+id/ubutton"
+		android:title="@string/menu_main_ubutton_title"
+		android:titleCondensed="@string/menu_main_ubutton_titlecondensed"
+		android:alphabeticShortcut="U"
+	/>
+	<item android:id="@+id/copybutton"
+		android:title="@string/menu_main_copybutton_title"
+		android:titleCondensed="@string/menu_main_copybutton_titlecondensed"
+		android:alphabeticShortcut="Y"
+	/>
+	<item android:id="@+id/inputhistory"
+		android:title="@string/menu_main_inputhistory_title"
+		android:titleCondensed="@string/menu_main_inputhistory_titlecondensed"
+		android:alphabeticShortcut="O"
+	/>
+	<item android:id="@+id/clearnotify"
+		android:title="@string/menu_main_clearnotify_title"
+		android:titleCondensed="@string/menu_main_clearnotify_titlecondensed"
+		android:alphabeticShortcut="E"
+	/>
+	<item android:id="@+id/version"
+		android:title="@string/menu_main_version_title"
+		android:titleCondensed="@string/menu_main_version_titlecondensed"
+		android:alphabeticShortcut="V"
+		android:numericShortcut="0"
+		android:icon="@android:drawable/ic_menu_info_details"
+	/>
+</menu>

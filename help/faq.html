@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Last-modified" content="<!--#echo var='LAST_MODIFIED'-->">
+<LINK REV=MADE HREF="mailto:gorry@hauN.org">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Content-Language" CONTENT="ja">
+<LINK REL="stylesheet" TYPE="text/css" HREF="basic.css">
+<LINK REL="stylesheet" TYPE="text/css" HREF="local.css">
+<TITLE>よくある質問 - AiCiA</TITLE>
+</HEAD>
+<BODY BGCOLOR="#D0E0F0" TEXT="#000080" LINK="#008000" VLINK="#FF8080" ALINK="#FF40C0">
+<DIV ALIGN="center" class="titleframe">
+<DIV ALIGN="center" class="title">
+<BIG class="big_title"><B>よくある質問 - AiCiA</B></BIG><BR>
+</DIV>
+</DIV>
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="pagebody">
+
+<DL class="item">
+
+<DT id="japanese">日本語が正しく表示されません。</DT>
+<DD>
+<DIV>「サーバの設定」で、<SPAN class="ctrl">[文字コード]</SPAN>に適切なコードを選びます。日本語が使われるチャンネルの場合は、以下のいずれかを選びます。<DIV>
+<TABLE border>
+
+<TR>
+<TH>ISO-2022-JP</TH>
+<TD>
+<DIV>もっとも一般的な選択です。</DIV>
+<DIV>ただし、AiCiAではこのコードでは「JIS半角カナ文字」が適切に表示されません。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH>ISO-2022-JP_with_halfkana</TH>
+<TD>
+<DIV>「JIS半角カナ文字」を適切に表示したい場合は、このコードを選択します。</DIV>
+<DIV>いくつかの内部処理が加わるために表示が多少遅くなったり、日本語以外の文字が適切に表示されない可能性があります。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH>UTF-8</TH>
+<TD>
+<DIV>表示できる文字の種類は最も多くなりますが、このコードを採用しているIRCチャンネルはあまり多くありません。</DIV>
+</TD>
+</TR>
+
+</TABLE>
+
+<UL class="jump">
+<LI><A HREF="server.html#encode">サーバの設定</A>
+</UL>
+</DD>
+
+
+<DT id="sendhalfkana">半角カナ文字を送信しようとすると、全角に変換されてしまいます。</DT>
+<DD>
+<DIV>「環境設定:入力エリア」で、<SPAN class="ctrl">[JIS半角カナを送信する]</SPAN>をONにします。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#halfkana">環境設定</A>
+</UL>
+</DD>
+
+
+<DT id="chno">サブログウィンドウのチャンネル名の先頭に表示される"1a"などの文字は何ですか？</DT>
+<DD>
+<DIV class="centerpicture"><IMG src="pic/line_sublog.png"><BR>"2a"の部分がショートカット</DIV>
+<DIV>チャンネル名の先頭に表示されている文字列は、「チャンネルショートカット」です。<SPAN class="ctrl">[Ch]ボタン</SPAN>をタップして、メニューが表示された後にチャンネルショートカット文字列を入力すると、そのチャンネルへジャンプすることができます。</DIV>
+<DIV>これ以外のメニューでも、"123"などの数字や"abc"などのアルファベットが項目の先頭に付いている場合、そのキーを入力することで各項目にジャンプすることができます。</DIV>
+
+</DD>
+
+
+<DT id="lowmemory">"Low Memory"が通知されました。どうすればよいですか？</DT>
+<DD>
+<DIV>"Low Memory"通知が表示されたときにしなければならないことは、特にありません。必要なのは、"Low Memory"通知が表示されないように端末を扱うことです。</DIV>
+
+<DIV class="fyi">
+<DIV>AiCiAは、内部的には２つのパートに分かれています。画面表示を行うときだけメモリに存在するUI部分と、常駐してIRC通信を行うサービス部分です。これらは個別に起動し、互いに通信しながら動作しています。</DIV>
+<DIV>"Low Memory"通知は、「メモリ不足のため、IRC通信を行うサービス部分を強制終了させる可能性がある」という警告がOS側より送られた場合に表示されます。</DIV>
+<DIV>サービス部分が強制終了させられてしまうと、IRC通信が切断され、それまでのログが消去されてしまいます。</DIV>
+</DIV>
+
+<DIV>「"Low Memory"通知が表示されないように扱う」には、以下のような手段があります。</DIV>
+
+<DL class="subsec1">
+
+<DT>メモリの多い端末を使う。</DT>
+<DD>国内機種でメインメモリが256MB程度の端末では、"Low Memory"通知の発生確率はかなり高いようです。</DD>
+
+<DT>多くのアプリを起動しない。</DT>
+<DD>アプリは起動されるごとにメモリを消費します。アプリを多く起動しないことが、メモリ不足を起こさない最も簡単な方法です。</DD>
+
+<DT>不要なアプリを終了させる。</DT>
+<DD>アプリは、バックグラウンドに回っただけでは終了しません。確実に終了させるには、タスクマネージャなどのアプリを使用するのが最も簡単です。</DD>
+
+<DT>利用度の低いウィジェットを使用しない。</DT>
+<DD>ウィジェットは常駐するため、メモリが不足気味になったときにいつでも終了させられる通常アプリよりもメモリを圧迫します。</DD>
+
+</DL>
+
+<DIV class="fyi">
+<DIV>IS01など、「Android OSの起動が完了した時点ですでにアプリ１～２本分しかメモリが残っていない」機種が、現時点のAndroid端末には少なからずあります。このような機種では、AiCiAで表示されたURLをタップしてブラウザを開くだけでも、"Low Memory"通知が表示されてしまうことがあります。</DIV>
+</DIV>
+
+</DD>
+
+
+<DT id="sleep">Wi-Fi接続中、端末がスリープに入るとIRC接続が切れてしまいます。</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/wifisleep.png"><BR>Wi-Fiのスリープ設定</DIV>
+<DIV>設定メニューから、<SPAN class="ctrl">[通信]-[Wi-Fi設定]</SPAN>を選び、その後<SPAN class="ctrl">[MENU]ボタン</SPAN>をタップすると、<SPAN class="ctrl">[詳細設定]メニュー</SPAN>が現れます。</DIV>
+<DIV><SPAN class="ctrl">[Wi-Fiのスリープ設定]</SPAN>を選び、<SPAN class="ctrl">[スリープにしない]</SPAN>を選ぶと、端末がスリープに入ってもWi-Fiはスリープに入らなくなるため、IRC接続が維持されるようになります。</DIV>
+<DIV class="fyi">
+<DIV>バッテリー動作中で、スリープ状態に入ったときに通信経路が切断されると、端末が省電力モードに入って自動再接続タイマーが動作しなくなるため、再接続を行うことができなくなります。現時点ではこれを回避できません。</DIV>
+</DIV>
+</DL>
+
+</DIV>
+
+<BR clear="all">
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+</BODY>
+</HTML>

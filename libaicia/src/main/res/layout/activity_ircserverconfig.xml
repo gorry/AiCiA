@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_ircserverconfig_save_button" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_ircserverconfig_cancel_button" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_servername_edittext" />
+
+                    <EditText
+                        android:id="@+id/servername_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="(new setting)"
+                        android:inputType="textEmailAddress"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_host_edittext" />
+
+                    <EditText
+                        android:id="@+id/host_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="(irc.ircnet.ne.jp)"
+                        android:inputType="textEmailAddress"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_port_edittext" />
+
+                    <EditText
+                        android:id="@+id/port_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_pass_edittext" />
+
+                    <EditText
+                        android:id="@+id/pass_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="textPassword"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_nick_edittext" />
+
+                    <EditText
+                        android:id="@+id/nick_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="(nick)"
+                        android:inputType="textEmailAddress"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_username_edittext" />
+
+                    <EditText
+                        android:id="@+id/username_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="(username)"
+                        android:inputType="textEmailAddress"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_realname_edittext" />
+
+                    <EditText
+                        android:id="@+id/realname_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="(realname)"
+                        android:inputType="textEmailAddress"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_encoding_edittext" />
+
+                    <EditText
+                        android:id="@+id/encoding_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="textEmailAddress"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+
+                    <Button
+                        android:id="@+id/encoding_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_encoding_button" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_channel_edittext" />
+
+                    <EditText
+                        android:id="@+id/channel_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="#net.gorry.aicia #ch1 #ch2 #ch3..."
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/activity_ircserverconfig_alertkeywords_edittext" />
+
+                    <EditText
+                        android:id="@+id/alertkeywords_edittext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="word1 word2 word3..."
+                        android:scrollHorizontally="true"
+                        android:singleLine="true" />
+                </TableRow>
+            </TableLayout>
+
+            <CheckBox
+                android:id="@+id/usessl_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircserverconfig_usessl_checkbox" />
+
+            <CheckBox
+                android:id="@+id/autoconnect_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircserverconfig_autoconnect_checkbox" />
+
+            <CheckBox
+                android:id="@+id/autoreconnect_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircserverconfig_autoreconnect_checkbox" />
+
+            <CheckBox
+                android:id="@+id/fortig_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircserverconfig_fortig_checkbox" />
+
+            <CheckBox
+                android:id="@+id/putpaletextonsublog_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircserverconfig_putpaletextonsublog_checkbox" />
+
+            <CheckBox
+                android:id="@+id/alertnotify_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_ircserverconfig_alertnotify_checkbox" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

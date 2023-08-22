@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="entries_pref_sys_view_colorset">
+		<item>Dark Background</item>
+		<item>Light Background</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_colorset">
+		<item>0</item>
+		<item>1</item>
+	</string-array>
+	<string-array name="entries_pref_sys_view_layout">
+		<item>Upper(Main-log), Lower(Sub-log)</item>
+		<item>Lower(Main-log), Upper(Sub-log)</item>
+		<item>Left(Main-log), Right(Sub-log)</item>
+		<item>Right(Main-log), Left(Sub-log)</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_layout">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	<string-array name="entries_pref_sys_view_windowsize">
+		<item>None</item>
+		<item>Small</item>
+		<item>Medium</item>
+		<item>Large</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_windowsize">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	<string-array name="entries_pref_sys_view_rotatemode">
+		<item>Rotate Anytime</item>
+		<item>Fixed on Starting</item>
+		<item>Portrait</item>
+		<item>Landscape</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_rotatemode">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+	<string-array name="entries_pref_sys_action_alert_ring_level">
+		<item>silent</item>
+		<item>medium</item>
+		<item>loud</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_action_alert_ring_level">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="entries_pref_sys_view_font">
+		<item>default</item>
+		<item>Serif</item>
+		<item>Sans-Serif</item>
+		<item>Monospace</item>
+		<item>External Font File</item>
+	</string-array>
+	<string-array name="entryvalues_pref_sys_view_font">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
+</resources>

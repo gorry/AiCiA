@@ -1,0 +1,511 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Last-modified" content="<!--#echo var='LAST_MODIFIED'-->">
+<LINK REV=MADE HREF="mailto:gorry@hauN.org">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Content-Language" CONTENT="ja">
+<LINK REL="stylesheet" TYPE="text/css" HREF="basic.css">
+<LINK REL="stylesheet" TYPE="text/css" HREF="local.css">
+<TITLE>操作方法 - AiCiA</TITLE>
+</HEAD>
+<XBODY>
+<BODY BGCOLOR="#D0E0F0" TEXT="#000080" LINK="#008000" VLINK="#FF8080" ALINK="#FF40C0">
+<DIV ALIGN="center" class="titleframe">
+<DIV ALIGN="center" class="title">
+<BIG class="big_title"><B>操作方法 - AiCiA</B></BIG><BR>
+</DIV>
+</DIV>
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="pagebody">
+
+<DIV class="rightpicture"><IMG src="pic/start_enum.png"><BR>AiCiAメイン画面</DIV>
+
+<P>AiCiAでIRCサーバに接続した後の操作は、以下のウィンドウやボタン類で行います。</P>
+
+<UL class="jump">
+<LI><A HREF="#notify">①通知アイコン</A>
+<LI><A HREF="#mainlog">②メインログウィンドウ</A>
+<LI><A HREF="#sublog">③サブログウィンドウ</A>
+<LI><A HREF="#inputbox">④入力エリア</A>
+<LI><A HREF="#command">⑤コマンドボタン</A>
+</UL>
+
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>画面内ボタンの代わりに、以下のショートカットキーを使うことができます。</DIV>
+<TABLE border>
+
+<TR>
+<TH>[Alt]+[検索]キー</TH>
+<TD><SPAN class="ctrl">[Ch]ボタン</SPAN>を押すのと同じ動作をします。</TD>
+</TR>
+
+<TR>
+<TH>[Alt]+[Menu]キー</TH>
+<TD><SPAN class="ctrl">[U]ボタン</SPAN>を押すのと同じ動作をします。</TD>
+</TR>
+
+</TABLE>
+</DIV>
+</TD></TR></TABLE>
+
+<BR clear="all">
+
+
+<DL class="item">
+
+<DT id="notify">①通知アイコン</DT>
+<DD>
+<DIV>AiCiA上で重要な事柄（イベント）が発生したとき、ここにアイコンとその内容が表示されます。</DIV>
+<DIV>アイコンは、以下の３種類が表示されます。</DIV>
+
+<TABLE border>
+
+<TR>
+<TH><IMG src="pic/icon.png"><BR>メインアイコン</TH>
+<TD>
+<DIV>AiCiAのIRC接続サービスが実行されている間、常に表示されます。</DIV>
+<DIV>このアイコンをタップすると、AiCiAのメイン画面を表示することができます。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH><IMG src="pic/icon_server.png"><BR>サーバアイコン<BR>（接続中）<BR><IMG src="pic/icon_disconnect.png"><BR>サーバアイコン<BR>（切断中）</TH>
+<TD>
+<DIV>AiCiAが接続を行うIRCサーバ１つにつき、１つのアイコンが表示されます。</DIV>
+<DIV>このアイコンをタップすると、AiCiAでそのサーバのチャンネルを表示することができます。</DIV>
+<DIV>このアイコンで示される内容は、以下の通りです。</DIV>
+<DL class="item">
+<DT id="connect">サーバに接続しました（Connected）</DT>
+<DD><DIV>IRCサーバに接続したとき、表示されます。</DIV>
+</DD>
+<DT id="disconnect">サーバから切断しました（Disconnected）</DT>
+<DD><DIV>IRCサーバから切断したとき、表示されます。</DIV>
+</DD>
+<DT id="updated">サーバ設定が更新されました（Update）</DT>
+<DD><DIV>サーバ接続設定を変更したとき、表示されます。</DIV>
+</DD>
+</DL>
+</TD>
+</TR>
+
+<TR>
+<TH><IMG src="pic/icon_warn.png"><BR>警告アイコン</TH>
+<TD>
+<DIV>AiCiAのIRC接続サービスに問題が発生した時、表示されます。</DIV>
+<DIV>このアイコンをタップすると、AiCiAのメイン画面を表示することができます。</DIV>
+<DIV>このアイコンで示される内容は、以下の通りです。</DIV>
+<DL class="item">
+<DT id="lowmemory">IRCサービス用メモリが不足しています（Low Memory）</DT>
+<DD><DIV>IRC接続サービスを維持するためのメモリ残量が少ないとき、表示されます。</DIV>
+<DIV>不要なアプリケーションを終了するなどの策を講じない場合は、IRC接続サービスがメモリ不足により終了してしまうことがあります。</DIV>
+</DD>
+</DL>
+</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+
+<DT id="mainlog">②メインログウィンドウ</DT>
+<DD>
+<DIV>「現在注目しているチャンネル」の発言を表示します。チャンネル名はウィンドウタイトル部に表示されています。また、発言はこのチャンネルに対して行われます。</DIV>
+<DIV>メインログウィンドウでは、以下の操作を行うことができます。</DIV>
+<TABLE border>
+
+<TR>
+<TH>上下フリック<BR>上下方向キー</TH>
+<TD>ログウィンドウをスクロールします。</TD>
+</TR>
+
+<TR>
+<TH>左右フリック<BR>（短距離）</TH>
+<TD>「メインログウィンドウで表示しているチャンネル」を１つ前、あるいは次に変更します。</TD>
+</TR>
+
+<TR>
+<TH>左右フリック<BR>（長距離）</TH>
+<TD>「新しい発言があった」次（または前）のチャンネルへ移動します。</TD>
+</TR>
+
+<TR>
+<TH>タップ<BR>[実行]キー</TH>
+<TD>URL部分をタップすると、Webブラウザを起動してそのURLを開きます。</TD>
+</TR>
+
+<TR>
+<TH>ダブルタップ</TH>
+<TD>
+<DIV class="rightpicture"><IMG src="pic/dtap_scroll_point.png"><BR>ダブルタップ位置</DIV>
+<DIV>ログウィンドウ内の左上部分（右図の青色部）をダブルタップすると、ログ最上部までスクロールします。同様に、右下部分（右図の黄色部）をダブルタップすると、ログ最下部までスクロールします。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH>長押し</TH>
+<TD>
+<DIV>ウィンドウ内を長押し（ロングタップ）すると、メインログウィンドウで表示しているチャンネルや、そのチャンネルでの発言内容に対して操作を行うダイアログが表示されます。</DIV>
+<UL class="jump">
+<LI><A HREF="ircmode.html#l_menu">IRCモード - 長押しメニュー</A>
+<LI><A HREF="tigmode.html#l_menu">TIGモード - 長押しメニュー</A>
+</UL>
+</TD>
+</TR>
+
+<TR>
+<TH>[Alt]+[検索]キー</TH>
+<TD><SPAN class="ctrl">[Ch]ボタン</SPAN>を押すのと同じ動作をします。</TD>
+</TR>
+
+<TR>
+<TH>[Alt]+[Menu]キー</TH>
+<TD><SPAN class="ctrl">[U]ボタン</SPAN>を押すのと同じ動作をします。</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+
+<DT id="sublog">③サブログウィンドウ</DT>
+<DD>
+<DIV>「現在注目しているチャンネル」以外のチャンネルの発言を表示します。</DIV>
+<DIV>サブログウィンドウでは、以下の操作を行うことができます。</DIV>
+<TABLE border>
+
+<TR>
+<TH>上下フリック<BR>上下方向キー</TH>
+<TD>ログウィンドウをスクロールします。</TD>
+</TR>
+
+<TR>
+<TH>左右フリック<BR>（短距離）</TH>
+<TD>「メインログウィンドウで表示しているチャンネル」を１つ前、あるいは次に変更します。</TD>
+</TR>
+
+<TR>
+<TH>左右フリック<BR>（長距離）</TH>
+<TD>メインログウィンドウで「新しい発言があった」次（または前）のチャンネルへ移動します。</TD>
+</TR>
+
+<TR>
+<TH>タップ<BR>[実行]キー</TH>
+<TD>URL部分をタップすると、Webブラウザを起動してそのURLを開きます。</TD>
+</TR>
+
+<TR>
+<TH>ダブルタップ</TH>
+<TD>
+<DIV class="rightpicture"><IMG src="pic/dtap_scroll_point.png"><BR>ダブルタップ位置</DIV>
+<DIV>ログウィンドウ内の左上部分（右図の青色部）をダブルタップすると、ログ最上部までスクロールします。同様に、右下部分（右図の黄色部）をダブルタップすると、ログ最下部までスクロールします。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH>長押し</TH>
+<TD>
+<DIV>ウィンドウ内を長押し（ロングタップ）すると、メインログウィンドウで表示しているチャンネルや、サブログウィンドウ内の発言内容に対して操作を行うダイアログが表示されます。</DIV>
+<UL class="jump">
+<LI><A HREF="ircmode.html#l_menu">IRCモード - 長押しメニュー</A>
+<LI><A HREF="tigmode.html#l_menu">TIGモード - 長押しメニュー</A>
+</UL>
+</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+
+<DT id="inputbox">④入力エリア</DT>
+<DD>
+<DIV>「メインログウィンドウで表示しているチャンネル」へ入力内容を送信し、発言を行います。</DIV>
+<DIV>入力エリアでは、文字入力以外にも以下の操作を行うことができます。
+
+<TABLE border>
+
+<TR>
+<TH>ダブルタップ<BR>上へスワイプ<BR>[Alt]+[Delete]キー</TH>
+<TD>
+<DIV class="rightpicture"><IMG src="pic/dialog_history.png"><BR>入力履歴</DIV>
+<DIV>過去の発言履歴を参照して、再び入力できるようにします。</DIV>
+</TD>
+</TR>
+
+<TR>
+<TH>下へスワイプ<BR>[Shift]+[Enter]キー</TH>
+<TD>
+<DIV>現在入力中の発言を、送信せずに発言履歴へ登録します。文章入力中に別の文章を入力したくなった時に便利です。</DIV>
+</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+
+<DT id="command">⑤コマンドボタン</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/commandbutton.png"><BR>コマンドボタン</DIV>
+<DIV>IRCのチャンネルやサーバに対して命令を発行したり、AiCiAの操作を行ったりするためのボタンです。</DIV>
+
+<TABLE border>
+<TR>
+<TD>
+<UL class="tablejump">
+<LI><A HREF="#prevchannel">[↑]ボタン（前のチャンネル）</A>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD>
+<UL class="tablejump">
+<LI><A HREF="#channel">[Ch]ボタン（チャンネル一覧）</A>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD>
+<UL class="tablejump">
+<LI><A HREF="#nextchannel">[↓]ボタン（次のチャンネル）</A>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD>
+<UL class="tablejump">
+<LI><A HREF="#utility">[U]ボタン（ユーティリティ）</A>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD>
+<UL class="tablejump">
+<LI><A HREF="#appli">[A]ボタン（アプリの起動）</A>
+</UL>
+</TD>
+</TR>
+<TR>
+<TD>
+<UL class="tablejump">
+<LI><A HREF="#website">[W]ボタン（ウェブサイトを開く）</A>
+</UL>
+</TD>
+</TR>
+</TABLE>
+
+<DIV class="fyi">
+<DIV>必要なボタンだけを表示したいときは、「環境設定 - 表示設定 - コマンドボタン」で設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#commandbutton">環境設定 - 表示設定 - コマンドボタン</A>
+</UL>
+</DIV>
+
+
+<DL class="item">
+
+<DT id="prevchannel">[↑]ボタン（前のチャンネル）</DT>
+<DD>
+<DIV>「メインログウィンドウで表示しているチャンネル」を１つ前のチャンネルに変更します。</DIV>
+<DIV>このボタンでは、以下の操作を行うことができます。</DIV>
+<TABLE border>
+
+<TR>
+<TH>タップ<BR>[実行]キー</TH>
+<TD>前のチャンネルへ移動します。</TD>
+</TR>
+
+<TR>
+<TH>長押し</TH>
+<TD>「新しい発言があった」前のチャンネルへ移動します。</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+
+<DT id="channel">[Ch]ボタン（チャンネル一覧）</DT>
+<DD>
+<DIV>チャンネルの一覧をメニューで表示します。チャンネルを選択すると、そのチャンネルをメインログウィンドウで表示します。</DIV>
+<UL class="jump">
+<LI><A HREF="channel.html#select">チャンネル - チャンネルの選択</A>
+</UL>
+<DIV>このボタンでは、以下の操作を行うことができます。</DIV>
+<TABLE border>
+
+<TR>
+<TH>タップ<BR>[実行]キー</TH>
+<TD><SPAN class="ctrl">[チャンネルの一覧]</SPAN>メニューを開きます。</TD>
+</TR>
+
+<TR>
+<TH>長押し<BR>（ロングタップ）</TH>
+<TD><DIV><SPAN class="ctrl">[更新チャンネルの一覧]</SPAN>メニューを開きます。全チャンネルのうち、「新しい発言があった」チャンネルだけが表示されます。</DIV>
+
+<DIV class="fyi">
+<DIV>長押し（ロングタップ）の動作を<SPAN class="ctrl">[通知チャンネルの一覧]</SPAN>にしたいときは、「環境設定 - 通知キーワード - [Ch]長押しを通知チャンネル一覧にする」をONにします。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#longtabchbutton">環境設定 - 通知キーワード</A>
+</UL>
+</DIV>
+</TD>
+</TR>
+
+</TABLE>
+
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV class="rightpicture"><IMG src="pic/menu_main2_chbutton.png"><BR>[Ch]ボタン</DIV>
+<DIV>メインメニューから<SPAN class="ctrl">[その他]-[[Ch]ボタン]</SPAN>を選ぶと、チャンネル一覧を表示するためのメニューを表示します。</DIV>
+<BR clear="all">
+</DIV>
+</TD></TR></TABLE>
+
+</DD>
+
+
+<DT id="nextchannel">[↓]ボタン（次のチャンネル）</DT>
+<DD>
+<DIV>「メインログウィンドウで表示しているチャンネル」を１つ次のチャンネルに変更します。</DIV>
+<DIV>このボタンでは、以下の操作を行うことができます。</DIV>
+<TABLE border>
+
+<TR>
+<TH>タップ<BR>[実行]キー</TH>
+<TD>次のチャンネルへ移動します。</TD>
+</TR>
+
+<TR>
+<TH>長押し</TH>
+<TD>「新しい発言があった」次のチャンネルへ移動します。</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+
+<DT id="utility">[U]ボタン（ユーティリティ）</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/menu_irc.png"><BR>IRCメニュー</DIV>
+<DIV>便利な操作を行うためのメニューを表示します。</DIV>
+<DIV>このボタンは、TIGモードがONになっているかどうかで、内容が変化します。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">メインメニューから<SPAN class="ctrl">[その他]-[[U]ボタン]</SPAN>を選んでも、同じ動作をします。</DIV>
+</TD></TR></TABLE>
+
+<DL class="subsec1">
+
+<DT id="utility_normal">IRCモード</DT>
+
+<DD>
+
+<TABLE border>
+
+<TR>
+<TH>タップ<BR>[実行]キー</TH>
+<TD>
+<DIV><SPAN class="ctrl">[IRCメニュー]</SPAN>を開きます。</DIV>
+<UL class="jump">
+<LI><A HREF="ircmode.html">IRCモード</A>
+</UL>
+</TD>
+</TR>
+
+<TR>
+<TH>長押し</TH>
+<TD>
+<DIV>チャンネル内のユーザーを選択するメニューを開きます。</DIV>
+<DIV>ユーザーを選択して<SPAN class="ctrl">[Ok]ボタン</SPAN>をタップすると、そのユーザー名が入力エリアに挿入されます。</DIV>
+</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+<DT id="utility_tig">TIGモード</DT>
+
+<DD>
+
+<TABLE border>
+
+<TR>
+<TH>タップ<BR>[実行]キー</TH>
+<TD>
+<DIV><SPAN class="ctrl">[TweetIRCGatewayメニュー]</SPAN>を開きます。</DIV>
+<UL class="jump">
+<LI><A HREF="tigmode.html">TIGモード</A>
+</UL>
+
+<TR>
+<TH>長押し</TH>
+<TD>
+<DIV><SPAN class="ctrl">[IRCメニュー]</SPAN>を開きます。</DIV>
+<UL class="jump">
+<LI><A HREF="ircmode.html">IRCモード</A>
+</UL>
+</TD>
+</TR>
+
+</TABLE>
+
+</DD>
+
+</DL>
+
+<TABLE><TR><TD>
+<DIV class="fyi">TIGモードをONにするには、<SPAN class="ctrl">[サーバ設定]ダイアログ</SPAN>で<SPAN class="ctrl">[TweetIRCGatewayコマンドを使用]</SPAN>をONにします。</DIV>
+</TD></TR></TABLE>
+
+</DD>
+
+<DT id="appli">[A]ボタン（アプリの起動）</DT>
+<DD>
+<DIV><SPAN class="ctrl">[アプリ]メニュー</SPAN>を表示し、登録したアプリを実行することができます。</DIV>
+<UL class="jump">
+<LI><A HREF="boot.html#appli">[アプリ]メニュー</A>
+</UL>
+
+</DD>
+
+<DT id="website">[W]ボタン（ウェブサイトを開く）</DT>
+<DD>
+<DIV><SPAN class="ctrl">[ウェブサイト]メニュー</SPAN>を表示し、登録したウェブサイトをブラウザで開くことができます。</DIV>
+<UL class="jump">
+<LI><A HREF="boot.html#website">[ウェブサイト]メニュー</A>
+</UL>
+
+</DD>
+
+</DL>
+
+</DD>
+
+</DL>
+
+
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+</BODY>
+</HTML>

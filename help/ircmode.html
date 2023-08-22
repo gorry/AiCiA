@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Last-modified" content="<!--#echo var='LAST_MODIFIED'-->">
+<LINK REV=MADE HREF="mailto:gorry@hauN.org">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Content-Language" CONTENT="ja">
+<LINK REL="stylesheet" TYPE="text/css" HREF="basic.css">
+<LINK REL="stylesheet" TYPE="text/css" HREF="local.css">
+<TITLE>IRCモード - AiCiA</TITLE>
+</HEAD>
+<BODY BGCOLOR="#D0E0F0" TEXT="#000080" LINK="#008000" VLINK="#FF8080" ALINK="#FF40C0">
+<DIV ALIGN="center" class="titleframe">
+<DIV ALIGN="center" class="title">
+<BIG class="big_title"><B>IRCモード - AiCiA</B></BIG><BR>
+</DIV>
+</DIV>
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="pagebody">
+
+<P>IRCモードは、一般のIRCサーバに接続するときに使用するモードです。</P>
+<P>「サーバ設定」で、<SPAN class="ctrl">[TweetIRCGatewayコマンドを使用する]</SPAN>がOFFになっていると、そのサーバ内で作られるチャンネルはIRCモードとなります。</P>
+<UL class="jump">
+<LI><A HREF="server.html#tigmode">TweetIRCGatewayコマンドを使用</A>
+</UL>
+
+
+
+
+<H2 id="l_menu">長押しメニュー</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_log_irc.png"><BR>IRCチャンネルメニュー</DIV>
+
+<P>IRCモードでは、メインログウィンドウを長押し（ロングタップ）すると、「IRCチャンネルメニュー」が表示されます。メインログウィンドウでIRCモードのチャンネルを開いているときは、サブログウィンドウを長押し（ロングタップ）しても同じメニューが開きます。</P>
+
+<DL class="item">
+
+<DT id="l_channel">チャンネルを選択</DT>
+<DD>
+<DIV>チャンネルの一覧がダイアログで表示され、選択したチャンネルへ移動します。</DIV>
+<UL class="jump">
+<LI><A HREF="channel.html#select">チャンネル - チャンネルの選択</A>
+</UL>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_user">ユーザーを選択</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/menu_log_irc_user.png"><BR>選択したユーザーに対するメニュー</DIV>
+
+<DIV>チャンネルに所属しているユーザーの一覧がリストで表示され、選択したユーザーに対して作業をします。</DIV>
+
+<DL class="item">
+
+<DT id="l_user_talk">ユーザーとトーク</DT>
+<DIV>指定したユーザーとの一対一の会話を行います。入力エリアで「/join [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+<DD>
+
+<DT id="l_user_whois">ユーザー情報を見る(/whois)</DT>
+<DIV>指定したユーザーの情報を表示します。入力エリアで「/whois [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+<DD>
+
+<DT id="l_user_incop">オペレータ権限を与える</DT>
+<DIV>指定したユーザーにオペレータ権限を付与します。IRCのいくつかの命令は、オペレータでないと実行することができません。入力エリアで「/mode +o [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+<DD>
+
+<DT id="l_user_decop">オペレータ権限を奪う</DT>
+<DD>
+<DIV>指定したユーザーからオペレータ権限を剥奪します。IRCのいくつかの命令は、オペレータでないと実行することができません。入力エリアで「/mode -o [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<DT id="l_user_oper">オペレータ権限を得る</DT>
+<DD>
+<DIV>指定したユーザー名とパスワードで、サーバからオペレータ権限を得ることができます。入力エリアで「/oper [ユーザー名] [パスワード]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<DT id="l_user_kick">チャンネルから追い出す(/kick)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_kick.png"><BR>追い出す理由</DIV>
+<DIV>指定したユーザーをチャンネルから追い出します。入力エリアで「/kick [ユーザー名] [追い出す理由]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<BR clear="all">
+
+</DL>
+
+</DD>
+
+<DT id="l_copy">ログからコピー</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/menu_log_irc_copy.png"><BR>サブログからコピー</DIV>
+<DIV>ログウィンドウのテキストをコピーして、クリップボードに入れることができます。</DIV>
+<DIV>メインログウィンドウを長押し（ロングタップ）したときはメインログ、サブログウィンドウを長押し（ロングタップ）したときはサブログの内容をコピーします。</DIV>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_topic">トピックの変更(/topic)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_topic.png"><BR>新しいトピック</DIV>
+<DIV>「メインログウィンドウで表示しているチャンネル」のトピックを変更します。入力エリアで「/topic [新しいトピック]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_nick">Nickの変更(/nick)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_nick.png"><BR>新しいNick</DIV>
+<DIV>Nickを変更します。入力エリアで「/nick [新しいNick]」と入力しても、同じ結果が得られます。</DIV>
+<DIV>この変更は、「サーバ設定」内のNickまでは変更しません。現在接続しているIRCサーバ上でのNickのみが変更されます。</DIV>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_join">チャンネルに入る(/join)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_join.png"><BR>入るチャンネル</DIV>
+<DIV>指定した名前のチャンネルに入ります。チャンネルが存在しない場合は、新しいチャンネルが作られます。入力エリアで「/join [新しいチャンネル名]」と入力しても、同じ結果が得られます。</DIV>
+<DIV>チャンネルの代わりに、ユーザー名を指定することもできます。この場合は、指定したユーザーと２人だけで会話を行う「トーク」となります。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">パスワード付きのチャンネルに入りたいときは、チャンネル名の後に",パスワード"を追加します。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_invite">チャンネルに招待する(/invite)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_invite.png"><BR>招待するユーザー</DIV>
+<DIV>指定したユーザーにチャンネルに入ってもらうよう促すメッセージを送ります。入力エリアで「/invite [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">AiCiAで誰かからinviteメッセージが送られてくると、自動的に招待されたチャンネルに入ります。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_part">チャンネルから出る(/part)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_part.png"><BR>退出メッセージ</DIV>
+<DIV>チャンネルから退出します。入力エリアで「/part [退出メッセージ]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_raw">生のコマンド行を送る(/raw)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_raw.png"><BR>コマンド行</DIV>
+<DIV>以後の文字列をそのままIRCサーバに送信します。入力エリアで「/raw [コマンド行]」と入力しても、同じ結果が得られます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>初期設定では、コマンド行を送信した結果（リプライ）の多くは表示されないようになっています。これらのリプライを表示するには、Verboseモードを1以上にします。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#verbose">Verboseモード</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<BR clear="all">
+
+<DT id="l_config">チャンネル設定</DT>
+<DD>
+<DIV>現在メインログウィンドウで表示しているチャンネルの動作設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="channel.html#config">チャンネル - チャンネル設定</A>
+</UL>
+</DD>
+
+
+</DL>
+
+
+
+
+<H2 id="u_menu">[U]ボタンメニュー</H2>
+
+<DIV class="rightpicture"><IMG src="pic/menu_irc.png"><BR>IRCメニュー</DIV>
+
+<P>IRCモードでは、<SPAN class="ctrl">[U]ボタン</SPAN>をタップしたときに「IRCメニュー」が表示されます。メインメニューから<SPAN class="ctrl">[その他]-[[U]ボタン]</SPAN>を選んでも同様です。</P>
+
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>TIGモードで動作している場合は、<SPAN class="ctrl">[U]ボタン</SPAN>をタップすると、TIGメニューが表示されます。</DIV>
+<UL class="jump">
+<LI><A HREF="tigmode.html#u_menu">TIGメニュー - [U]ボタンメニュー</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+
+
+
+<DL class="item">
+
+<DT id="u_topic">トピックの変更(/topic)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_topic.png"><BR>新しいトピック</DIV>
+<DIV>「メインログウィンドウで表示しているチャンネル」のトピックを変更します。入力エリアで「/topic [新しいトピック]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<BR clear="all">
+
+<DT id="u_nick">Nickの変更(/nick)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_nick.png"><BR>新しいNick</DIV>
+<DIV>Nickを変更します。入力エリアで「/nick [新しいNick]」と入力しても、同じ結果が得られます。</DIV>
+<DIV>この変更は、「サーバ設定」内のNickまでは変更しません。現在接続しているIRCサーバ上でのNickのみが変更されます。</DIV>
+</DD>
+
+<BR clear="all">
+
+<DT id="u_join">チャンネルに入る(/join)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_join.png"><BR>入るチャンネル</DIV>
+<DIV>指定した名前のチャンネルに入ります。チャンネルが存在しない場合は、新しいチャンネルが作られます。入力エリアで「/join [新しいチャンネル名]」と入力しても、同じ結果が得られます。</DIV>
+<DIV>チャンネルの代わりに、ユーザー名を指定することもできます。この場合は、指定したユーザーと２人だけで会話を行う「トーク」となります。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">パスワード付きのチャンネルに入りたいときは、チャンネル名の後に",パスワード"を追加します。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<BR clear="all">
+
+<DT id="u_invite">チャンネルに招待する(/invite)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_invite.png"><BR>招待するユーザー</DIV>
+<DIV>指定したユーザーにチャンネルに入ってもらうよう促すメッセージを送ります。入力エリアで「/invite [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">AiCiAでIRCを行っているときにinviteメッセージが送られてくると、自動的に招待されたチャンネルに入ります。</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<BR clear="all">
+
+<DT id="u_kick">チャンネルから追い出す(/kick)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_kick.png"><BR>追い出す理由</DIV>
+<DIV>指定したユーザーをチャンネルから追い出します。入力エリアで「/kick [ユーザー名] [追い出す理由]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<BR clear="all">
+
+<DT id="u_part">チャンネルから出る(/part)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_part.png"><BR>退出メッセージ</DIV>
+<DIV>チャンネルから退出します。入力エリアで「/part [退出メッセージ]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<BR clear="all">
+
+<DT id="u_incop">オペレータ権限を与える</DT>
+<DD>
+<DIV>指定したユーザーにオペレータ権限を付与します。IRCのいくつかの命令は、オペレータでないと実行することができません。入力エリアで「/mode +o [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<DT id="u_decop">オペレータ権限を奪う</DT>
+<DD>
+<DIV>指定したユーザーからオペレータ権限を剥奪します。IRCのいくつかの命令は、オペレータでないと実行することができません。入力エリアで「/mode -o [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<DT id="u_oper">オペレータ権限を得る</DT>
+<DD>
+<DIV>指定したユーザー名とパスワードで、サーバからオペレータ権限を得ることができます。入力エリアで「/oper [ユーザー名] [パスワード]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<DT id="u_talk">ユーザーとトーク</DT>
+<DD>
+<DIV>指定したユーザーとの一対一の会話を行います。入力エリアで「/join [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<DT id="u_whois">ユーザー情報を見る(/whois)</DT>
+<DD>
+<DIV>指定したユーザーの情報を表示します。入力エリアで「/whois [ユーザー名]」と入力しても、同じ結果が得られます。</DIV>
+</DD>
+
+<DT id="u_raw">生のコマンド行を送る(/raw)</DT>
+<DD>
+<DIV class="rightpicture"><IMG src="pic/dialog_raw.png"><BR>コマンド行</DIV>
+<DIV>以後の文字列をそのままIRCサーバに送信します。入力エリアで「/raw [コマンド行]」と入力しても、同じ結果が得られます。</DIV>
+<TABLE><TR><TD>
+<DIV class="fyi">
+<DIV>初期設定では、コマンド行を送信した結果（リプライ）の多くは表示されないようになっています。これらのリプライを表示するには、Verboseモードを1以上にします。</DIV>
+<UL class="jump">
+<LI><A HREF="system.html#verbose">Verboseモード</A>
+</UL>
+</DIV>
+</TD></TR></TABLE>
+</DD>
+
+<BR clear="all">
+
+<DT id="u_config">チャンネル設定</DT>
+<DD>
+<DIV>現在メインログウィンドウで表示しているチャンネルの動作設定を行います。</DIV>
+<UL class="jump">
+<LI><A HREF="channel.html#config">チャンネル - チャンネル設定</A>
+</UL>
+</DD>
+
+
+</DL>
+
+
+</DIV>
+
+<HR>
+<!-------------------------------------------------------------------------------------------->
+
+<DIV class="shortcut">
+<A HREF="index.html">[ヘルプトップ]</A>
+<A HREF="http://GORRY.hauN.org/android/aicia/">[AiCiA配布ページ]</A>
+</DIV>
+
+</BODY>
+</HTML>
