@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'net.gorry.aicia'
+    namespace 'net.gorry.aicia_donate'
 
     compileSdk 33
 
@@ -34,6 +34,12 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        checkReleaseBuilds false
+    }
+
 }
 
 dependencies {

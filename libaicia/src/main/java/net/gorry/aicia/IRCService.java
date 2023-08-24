@@ -617,6 +617,7 @@ public class IRCService extends ForegroundService {
 		builder.setContentTitle(title);
 		builder.setContentText(message);
 		builder.setSmallIcon(icon);
+		builder.setSilent(true);
 		// builder.setLargeIcon(icon);
 		builder.setWhen(System.currentTimeMillis());
 		// builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS);
