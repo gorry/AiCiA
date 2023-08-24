@@ -1,27 +1,38 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
-    apply from: 'signingConfigs/debug.gradle', to: android
-    apply from: 'signingConfigs/release.gradle', to: android
+    namespace 'net.gorry.aicia'
+
+    compileSdk 33
+
     defaultConfig {
         applicationId "net.gorry.aicia"
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdk 22
+        targetSdk 33
+        versionCode 202308261
+        versionName "2023.0826.1"
     }
+
+
+    apply from: 'signingConfigs/debug.gradle', to: android
+    apply from: 'signingConfigs/release.gradle', to: android
     buildTypes {
         debug {
             debuggable true
+            minifyEnabled false
+            shrinkResources false
             signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.release
         }
-    }
-    productFlavors {
     }
 }
 

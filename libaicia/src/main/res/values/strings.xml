@@ -198,7 +198,7 @@
     <string name="ircservice_java_shutdownircservice">Terminate IRC Service.</string>
     <string name="ircservice_java_startircservice">Start IRC Service.</string>
     <string name="ircservice_java_alert" formatted="false">%s &lt;%s&gt; %s</string>
-    <string name="ircservice_java_alert_title" formatted="false">from &lt;%s&gt; %s</string>
+    <string name="ircservice_java_alert_title" formatted="false">from %s &lt;%s&gt; %s</string>
     <string name="activityircserverconfig_java_error_emptyrealname">[Real Name] Required.</string>
     <string name="activityircserverconfig_java_error_emptyusername">[User Name] Required.</string>
     <string name="activityircserverconfig_java_error_emptynick">[Nick] Required.</string>
@@ -374,7 +374,7 @@
     <string name="pref_sys_action_alert_notify_title">OS Notification</string>
     <string name="pref_sys_action_alert_vibrate_summary">Vibrate the device</string>
     <string name="pref_sys_action_alert_vibrate_title">Vibration</string>
-    <string name="pref_sys_action_alert_ring_summary">Ring the device: You can set the voice file \"/sdcard/AiCiA/ring.ogg\" instead of system default</string>
+    <string name="pref_sys_action_alert_ring_summary">Ring the device: You can set the voice file \"\%s\" instead of system default</string>
     <string name="pref_sys_action_alert_ring_title">Ring</string>
     <string name="pref_sys_action_alert_summary">Specify when detected Notify Keywords in the line</string>
     <string name="pref_sys_action_alert_title">Notify Keywords</string>
@@ -458,4 +458,6 @@
     <string name="activitymain_java_error_saveconfig">Save Config Failed.</string>
     <string name="activitysystemconfig_not_granted_readexternalstorage">Not granted to read external storage.</string>
     <string name="activitysystemconfig_not_granted_writeexternalstorage">Not granted to write external storage.</string>
+	<string name="title_request_permission_notification">Request Permission</string>
+	<string name="msg_request_permission_notification">This app requires [Notification] permission.</string>
 </resources>

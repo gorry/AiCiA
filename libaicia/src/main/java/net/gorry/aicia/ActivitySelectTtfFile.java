@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import net.gorry.libaicia.BuildConfig;
 import net.gorry.libaicia.R;
 
 /**
@@ -27,10 +28,18 @@ import net.gorry.libaicia.R;
  *
  */
 public class ActivitySelectTtfFile extends ListActivity {
+	private static final boolean RELEASE = !BuildConfig.DEBUG;
 	private static final String TAG = "ActivitySelectTtfFile";
-	private static final boolean V = false;
-	private static final boolean D = false;
+	private static final boolean T = !RELEASE;
+	private static final boolean V = !RELEASE;
+	private static final boolean D = !RELEASE;
 	private static final boolean I = true;
+
+	private static String M() {
+		StackTraceElement[] es = new Exception().getStackTrace();
+		int count = 1; while (es[count].getMethodName().contains("$")) count++;
+		return es[count].getFileName()+"("+es[count].getLineNumber()+"): "+es[count].getMethodName()+"(): ";
+	}
 
 	private String mCurrentFolderName = "";
 	private File mCurDir;
@@ -46,10 +55,13 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 */
 	@Override
 	protected void onSaveInstanceState(final Bundle outState) {
-		if (I) Log.i(TAG, "onSaveInstanceState()");
+		if (T) Log.v(TAG, M()+"@in: outState="+outState);
+
 		outState.putString("mCurrentFolderName", mCurrentFolderName);
 		outState.putString("mCurrentFileName", mCurrentFileName);
 		outState.putString("mLastFolderName", mLastFolderName);
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 
 	/*
@@ -58,10 +70,13 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 */
 	@Override
 	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-		if (I) Log.i(TAG, "onRestoreInstanceState()");
+		if (T) Log.v(TAG, M()+"@in: savedInstanceState="+savedInstanceState);
+
 		mCurrentFolderName = savedInstanceState.getString("mCurrentFolderName");
 		mCurrentFileName = savedInstanceState.getString("mCurrentFileName");
 		mLastFolderName = savedInstanceState.getString("mLastFolderName");
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 
 	/**
@@ -69,15 +84,22 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 * @return 拡張子がマッチしたらtrue
 	 */
 	public FilenameFilter extNameFilter(final String ext) {
+		if (T) Log.v(TAG, M()+"@in: ext="+ext);
+
 		mExtFilenameFilter = new String(ext.toLowerCase());
 		return new FilenameFilter() {
 			public boolean accept(final File dir, final String name) {
+				if (T) Log.v(TAG, M()+"@in: dir="+dir+", name="+name);
+
+				boolean f = false;
 				final File file = new File(dir.getPath() + "/" + name);
-				if (file.isDirectory()) {
-					return false;
+				if (!file.isDirectory()) {
+					final String lname = name.toLowerCase();
+					f = lname.endsWith(mExtFilenameFilter);
 				}
-				final String lname = name.toLowerCase();
-				return lname.endsWith(mExtFilenameFilter);
+
+				if (T) Log.v(TAG, M()+"@out: f="+f);
+				return f;
 			}
 		};
 	}
@@ -86,9 +108,16 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 * @return エントリがdirならtrue
 	 */
 	public static FileFilter dirEntryFilter() {
+		if (T) Log.v(TAG, M()+"@in");
+
 		return new FileFilter() {
 			public boolean accept(final File file) {
-				return !(file.isFile());
+				if (T) Log.v(TAG, M()+"@in: file="+file);
+
+				boolean f = !(file.isFile());
+
+				if (T) Log.v(TAG, M()+"@out: f="+f);
+				return f;
 			}
 		};
 	}
@@ -107,6 +136,8 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 * @param uri uri
 	 */
 	public void setFileList(final Uri uri) {
+		if (T) Log.v(TAG, M()+"@in: uri="+uri);
+
 		// フォルダ一覧＋指定拡張子ファイル一覧
 		final String path = uri.getPath();
 		final int idx = path.lastIndexOf('/');
@@ -170,11 +201,13 @@ public class ActivitySelectTtfFile extends ListActivity {
 		if (curpos >= 0) {
 			getListView().setSelection(curpos);
 		}
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		if (I) Log.i(TAG, "onCreate()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onCreate(savedInstanceState);
 	}
 
@@ -184,7 +217,7 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 */
 	@Override
 	public void onRestart() {
-		if (I) Log.i(TAG, "onRestart()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onRestart();
 
 	}
@@ -195,7 +228,7 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 */
 	@Override
 	public void onStart() {
-		if (I) Log.i(TAG, "onStart()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onStart();
 	}
 
@@ -205,7 +238,7 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 */
 	@Override
 	public void onResume() {
-		if (I) Log.i(TAG, "onResume()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onResume();
 
 		// mSelected = false;
@@ -232,7 +265,7 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 */
 	@Override
 	public synchronized void onPause() {
-		if (I) Log.i(TAG, "onPause()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onPause();
 	}
 
@@ -242,27 +275,28 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 */
 	@Override
 	public void onStop() {
-		if (I) Log.i(TAG, "onStop()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onStop();
 	}
 
 	@Override
 	public void onDestroy() {
-		if (I) Log.i(TAG, "onDestroy()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onDestroy();
 	}
 
 	@Override
 	public void onContentChanged() {
-		if (I) Log.i(TAG, "onContentChanged");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onContentChanged();
 	}
 
 	@Override
-	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		if (I) Log.i(TAG, "onListItemClick");
-		final File file = mDirEntry[position];
-		if (I) Log.i(TAG, "Selected [" + file.getPath() + "]");
+	public void onListItemClick(final ListView l, final View v, final int pos, final long id) {
+		if (T) Log.v(TAG, M()+"@in: l="+l+", v="+v+", pos="+pos+", id="+id);
+
+		final File file = mDirEntry[pos];
+		if (T) Log.v(TAG, M()+"Selected [" + file.getPath() + "]");
 
 		if (file.isDirectory() || (file.getName().equals(".."))) {
 			Uri uri = Uri.parse("file://" + file.getPath() + "/");
@@ -282,6 +316,8 @@ public class ActivitySelectTtfFile extends ListActivity {
 			setResult(RESULT_OK, intent);
 			finish();
 		}
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 
 	/**
@@ -289,6 +325,8 @@ public class ActivitySelectTtfFile extends ListActivity {
 	 * @param uri Uri
 	 */
 	public void mySetTitle(final Uri uri) {
+		if (T) Log.v(TAG, M()+"@in: uri="+uri);
+
 		final String path = uri.getPath();
 		final int idx = path.lastIndexOf('/');
 		final String folder;
@@ -298,5 +336,7 @@ public class ActivitySelectTtfFile extends ListActivity {
 			folder = "/";
 		}
 		setTitle(folder + " " + getString(R.string.activityselectttffile_java_title));
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 }

@@ -20,10 +20,14 @@ import java.util.TreeMap;
 
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.Xml;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import net.gorry.libaicia.BuildConfig;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
@@ -33,10 +37,18 @@ import org.xmlpull.v1.XmlSerializer;
  *
  */
 public class MySharedPreferences {
-	private static final String TAG = "MySharedPreferences";
-	private static final boolean V = false;
-	private static final boolean D = false;
-	private static final boolean I = false;
+	private static final boolean RELEASE = !BuildConfig.DEBUG;
+	private static final String TAG = "AlarmManagerReceiver";
+	private static final boolean T = !RELEASE;
+	private static final boolean V = !RELEASE;
+	private static final boolean D = !RELEASE;
+	private static final boolean I = true;
+
+	private static String M() {
+		StackTraceElement[] es = new Exception().getStackTrace();
+		int count = 1; while (es[count].getMethodName().contains("$")) count++;
+		return es[count].getFileName()+"("+es[count].getLineNumber()+"): "+es[count].getMethodName()+"(): ";
+	}
 
 	private Context me;
 	private Activity myActivity;
@@ -53,21 +65,29 @@ public class MySharedPreferences {
 	 */
 	@SuppressWarnings("unchecked")
 	public MySharedPreferences(Context context, String name) {
-		if (I) Log.i(TAG, "MySharedPreferences(): name=[" + name + "]");
+		if (T) Log.v(TAG, M()+"@in: context="+context+", name=" + name);
+
 		me = context;
 		mFilename = name;
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 
 	static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 101;
 	static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 102;
 
 	public int checkReadPermission() {
+		if (T) Log.v(TAG, M()+"@in");
+
+		/*
 		int ret = ContextCompat.checkSelfPermission(myActivity, Manifest.permission.READ_EXTERNAL_STORAGE);
 		if (ret == PackageManager.PERMISSION_GRANTED) {
+			if (T) Log.v(TAG, M()+"@out: ret=0");
 			return 1;
 		}
 		if (ActivityCompat.shouldShowRequestPermissionRationale(myActivity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
 			Log.e(TAG, "checkReadPermission(): need permission READ_EXTERNAL_STORAGE");
+			if (T) Log.v(TAG, M()+"@out: ret=-1");
 			return -1;
 		}
 		ActivityCompat.requestPermissions(
@@ -75,16 +95,28 @@ public class MySharedPreferences {
 				new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
 				MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
 		);
+
+		if (T) Log.v(TAG, M()+"@out: ret=0");
 		return 0;
+		*/
+
+		// getExternalFilesDir()のアクセスだけになったので常にgranted
+		if (T) Log.v(TAG, M()+"@out: granted");
+		return 1;
 	}
 
 	public int checkWritePermission() {
+		if (T) Log.v(TAG, M()+"@in");
+
+		/*
 		int ret = ContextCompat.checkSelfPermission(myActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 		if (ret == PackageManager.PERMISSION_GRANTED) {
+			if (T) Log.v(TAG, M()+"@out: ret=0");
 			return 1;
 		}
 		if (ActivityCompat.shouldShowRequestPermissionRationale(myActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 			Log.e(TAG, "MySharedPreferences(): need permission WRITE_EXTERNAL_STORAGE");
+			if (T) Log.v(TAG, M()+"@out: ret=-1");
 			return -1;
 		}
 		ActivityCompat.requestPermissions(
@@ -92,21 +124,33 @@ public class MySharedPreferences {
 				new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
 				MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE
 		);
+
+		if (T) Log.v(TAG, M()+"@out: ret=0");
 		return 0;
+		*/
+
+		// getExternalFilesDir()のアクセスだけになったので常にgranted
+		if (T) Log.v(TAG, M()+"@out: granted");
+		return 1;
 	}
 
 	public int readSharedPreferences() {
+		if (T) Log.v(TAG, M()+"@in");
+
 		if (!mFilename.startsWith("/")) {
-			if (I) Log.i(TAG, "MySharedPreferences(): shared");
 			mShared = true;
 			int mode = ((Build.VERSION.SDK_INT >= 11) ? Context.MODE_MULTI_PROCESS : Context.MODE_PRIVATE);
 			mPref = me.getSharedPreferences(mFilename, mode);
 			mEditor = mPref.edit();
+
+			if (T) Log.v(TAG, M()+"@out: ret=1");
 			return 1;
 		}
 
 		int ret = checkReadPermission();
 		if (ret < 1) {
+
+			if (T) Log.v(TAG, M()+"@out: ret="+ret);
 			return ret;
 		}
 
@@ -140,6 +184,8 @@ public class MySharedPreferences {
         } catch (IOException e) {
 			e.printStackTrace();
         }
+
+		if (T) Log.v(TAG, M()+"@out: ret=1");
         return 1;
 	}
 
@@ -150,36 +196,38 @@ public class MySharedPreferences {
 	 * @return 処理成功ならtrue
 	 */
 	private final boolean readValueXml(Map<String, Object> map, XmlPullParser parser) throws XmlPullParserException, IOException {
-		if (I) Log.i(TAG, "readValueXml()");
+		if (T) Log.v(TAG, M()+"@in: map="+map+", parser="+parser);
+
 		Object obj = null;
 		final String valueName = parser.getAttributeValue(null, "name");
 		final String tagName = parser.getName();
 		int event;
 		boolean result = false;
 		
-		if (I) Log.i(TAG, "tagName=[" + tagName + "], valueName=[" + valueName + "]");
+		if (T) Log.v(TAG, M()+"tagName=[" + tagName + "], valueName=[" + valueName + "]");
 
 		if (tagName.equals("null")) {
 			result = true;
 		} else if (tagName.equals("map")) {
 			parser.next();
 			result = readMapXml(map, parser, valueName);
+			if (T) Log.v(TAG, M()+"@out: result="+result);
 			return (result);
 		} else if (tagName.equals("int")) {
 			String value = parser.getAttributeValue(null, "value");
-			if (I) Log.i(TAG, "value=[" + value + "]");
+			if (T) Log.v(TAG, M()+"value=[" + value + "]");
 			obj = Integer.parseInt(value);
 			map.put(valueName, obj);
 			result = true;
 		} else if (tagName.equals("boolean")) {
 			String value = parser.getAttributeValue(null, "value");
-			if (I) Log.i(TAG, "value=[" + value + "]");
+			if (T) Log.v(TAG, M()+"value=[" + value + "]");
 			obj = Boolean.valueOf(value);
 			map.put(valueName, obj);
 			result = true;
 		} else if (tagName.equals("string")) {
 			String value = "";
-			if (I) Log.i(TAG, "<string> start");
+			if (T) Log.v(TAG, M()+"<string> start");
 			while ((event = parser.next()) != XmlPullParser.END_DOCUMENT) {
 				if (event == XmlPullParser.START_TAG) {
 					String tag = parser.getName();
@@ -187,16 +235,17 @@ public class MySharedPreferences {
 				} else if (event == XmlPullParser.END_TAG) {
 					String tag = parser.getName();
 					if (tag.equals("string")) {
-						if (I) Log.i(TAG, "<string> close: value=[" + value + "]");
+						if (T) Log.v(TAG, M()+"<string> close: value=[" + value + "]");
 						obj = value;
 						map.put(valueName, obj);
 						result = true;
+						if (T) Log.v(TAG, M()+"@out: result="+result);
 						return (result);
 					}
 					throw new XmlPullParserException("<string> must be closed by </string>: </" + tag + ">");
 				} else if (event == XmlPullParser.TEXT) {
 					String content = parser.getText();
-					if (I) Log.i(TAG, "content=[" + content + "]");
+					if (T) Log.v(TAG, M()+"content=[" + content + "]");
 					value += content;
 				} else {
 					throw new XmlPullParserException("cannot parse in <string>: event " + event);
@@ -213,13 +262,14 @@ public class MySharedPreferences {
 			} else if (event == XmlPullParser.END_TAG) {
 				String tag = parser.getName();
 				if (tag.equals(tagName)) {
-					if (I) Log.i(TAG, "<" + tagName + "> close.");
+					if (T) Log.v(TAG, M()+"<" + tagName + "> close.");
+					if (T) Log.v(TAG, M()+"@out: result="+result);
 					return result;
 				}
 				throw new XmlPullParserException("<" + tagName + "> is closed by another tag:  </" + tag + ">");
 			} else if (event == XmlPullParser.TEXT) {
 				String content = parser.getText();
-				if (I) Log.i(TAG, "contains text [" + content + "]");
+				if (T) Log.v(TAG, M()+"contains text [" + content + "]");
 				// throw new XmlPullParserException("cannot contains text [" + content + "] in <" + tagName + ">");
 			} else {
 				throw new XmlPullParserException("cannot parse in <" + tagName + ">: event " + event);
@@ -237,7 +287,8 @@ public class MySharedPreferences {
 	 * @return 処理成功ならtrue
 	 */
 	private final boolean readMapXml(Map<String, Object> map, XmlPullParser parser, String tagName) throws XmlPullParserException, IOException {
-		if (I) Log.i(TAG, "readMapXml()");
+		if (T) Log.v(TAG, M()+"@in: map="+map+", parser="+parser+", tagName="+tagName);
+
 		TreeMap<String, Object> map2 = new TreeMap<String, Object>();
 		boolean result = false;
 		String tagName2 = (tagName == null) ? "" : tagName;
@@ -249,7 +300,7 @@ public class MySharedPreferences {
 			} else if (event == XmlPullParser.END_TAG) {
 				String tag = parser.getName();
 				if (tag.equals("map")) {
-					if (I) Log.i(TAG, "<map> close");
+					if (T) Log.v(TAG, M()+"<map> close");
 					Object obj = map2;
 					map.put(tagName2, obj);
 					result = true;
@@ -258,7 +309,7 @@ public class MySharedPreferences {
 				throw new XmlPullParserException("<map> must be closed by </map>: </" + tag + ">");
 			} else if (event == XmlPullParser.TEXT) {
 				String content = parser.getText();
-				if (I) Log.i(TAG, "contains text [" + content + "]");
+				if (T) Log.v(TAG, M()+"contains text [" + content + "]");
 				// throw new XmlPullParserException("cannot contains text [" + content + "] in <" + tagName + ">");
 			} else {
 				throw new XmlPullParserException("cannot parse in <map>: event " + event);
@@ -266,6 +317,7 @@ public class MySharedPreferences {
 			event = parser.next();
 		}
 
+		if (T) Log.v(TAG, M()+"@out: result="+result);
 		return result;
 	}
 
@@ -276,20 +328,20 @@ public class MySharedPreferences {
 	 * @return getInt
 	 */
 	public int getInt(String name, int def) {
-		if (I) Log.i(TAG, "getInt(): " + mFilename + ": name=[" + name + "], def=[" + def + "]");
+		if (T) Log.v(TAG, M()+"@in name="+name+", def="+def);
 		int value;
 		if (mShared) {
 			value = mPref.getInt(name, def);
-			if (I) Log.i(TAG, "getInt(): shared: return value=[" + value + "]");
+			if (T) Log.v(TAG, M()+"@out: shared: value=[" + value + "]");
 			return value;
 		}
 		if (mMap.containsKey(name)) {
 			value = (Integer)mMap.get(name);
 		} else {
-			if (I) Log.i(TAG, "getString(): not have key");
+			if (T) Log.v(TAG, M()+"not have key");
 			value = def;
 		}
-		if (I) Log.i(TAG, "getString(): return value=[" + value + "]");
+		if (T) Log.v(TAG, M()+"@out: value=[" + value + "]");
 		return value;
 	}
 
@@ -300,20 +352,20 @@ public class MySharedPreferences {
 	 * @return getInt
 	 */
 	public String getString(String name, String def) {
-		if (I) Log.i(TAG, "getString(): " + mFilename + ": name=[" + name + "], def=[" + def + "]");
+		if (T) Log.v(TAG, M()+"@in name="+name+", def="+def);
 		String value;
 		if (mShared) {
 			value = mPref.getString(name, def);
-			if (I) Log.i(TAG, "getString(): shared: return value=[" + value + "]");
+			if (T) Log.v(TAG, M()+"@out: shared: value=[" + value + "]");
 			return value;
 		}
 		if (mMap.containsKey(name)) {
 			value = (String)mMap.get(name);
 		} else {
-			if (I) Log.i(TAG, "getString(): not have key");
+			if (T) Log.v(TAG, M()+"not have key");
 			value = def;
 		}
-		if (I) Log.i(TAG, "getString(): return value=[" + value + "]");
+		if (T) Log.v(TAG, M()+"@out: value=[" + value + "]");
 		return value;
 	}
 
@@ -324,20 +376,20 @@ public class MySharedPreferences {
 	 * @return getInt
 	 */
 	public boolean getBoolean(String name, boolean def) {
-		if (I) Log.i(TAG, "getBoolean(): " + mFilename + ": name=[" + name + "], def=[" + def + "]");
+		if (T) Log.v(TAG, M()+"getBoolean(): " + mFilename + ": name=[" + name + "], def=[" + def + "]");
 		boolean value;
 		if (mShared) {
 			value = mPref.getBoolean(name, def);
-			if (I) Log.i(TAG, "getBoolean(): shared: return value=[" + value + "]");
+			if (T) Log.v(TAG, M()+"@out: shared: value=[" + value + "]");
 			return value;
 		}
 		if (mMap.containsKey(name)) {
 			value = (Boolean)mMap.get(name);
 		} else {
-			if (I) Log.i(TAG, "getBoolean(): not have key");
+			if (T) Log.v(TAG, M()+"not have key");
 			value = def;
 		}
-		if (I) Log.i(TAG, "getBoolean(): return value=[" + value + "]");
+		if (T) Log.v(TAG, M()+"@out: value=[" + value + "]");
 		return value;
 	}
 
@@ -352,14 +404,17 @@ public class MySharedPreferences {
 		 * @return this
 		 */
 		public MySharedPreferences.Editor clear() {
-			if (I) Log.i(TAG, "Editor.clear(): " + mFilename);
+			if (T) Log.v(TAG, M()+"@in");
+
 			if (mShared) {
-				if (I) Log.i(TAG, "Editor.clear(): shared");
+				if (T) Log.v(TAG, M()+"clear shared");
 				mEditor.clear();
 				return this;
 			}
 
 			mEditMap.clear();
+
+			if (T) Log.v(TAG, M()+"@out");
 			return this;
 		}
 
@@ -368,15 +423,18 @@ public class MySharedPreferences {
 		 * @return 成功ならtrue
 		 */
 		public int commit() {
-			if (I) Log.i(TAG, "Editor.commit(): " + mFilename);
+			if (T) Log.v(TAG, M()+"@in");
 
+			int ret = 0;
 			if (mShared) {
-				if (I) Log.i(TAG, "Editor.commit(): shared");
-				return (mEditor.commit() ? 1 : 0);
+				ret = (mEditor.commit() ? 1 : 0);
+				if (T) Log.v(TAG, M()+"@out: shared: ret="+ret);
+				return ret;
 			}
 
-			int ret = checkWritePermission();
+			ret = checkWritePermission();
 			if (ret < 1) {
+				if (T) Log.v(TAG, M()+"@out: ret="+ret);
 				return ret;
 			}
 
@@ -387,14 +445,15 @@ public class MySharedPreferences {
 				String parentDirPath = file.getParent();
 				file = new File(parentDirPath);
 				if (file.isDirectory()) {
-					if (I) Log.i(TAG, "parent Directory ["+parentDirPath+"] exists");
+					if (T) Log.v(TAG, M()+"parent Directory ["+parentDirPath+"] exists");
 				} else {
 					file.mkdirs();
 					if (!file.isDirectory()) {
 						Log.e(TAG, "cannot create Directory ["+parentDirPath+"]");
+						if (T) Log.v(TAG, M()+"@out: ret=0");
 						return 0;
 					}
-					if (I) Log.i(TAG, "parent Directory ["+parentDirPath+"] created");
+					if (T) Log.v(TAG, M()+"parent Directory ["+parentDirPath+"] created");
 				}
 
 				FileOutputStream ostream = new FileOutputStream(mFilename);
@@ -414,6 +473,7 @@ public class MySharedPreferences {
 				e.printStackTrace();
 	        }
 			
+			if (T) Log.v(TAG, M()+"@out: ret=1");
 	        return 1;
 		}
 
@@ -423,13 +483,15 @@ public class MySharedPreferences {
 		 * @return this
 		 */
 		public MySharedPreferences.Editor remove(String name) {
-			if (I) Log.i(TAG, "Editor.remove(): " + mFilename);
+			if (T) Log.v(TAG, M()+"@in: name="+name);
 			if (mShared) {
-				if (I) Log.i(TAG, "Editor.remove(): shared");
 				mEditor.remove(name);
+				if (T) Log.v(TAG, M()+"@out: shared");
 				return this;
 			}
 			mEditMap.remove(name);
+
+			if (T) Log.v(TAG, M()+"@out");
 			return this;
 		}
 
@@ -440,13 +502,14 @@ public class MySharedPreferences {
 		 * @return this
 		 */
 		public MySharedPreferences.Editor putInt(String name, int data) {
-			if (I) Log.i(TAG, "Editor.putInt(): " + mFilename + ": name=[" + name + "], data=[" + data + "]");
+			if (T) Log.v(TAG, M()+"@in: name=" + name + ", data=" + data);
 			if (mShared) {
-				if (I) Log.i(TAG, "Editor.putInt(): shared");
 				mEditor.putInt(name, data);
+				if (T) Log.v(TAG, M()+"@out: shared");
 				return this;
 			}
 			mEditMap.put(name, data);
+			if (T) Log.v(TAG, M()+"@out");
 			return this;
 		}
 
@@ -457,13 +520,14 @@ public class MySharedPreferences {
 		 * @return this
 		 */
 		public MySharedPreferences.Editor putString(String name, String data) {
-			if (I) Log.i(TAG, "Editor.putString(): " + mFilename + ": name=[" + name + "], data=[" + data + "]");
+			if (T) Log.v(TAG, M()+"@in: name=" + name + ", data=" + data);
 			if (mShared) {
-				if (I) Log.i(TAG, "Editor.putString(): shared");
 				mEditor.putString(name, data);
+				if (T) Log.v(TAG, M()+"@out: shared");
 				return this;
 			}
 			mEditMap.put(name, data);
+			if (T) Log.v(TAG, M()+"@out");
 			return this;
 		}
 
@@ -474,13 +538,14 @@ public class MySharedPreferences {
 		 * @return this
 		 */
 		public MySharedPreferences.Editor putBoolean(String name, boolean data) {
-			if (I) Log.i(TAG, "Editor.putBoolean(): " + mFilename + ": name=[" + name + "], data=[" + data + "]");
+			if (T) Log.v(TAG, M()+"@in: name=" + name + ", data=" + data);
 			if (mShared) {
-				if (I) Log.i(TAG, "Editor.putBoolean(): shared");
+				if (T) Log.v(TAG, M()+"@out: shared");
 				mEditor.putBoolean(name, data);
 				return this;
 			}
 			mEditMap.put(name, data);
+			if (T) Log.v(TAG, M()+"@out");
 			return this;
 		}
 	}
@@ -490,13 +555,14 @@ public class MySharedPreferences {
 	 * @return edit
 	 */
 	public Editor edit() {
-		if (I) Log.i(TAG, "Editor.edit(): " + mFilename);
+		if (T) Log.v(TAG, M()+"@in");
 		if (mShared) {
-			if (I) Log.i(TAG, "Editor.edit(): shared");
+			if (T) Log.v(TAG, M()+"@out: shared");
 			return new Editor();
 		}
 		mEditMap = new TreeMap<String, Object>();
 		mEditMap.putAll(mMap);
+		if (T) Log.v(TAG, M()+"@out");
 		return new Editor();
 	}
 
@@ -507,46 +573,50 @@ public class MySharedPreferences {
 	 * @return 書き込み成功時true
 	 */
 	private final boolean writeValueXml(String name, Object data, XmlSerializer writer) throws XmlPullParserException, IOException {
-		if (I) Log.i(TAG, "writeValueXml(): " + mFilename + ": name=[" + name + "], data=[" + data + "]");
+		if (T) Log.v(TAG, M()+"@in: name=" + name + ", data=" + data);
 		String typeStr = null;
 		if (data == null) {
-			if (I) Log.i(TAG, "writeValueXml(): write <null>");
+			if (T) Log.v(TAG, M()+"write <null>");
 			writer.startTag(null, "null");
 			if (name != null) {
 				writer.attribute(null, "name", name);
 			}
 			writer.endTag(null, "null");
+			if (T) Log.v(TAG, M()+"@out: true");
 			return true;
 		} else if (data instanceof String) {
-			if (I) Log.i(TAG, "writeValueXml(): write <string>");
+			if (T) Log.v(TAG, M()+"write <string>");
 			writer.startTag(null, "string");
 			if (name != null) {
 				writer.attribute(null, "name", name);
 			}
 			writer.text(data.toString());
 			writer.endTag(null, "string");
+			if (T) Log.v(TAG, M()+"@out: true");
 			return true;
 		} else if (data instanceof Map) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> map = (Map<String, Object>)data;
 			writeMapXml(name, map, writer);
+			if (T) Log.v(TAG, M()+"@out: true");
 			return true;
 		} else if (data instanceof Integer) {
 			typeStr = "int";
 		} else if (data instanceof Boolean) {
 			typeStr = "boolean";
 		} else {
-			if (I) Log.i(TAG, "writeValueXml(): unknown type");
+			if (T) Log.v(TAG, M()+"writeValueXml(): unknown type");
 			throw new RuntimeException("writeValueXml(): unknown type: name=[" + name + "], data=[" + data + "]");
 		}
 
-		if (I) Log.i(TAG, "writeValueXml(): write <" + typeStr + ">");
+		if (T) Log.v(TAG, M()+"write <" + typeStr + ">");
 		writer.startTag(null, typeStr);
 		if (name != null) {
 			writer.attribute(null, "name", name);
 		}
 		writer.attribute(null, "value", data.toString());
 		writer.endTag(null, typeStr);
+		if (T) Log.v(TAG, M()+"@out: true");
 		return true;
 	}
 
@@ -558,11 +628,12 @@ public class MySharedPreferences {
 	 * @return 書き込み成功時true
 	 */
 	private final boolean writeMapXml(String name, Map<String, Object> map, XmlSerializer writer) throws XmlPullParserException, IOException {
-		if (I) Log.i(TAG, "writeMapXml(): " + mFilename + ": name=[" + name + "]");
+		if (T) Log.v(TAG, M()+"@in: name=" + name);
 
 		if (map == null) {
 			writer.startTag(null, "null");
 			writer.endTag(null, "null");
+			if (T) Log.v(TAG, M()+"@out: true");
 			return true;
 		}
 
@@ -578,15 +649,20 @@ public class MySharedPreferences {
 			Map.Entry entry = (Map.Entry)i.next();
 			final String entryname = (String)entry.getKey();
 			final Object entrydata = entry.getValue();
-			if (I) Log.i(TAG, "writeMapXml(): map-key=[" + entryname + "]");
+			if (T) Log.v(TAG, M()+"map-key=[" + entryname + "]");
 			writeValueXml(entryname, entrydata, writer);
 		}
 		
 		writer.endTag(null, "map");
+		if (T) Log.v(TAG, M()+"@out: true");
 		return true;
 	}
 
 	public void setActivity(Activity a) {
+		if (T) Log.v(TAG, M()+"@in: activity="+a);
+
 		myActivity = a;
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 }

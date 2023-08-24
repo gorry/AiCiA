@@ -31,11 +31,12 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.os.SystemClock;
 import android.os.Vibrator;
-//import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.NotificationCompat;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
 
+import androidx.core.app.NotificationCompat;
+
+import net.gorry.libaicia.BuildConfig;
 import net.gorry.libaicia.R;
 
 /**
@@ -46,11 +47,12 @@ import net.gorry.libaicia.R;
  *
  */
 public class IRCService extends ForegroundService {
+	private static final boolean RELEASE = !BuildConfig.DEBUG;
 	private static final String TAG = "IRCService";
-	private static final boolean VV = false;
-	private static final boolean V = false;
-	private static final boolean D = false;
-	private static final boolean I = false;
+	private static final boolean T = !RELEASE;
+	private static final boolean V = !RELEASE;
+	private static final boolean D = !RELEASE;
+	private static final boolean I = true;
 
 	private static String M() {
 		StackTraceElement[] es = new Exception().getStackTrace();
@@ -82,6 +84,8 @@ public class IRCService extends ForegroundService {
 	private static final int NOTIFY_LOWMEMORY = 1;
 	private static final int NOTIFY_SERVER_MESSAGE = 10000;
 	private static final int NOTIFY_ALERT = 20000;
+
+	private static final String CHANNEL_AICIA="aicia_ch_1";
 
 	private IRCServerList ircServerList = null;
 	private Context me = null;
@@ -120,15 +124,8 @@ public class IRCService extends ForegroundService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		if (I) Log.i(TAG, M()+": start");
+		if (T) Log.v(TAG, M()+": start");
 		mNotificationManager = super.getNotificationManager();
-		if (Build.VERSION.SDK_INT >= 26) {
-			NotificationChannel nc = new NotificationChannel("aicia_ch_1", "AiCiA", NotificationManager.IMPORTANCE_DEFAULT);
-			nc.setLightColor(Color.WHITE);
-			nc.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-			nc.setDescription("AiCiA Description");
-			mNotificationManager.createNotificationChannel(nc);
-		}
 
 		SystemConfig.setContext(me);
 		SystemConfig.loadConfig();
@@ -144,18 +141,6 @@ public class IRCService extends ForegroundService {
 		}
 		 */
 
-		// startTimer();
-		if (!mSetAlarm) {
-			MyAlarmManager.setAlarmManager(this, new Runnable() {
-				public void run() {
-					if (I) Log.i(TAG, M()+": start: receive AlarmManager");
-					sendPingToMain();
-					if (I) Log.i(TAG, M()+": end");
-				}
-			});
-			mSetAlarm = true;
-		}
-
 		if (!mSetReceiverHome) {
 			IntentFilter iFilter = new IntentFilter();
 			iFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
@@ -165,7 +150,7 @@ public class IRCService extends ForegroundService {
 
 		loadRingSound();
 
-		if (I) Log.i(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 	}
 
 	/*
@@ -174,13 +159,70 @@ public class IRCService extends ForegroundService {
 	 */
 	@Override
 	public int onStartCommand(final Intent intent, final int flags, final int startId) {
-		if (I) Log.i(TAG, M()+": start: intent=["+intent+"], flags="+flags+", startId="+startId);
+		if (T) Log.v(TAG, M()+": start: intent=["+intent+"], flags="+flags+", startId="+startId);
 		if (intent != null) {
 			final Bundle extras = intent.getExtras();
 			if (extras != null) {
 				mDonate = (extras.getBoolean("donate"));
 			}
 		}
+
+		setupNotification();
+
+		SystemConfig.setContext(me);
+		SystemConfig.loadConfig();
+
+		if (ircServerList == null) {
+			ircServerList = new IRCServerList(me, true);
+			ircServerList.addEventListener(new IRCServerListListener());
+			ircServerList.reloadList();
+			ircServerList.restoreServerIsConnectedFlag();
+		}
+		
+		return START_REDELIVER_INTENT;
+	}
+
+	private void sendPingToMain() {
+		if (T) Log.v(TAG, M()+": start");
+		
+		// ActivityMainにKeepalive Pingを送る
+		final Intent intent2 = new Intent(ACTION);
+		intent2.putExtra("msg", IRCService.PING_PONG);
+		sendBroadcast(intent2);
+		if (T) Log.v(TAG, M()+": end");
+	}
+
+	/**
+	 * HOMEボタン押下を受け取るレシーバ
+	 */
+	public class HomeReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (T) Log.v(TAG, M()+": start: receive HomeReceiver");
+			sendPingToMain();
+			if (T) Log.v(TAG, M()+": end");
+		}
+	}
+
+
+
+	private void setupNotification() {
+		if (T) Log.v(TAG, M()+"@in");
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+			NotificationChannel channel = new NotificationChannel(
+				CHANNEL_AICIA,
+				"AICIA",
+				NotificationManager.IMPORTANCE_DEFAULT
+			);
+			channel.enableLights(true);
+			channel.setLightColor(Color.WHITE);
+			channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+			manager.createNotificationChannel(channel);
+		}
+
 		SharedPreferences pref = getApplicationContext().getSharedPreferences("ircservice", 0);
 		final boolean killedByLowMemory = pref.getBoolean("killedbylowmemory", false);
 		if (killedByLowMemory) {
@@ -188,7 +230,7 @@ public class IRCService extends ForegroundService {
 				// ここで例外発生により落ちる事例がいくつかあるので防止。原因不明
 				startForegroundCompat(
 						showNotification(
-								"Restart", 
+								"Restart",
 								(mDonate ? "AiCiA (DONATED)" : "AiCiA"),
 								getString(R.string.ircservice_java_restartircservicebylowmemory),
 								R.drawable.icon_normal,
@@ -199,7 +241,7 @@ public class IRCService extends ForegroundService {
 						)
 				);
 			} catch (final Exception e) {
-				// e.printStackTrace();
+				e.printStackTrace();
 			}
 			final SharedPreferences.Editor editor = pref.edit();
 			editor.putBoolean("killedbylowmemory", false);
@@ -220,48 +262,34 @@ public class IRCService extends ForegroundService {
 						)
 				);
 			} catch (final Exception e) {
-				// e.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 		clearNotification(NOTIFY_LOWMEMORY);
 		pref = null;
 
-		SystemConfig.setContext(me);
-		SystemConfig.loadConfig();
-
-		if (ircServerList == null) {
-			ircServerList = new IRCServerList(me, true);
-			ircServerList.addEventListener(new IRCServerListListener());
-			ircServerList.reloadList();
-			ircServerList.restoreServerIsConnectedFlag();
+		// startTimer();
+		if (!mSetAlarm) {
+			MyAlarmManager.setAlarmManager(this,new Runnable() {
+				@Override
+				public void run() {
+					if (D) Log.d(TAG, "sendPing()");
+					// ActivityMainにKeepalive Pingを送る
+					final Intent intent2 = new Intent(ACTION);
+					intent2.putExtra("msg", IRCService.PING_PONG);
+					sendBroadcast(intent2);
+				}
+			});
+			mSetAlarm = true;
 		}
-		
-		return START_REDELIVER_INTENT;
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 
-	private void sendPingToMain() {
-		if (I) Log.i(TAG, M()+": start");
-		
-		// ActivityMainにKeepalive Pingを送る
-		final Intent intent2 = new Intent(ACTION);
-		intent2.putExtra("msg", IRCService.PING_PONG);
-		sendBroadcast(intent2);
-		if (I) Log.i(TAG, M()+": end");
-	}
 
-	/**
-	 * HOMEボタン押下を受け取るレシーバ
-	 */
-	public class HomeReceiver extends BroadcastReceiver {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if (I) Log.i(TAG, M()+": start: receive HomeReceiver");
-			sendPingToMain();
-			if (I) Log.i(TAG, M()+": end");
-		}
-	}
 
-	
+
+
 	/*
 	 * 破棄
 	 * @see android.app.Service#onDestroy()
@@ -270,7 +298,7 @@ public class IRCService extends ForegroundService {
 	public void onDestroy() {
 		super.onDestroy();
 
-		if (I) Log.i(TAG, M()+": start");
+		if (T) Log.v(TAG, M()+": start");
 		showNotification(
 				"End", 
 				(mDonate ? "AiCiA (DONATED)" : "AiCiA"),
@@ -301,7 +329,7 @@ public class IRCService extends ForegroundService {
 		mSetAlarm = false;
 		ircServerList.dispose();
 		ircServerList = null;
-		if (I) Log.i(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 		System.exit(0);
 	}
 
@@ -312,7 +340,7 @@ public class IRCService extends ForegroundService {
 	 */
 	@Override
 	public IBinder onBind(final Intent intent) {
-		if (I) Log.i(TAG, M()+": start: intent=["+intent+"]");
+		if (T) Log.v(TAG, M()+": start: intent=["+intent+"]");
 //		me = this;
 		final Bundle extras = intent.getExtras();
 		if (extras != null) {
@@ -334,7 +362,7 @@ public class IRCService extends ForegroundService {
 		if (!mDonate) {
 			if (!mPrintDonate) {
 				mPrintDonate = true;
-				ircServerList.echoMessageToOther("You can select [AiCiA Donate Version]: https://market.android.com/details?id=net.gorry.aicia_donate");
+				ircServerList.echoMessageToOther("You can select [AiCiA Donate Version]: https://play.google.com/store/apps/details?id=net.gorry.aicia_donate");
 			}
 		}
 
@@ -342,7 +370,7 @@ public class IRCService extends ForegroundService {
 			return null;
 		}
 
-		if (I) Log.i(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 		return ircServiceIf;
 	}
 
@@ -352,8 +380,8 @@ public class IRCService extends ForegroundService {
 	 */
 	@Override
 	public void onRebind(final Intent intent) {
-		if (I) Log.i(TAG, M()+": start");
-		if (I) Log.i(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": start");
+		if (T) Log.v(TAG, M()+": end");
 	}
 
 	/*
@@ -362,14 +390,14 @@ public class IRCService extends ForegroundService {
 	 */
 	@Override
 	public boolean onUnbind(final Intent intent) {
-		if (I) Log.i(TAG, M()+": start");
-		if (I) Log.i(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": start");
+		if (T) Log.v(TAG, M()+": end");
 		return true;
 	}
 
 	@Override
 	public void onLowMemory() {
-		if (I) Log.i(TAG, M()+": start");
+		if (T) Log.v(TAG, M()+": start");
 		showNotification(
 				"Low Memory", 
 				(mDonate ? "AiCiA (DONATED)" : "AiCiA"),
@@ -385,13 +413,13 @@ public class IRCService extends ForegroundService {
 		editor.putBoolean("killedbylowmemory", true);
 		editor.commit();
 		pref = null;
-		if (I) Log.i(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 	}
 
 	@Override
 	public void onTrimMemory(int level) {
-		if (I) Log.i(TAG, M()+": start: level="+level);
-		if (I) Log.i(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": start: level="+level);
+		if (T) Log.v(TAG, M()+": end");
 	}
 
 	//
@@ -400,8 +428,7 @@ public class IRCService extends ForegroundService {
 	 */
 	private class IRCServerListListener implements IRCServerListEventListener {
 		public void receiveMessageToChannel(final String serverName, final String channel, final String nick, final String dateMsg, final SpannableStringBuilder ssb, final SpannableStringBuilder ssbOther, final boolean toSublog, final boolean alert) {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], nick=["+nick+"], dateMsg=["+dateMsg+"], ssb=["+ssb+"]");
-			if (I) Log.i(TAG, M()+": "+dateMsg+" "+ssb);
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], nick=["+nick+"], dateMsg=["+dateMsg+"], ssb=["+ssb+"]");
 			if (alert) {
 				doAlert(serverName, channel, dateMsg, nick, ssb);
 			}
@@ -424,11 +451,11 @@ public class IRCService extends ForegroundService {
 			intent.putExtra("serverid", serverId);
 			intent.putExtra("channelid", channelId);
 			sendBroadcast(intent);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void createServer(final String serverName, final String dateMsg) {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], dateMsg=["+dateMsg+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], dateMsg=["+dateMsg+"]");
 			if (I) Log.i(TAG, M()+": "+dateMsg+" Create Server ["+serverName+"]");
 			ircServerList.setCurrentServerName(serverName);
 			final Intent intent = new Intent(ACTION);
@@ -436,21 +463,21 @@ public class IRCService extends ForegroundService {
 			intent.putExtra("server", serverName);
 			intent.putExtra("date", dateMsg);
 			sendBroadcast(intent);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void removeServer(final String serverName, final String dateMsg) {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], dateMsg=["+dateMsg+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], dateMsg=["+dateMsg+"]");
 			final Intent intent = new Intent(ACTION);
 			intent.putExtra("msg", IRCService.REMOVE_SERVER);
 			intent.putExtra("server", serverName);
 			intent.putExtra("date", dateMsg);
 			sendBroadcast(intent);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void createChannel(final String serverName, final String channel, final String dateMsg) {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], dateMsg=["+dateMsg+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], dateMsg=["+dateMsg+"]");
 			if (I) Log.i(TAG, M()+": "+dateMsg+" Create Channel ["+channel+"] on Server ["+serverName+"]");
 			ircServerList.setCurrentServerName(serverName);
 			ircServerList.setCurrentChannel(serverName, channel);
@@ -460,22 +487,22 @@ public class IRCService extends ForegroundService {
 			intent.putExtra("channel", channel);
 			intent.putExtra("date", dateMsg);
 			sendBroadcast(intent);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void removeChannel(final String serverName, final String channel, final String dateMsg) {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], dateMsg=["+dateMsg+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], dateMsg=["+dateMsg+"]");
 			final Intent intent = new Intent(ACTION);
 			intent.putExtra("msg", IRCService.REMOVE_CHANNEL);
 			intent.putExtra("server", serverName);
 			intent.putExtra("channel", channel);
 			intent.putExtra("date", dateMsg);
 			sendBroadcast(intent);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void changeNick(final String serverName, final String oldNick, final String newNick, final String dateMsg) {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], oldNick=["+oldNick+"], newNick=["+newNick+"], dateMsg=["+dateMsg+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], oldNick=["+oldNick+"], newNick=["+newNick+"], dateMsg=["+dateMsg+"]");
 			if (I) Log.i(TAG, "changeNick()");
 			final Intent intent = new Intent(ACTION);
 			intent.putExtra("msg", IRCService.CHANGE_NICK);
@@ -484,11 +511,11 @@ public class IRCService extends ForegroundService {
 			intent.putExtra("newnick", newNick);
 			intent.putExtra("date", dateMsg);
 			sendBroadcast(intent);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void changeTopic(final String serverName, final String channel, final String topic, final String dateMsg) {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], topic=["+topic+"], dateMsg=["+dateMsg+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], topic=["+topic+"], dateMsg=["+dateMsg+"]");
 			final Intent intent = new Intent(ACTION);
 			intent.putExtra("msg", IRCService.CHANGE_TOPIC);
 			intent.putExtra("server", serverName);
@@ -496,11 +523,11 @@ public class IRCService extends ForegroundService {
 			intent.putExtra("topic", topic);
 			intent.putExtra("date", dateMsg);
 			sendBroadcast(intent);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void receiveConnect(final String serverName) {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			if (D) ircServerList.echoMessageToChannel(serverName, IRCMsg.sSystemChannelName, "receiveConnect()");
 			if (SystemConfig.showServerIcon) {
 				showNotification("Connect " + serverName, 
@@ -513,11 +540,11 @@ public class IRCService extends ForegroundService {
 						null
 				);
 			}
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void receiveDisconnect(final String serverName) {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			if (D) ircServerList.echoMessageToChannel(serverName, IRCMsg.sSystemChannelName, "receiveDisconnect()");
 			if (SystemConfig.showServerIcon) {
 				showNotification("Disconnect " + serverName,
@@ -533,7 +560,7 @@ public class IRCService extends ForegroundService {
 			if (ircServerList.getNeedReconnect(serverName)) {
 				ircServerList.echoMessageToChannel(serverName, IRCMsg.sSystemChannelName, "Wait " + SystemConfig.autoReconnectWaitSec + " seconds for retry.");
 			}
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 	}
 
@@ -545,7 +572,7 @@ public class IRCService extends ForegroundService {
 	 * @param id ID
 	 */
 	private Notification showNotification(final String ticker, final String title, final String message, final int icon, final int flag, final int id, final String serverName, final String channel) {
-		if (VV) Log.v(TAG, M()+": start: id="+id+", ticker="+ticker+", title="+title+", message="+message);
+		if (T) Log.v(TAG, M()+": start: id="+id+", ticker="+ticker+", title="+title+", message="+message);
 		final Intent intent = new Intent(this, net.gorry.aicia.ActivityMain.class);
 		if (id == NOTIFY_SYSTEM) {
 			//
@@ -583,7 +610,7 @@ public class IRCService extends ForegroundService {
 		return notification;
 		*/
 
-		PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE|PendingIntent.FLAG_UPDATE_CURRENT);
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(me);
 		builder.setContentIntent(pi);
 		builder.setTicker(ticker);
@@ -595,11 +622,19 @@ public class IRCService extends ForegroundService {
 		// builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS);
 		builder.setAutoCancel(true);
 
+		if ((flag & Notification.FLAG_ONGOING_EVENT) != 0) {
+			builder.setOngoing(true);
+		}
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			builder.setChannelId(CHANNEL_AICIA);
+		}
+
 		mNotificationManager.cancel(id);
 		final Notification notification = builder.build();
 		mNotificationManager.notify(id, notification);
 
-		if (VV) Log.v(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 		return notification;
 	}
 
@@ -608,18 +643,18 @@ public class IRCService extends ForegroundService {
 	 * @param id ID
 	 */
 	private void clearNotification(final int id) {
-		if (VV) Log.v(TAG, M()+": start: id="+id);
+		if (T) Log.v(TAG, M()+": start: id="+id);
 		mNotificationManager.cancel(id);
-		if (VV) Log.v(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 	}
 
 	/**
 	 * 通知表示の全消去
 	 */
 	private void clearNotificationAll() {
-		if (VV) Log.v(TAG, M()+": start");
+		if (T) Log.v(TAG, M()+": start");
 		mNotificationManager.cancelAll();
-		if (VV) Log.v(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 	}
 
 	/**
@@ -631,7 +666,7 @@ public class IRCService extends ForegroundService {
 	 * @return
 	 */
 	private int getFlatServerChannelList(final ArrayList<String> flatServerName, final ArrayList<String> flatChannel, final ArrayList<Boolean> flatChannelUpdated, final ArrayList<Boolean> flatChannelAlerted ) {
-		if (VV) Log.v(TAG, M()+": start");
+		if (T) Log.v(TAG, M()+": start");
 		int noFlat = 0;
 		int select = -1;
 		final String currentServerName = ircServerList.getCurrentServerName();
@@ -655,7 +690,7 @@ public class IRCService extends ForegroundService {
 				noFlat++;
 			}
 		}
-		if (VV) Log.v(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 		return select;
 	}
 
@@ -664,39 +699,39 @@ public class IRCService extends ForegroundService {
 	 */
 	private final IIRCService.Stub ircServiceIf = new IIRCService.Stub() {
 		public void shutdown() {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			if (I) Log.i(TAG, M()+" API SHUTDOWN");
 			mSetReceiverHome = false;
 			MyAlarmManager.resetAlarmManager(me);
 			mSetAlarm = false;
 			ircServerList.closeAll();
 			stopSelf();
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void reloadSystemConfig() {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			SystemConfig.loadConfig();
 
 			loadRingSound();
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public CharSequence getSpanChannelLog(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			CharSequence s = ircServerList.getSpanChannelLog(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public void clearChannelLog(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			ircServerList.clearChannelLog(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void clearAllChannelLog() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			final int num = ircServerList.getNumServers();
 			for (int i=0; i<num; i++) {
 				final String serverName = ircServerList.getServerName(i);
@@ -704,120 +739,120 @@ public class IRCService extends ForegroundService {
 			}
 			ircServerList.clearAllChannelLog(IRCMsg.sOtherChannelName);
 			ircServerList.echoMessageToOther("Sub-log was cleared.");
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void reloadChannelConfig(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			ircServerList.getServer(serverName).loadChannelConfig(channel);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public String getNick(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			String s = ircServerList.getNick(serverName);
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public String getTopic(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			String s = ircServerList.getTopic(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public void sendCommandLine(final String serverName, final String channel, final String message) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
 			ircServerList.sendCommandLine(serverName, channel, message);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void sendMessageToChannel(final String serverName, final String channel, final String message) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
 			ircServerList.sendMessageToChannel(serverName, channel, message);
 			pushInputHistory(message);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void sendQuietCommandLine(final String serverName, final String channel, final String message) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
 			ircServerList.sendQuietCommandLine(serverName, channel, message);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void sendQuietMessageToChannel(final String serverName, final String channel, final String message) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
 			ircServerList.sendQuietMessageToChannel(serverName, channel, message);
 			pushInputHistory(message);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void sendNoticeToChannel(final String serverName, final String channel, final String message) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
 			ircServerList.sendNoticeToChannel(serverName, channel, message);
 			pushInputHistory(message);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void echoMessageToChannel(final String serverName, final String channel, final String message) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], message=["+message+"]");
 			ircServerList.echoMessageToChannel(serverName, channel, message);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void connectServer(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			if (I) Log.i(TAG, "connectServer(): serverName="+serverName);
 			ircServerList.connectServer(serverName);
 			ircServerList.saveServerIsConnectedFlag();
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void disconnectServer(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			ircServerList.disconnectServer(serverName);
 			ircServerList.saveServerIsConnectedFlag();
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void closeServer(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			ircServerList.closeServer(serverName);
 			ircServerList.saveServerIsConnectedFlag();
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public int connectAuto() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			int ret = ircServerList.connectAuto();
 			ircServerList.saveServerIsConnectedFlag();
-			if (VV) Log.v(TAG, M()+": end: ret="+ret);
+			if (T) Log.v(TAG, M()+": end: ret="+ret);
 			return ret;
 		}
 
 		public void disconnectAll() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			ircServerList.disconnectAll();
 			ircServerList.saveServerIsConnectedFlag();
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void closeAll() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			ircServerList.closeAll();
 			ircServerList.saveServerIsConnectedFlag();
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void reloadList() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			ircServerList.reloadList();
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public synchronized void addNewServer() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			final int num = ircServerList.getNumServers();
 			final IRCServerConfig config = new IRCServerConfig(me);
 			config.loadConfig(num);
@@ -832,11 +867,11 @@ public class IRCService extends ForegroundService {
 			} catch (final InterruptedException e) {
 				e.printStackTrace();
 			}
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void reloadServerConfig(final int serverId) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverId="+serverId);
+			if (T) Log.v(TAG, M()+": start: serverId="+serverId);
 			ircServerList.reloadServerConfig(serverId);
 			final String serverName = ircServerList.getServerName(serverId);
 			if (SystemConfig.showServerIcon) {
@@ -850,11 +885,11 @@ public class IRCService extends ForegroundService {
 						null
 				);
 			}
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public synchronized void removeServer(final int serverId) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverId="+serverId);
+			if (T) Log.v(TAG, M()+": start: serverId="+serverId);
 			final CountDownLatch signal = new CountDownLatch(1);
 			final Runnable remover = new Runnable(){ public void run() {
 				ircServerList.removeServer(serverId);
@@ -866,130 +901,130 @@ public class IRCService extends ForegroundService {
 			} catch (final InterruptedException e) {
 				e.printStackTrace();
 			}
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void setCurrentServerName(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			ircServerList.setCurrentServerName(serverName);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public String getCurrentServerName() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			String s = ircServerList.getCurrentServerName();
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public void setCurrentChannel(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			ircServerList.setCurrentChannel(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public String getCurrentChannel(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			String s = ircServerList.getCurrentChannel(serverName);
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public String[] getServerList() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			String[] s = ircServerList.getServerList();
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public String[] getChannelList(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			String[] s = ircServerList.getChannelList(serverName);
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public boolean[] getChannelUpdatedList(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			final Boolean[] b1 = ircServerList.getChannelUpdatedList(serverName);
 			final int num = b1.length;
 			final boolean[] b2 = new boolean[num];
 			for (int i=0; i<num; i++) {
 				b2[i] = b1[i];
 			}
-			if (VV) Log.v(TAG, M()+": end: b2=["+b2+"]");
+			if (T) Log.v(TAG, M()+": end: b2=["+b2+"]");
 			return b2;
 		}
 
 		public boolean getChannelUpdated(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			boolean b = ircServerList.getChannelUpdated(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end: b="+b);
+			if (T) Log.v(TAG, M()+": end: b="+b);
 			return b;
 		}
 
 		public void clearChannelUpdated(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			ircServerList.clearChannelUpdated(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void clearChannelUpdatedAll() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			for (int i=0; i<ircServerList.getNumServers(); i++) {
 				final IRCServer ircServer = ircServerList.getServer(i);
 				for (int j=0; j<ircServer.getNumChannels(); j++) {
 					ircServer.clearChannelUpdated(j);
 				}
 			}
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public boolean[] getChannelAlertedList(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			final Boolean[] b1 = ircServerList.getChannelAlertedList(serverName);
 			final int num = b1.length;
 			final boolean[] b2 = new boolean[num];
 			for (int i=0; i<num; i++) {
 				b2[i] = b1[i];
 			}
-			if (VV) Log.v(TAG, M()+": end: b2=["+b2+"]");
+			if (T) Log.v(TAG, M()+": end: b2=["+b2+"]");
 			return b2;
 		}
 
 		public boolean getChannelAlerted(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			boolean b =ircServerList.getChannelAlerted(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end: b="+b);
+			if (T) Log.v(TAG, M()+": end: b="+b);
 			return b;
 		}
 
 		public void clearChannelAlerted(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			ircServerList.clearChannelAlerted(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void clearChannelAlertedAll() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			for (int i=0; i<ircServerList.getNumServers(); i++) {
 				final IRCServer ircServer = ircServerList.getServer(i);
 				for (int j=0; j<ircServer.getNumChannels(); j++) {
 					ircServer.clearChannelAlerted(j);
 				}
 			}
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public String[] getUserList(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			String[] s = ircServerList.getUserList(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public boolean changeNextChannel(final int dir, final int mode) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: dir="+dir+", mode="+mode);
+			if (T) Log.v(TAG, M()+": start: dir="+dir+", mode="+mode);
 			final ArrayList<String> flatServerName = new ArrayList<String>();
 			final ArrayList<String> flatChannel = new ArrayList<String>();
 			final ArrayList<Boolean> flatChannelUpdated = new ArrayList<Boolean>();
@@ -1015,132 +1050,132 @@ public class IRCService extends ForegroundService {
 			if (newId == currentId) return false;
 			ircServerList.setCurrentServerName(flatServerName.get(newId));
 			ircServerList.setCurrentChannel(flatServerName.get(newId), flatChannel.get(newId));
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 			return true;
 		}
 
 		public void joinChannel(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			ircServerList.joinChannel(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void joinChannels(final String serverName, final String channels) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channels=["+channels+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channels=["+channels+"]");
 			ircServerList.joinChannels(serverName, channels);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void partChannel(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			ircServerList.joinChannel(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public void saveInputBox(final String input, final int selStart, final int selEnd) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: input=["+input+"], selStart="+selStart+", selEnd="+selEnd);
+			if (T) Log.v(TAG, M()+": start: input=["+input+"], selStart="+selStart+", selEnd="+selEnd);
 			mInputBox = new String(input);
 			mInputBoxSelStart = selStart;
 			mInputBoxSelEnd = selEnd;
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public String loadInputBox() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			String s = new String(mInputBox);
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public int loadInputBoxSelStart() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			int ret = mInputBoxSelStart;
-			if (VV) Log.v(TAG, M()+": end: ret="+ret);
+			if (T) Log.v(TAG, M()+": end: ret="+ret);
 			return ret;
 		}
 
 		public int loadInputBoxSelEnd() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			int ret = mInputBoxSelEnd;
-			if (VV) Log.v(TAG, M()+": end: ret="+ret);
+			if (T) Log.v(TAG, M()+": end: ret="+ret);
 			return ret;
 		}
 
 		public void receivePong() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public boolean isTIGMode(final String serverName) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"]");
 			boolean b = ircServerList.isTIGMode(serverName);
-			if (VV) Log.v(TAG, M()+": end: b="+b);
+			if (T) Log.v(TAG, M()+": end: b="+b);
 			return b;
 		}
 
 		public void clearLowMemoryNotification() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			clearNotification(NOTIFY_LOWMEMORY);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public String getVersionString() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			String s = SystemConfig.getVersionString();
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public boolean isPutOnSublog(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			boolean b = ircServerList.isPutOnSublog(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end: b="+b);
+			if (T) Log.v(TAG, M()+": end: b="+b);
 			return b;
 		}
 
 		public boolean isPutOnSublogAll(final String serverName, final String channel) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
+			if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"]");
 			boolean b = ircServerList.isPutOnSublogAll(serverName, channel);
-			if (VV) Log.v(TAG, M()+": end: b="+b);
+			if (T) Log.v(TAG, M()+": end: b="+b);
 			return b;
 		}
 
 		public String getInputHistory(final int pos) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: pos="+pos);
+			if (T) Log.v(TAG, M()+": start: pos="+pos);
 			String s = getInputHistoryMessage(pos);
-			if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+			if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 			return s;
 		}
 
 		public void pushInputHistory(final String message) throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start: message=["+message+"]");
+			if (T) Log.v(TAG, M()+": start: message=["+message+"]");
 			pushInputHistoryMessage(message);
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 		public boolean haveTIGModeInConnectedServers() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			for (int i=0; i<ircServerList.getNumServers(); i++) {
 				final IRCServer ircServer = ircServerList.getServer(i);
 				if (ircServer.isTIGMode()) {
 					if (ircServer.isConnected()) {
-						if (VV) Log.v(TAG, M()+": end: ret=true");
+						if (T) Log.v(TAG, M()+": end: ret=true");
 						return true;
 					}
 					if (ircServer.isTimerEnabled()) {
-						if (VV) Log.v(TAG, M()+": end: ret=true");
+						if (T) Log.v(TAG, M()+": end: ret=true");
 						return true;
 					}
 				}
 			}
-			if (VV) Log.v(TAG, M()+": end: ret=false");
+			if (T) Log.v(TAG, M()+": end: ret=false");
 			return false;
 		}
 
 		public void clearNotify() throws RemoteException {
-			if (VV) Log.v(TAG, M()+": start");
+			if (T) Log.v(TAG, M()+": start");
 			clearNotificationAll();
-			if (VV) Log.v(TAG, M()+": end");
+			if (T) Log.v(TAG, M()+": end");
 		}
 
 	};
@@ -1149,14 +1184,15 @@ public class IRCService extends ForegroundService {
 	 * アラート処理
 	 */
 	private void doAlert(final String serverName, final String channel, final String date, final String nick, final SpannableStringBuilder ssb) {
-		if (VV) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], date=["+date+"], nick=["+nick+"], ssb=["+ssb+"]");
+		if (T) Log.v(TAG, M()+": start: serverName=["+serverName+"], channel=["+channel+"], date=["+date+"], nick=["+nick+"], ssb=["+ssb+"]");
 
 		if (SystemConfig.notifyOnAlert && ircServerList.isAlertNotify(serverName, channel)) {
 			SharedPreferences pref = getApplicationContext().getSharedPreferences("ircservice", 0);
 			int notifyAlertCount = pref.getInt("notifyalertcount", 0);
+			String str = String.format(me.getString(R.string.ircservice_java_alert_title), nick, channel, serverName);
 
 			showNotification(
-					String.format(me.getString(R.string.ircservice_java_alert_title), nick, channel, serverName),
+					str,
 					"<"+channel+"> "+serverName + " / " + (mDonate ? "AiCiA (DONATED)" : "AiCiA"),
 					String.format(me.getString(R.string.ircservice_java_alert), date, nick, ssb),
 					R.drawable.iconexc,
@@ -1217,14 +1253,14 @@ public class IRCService extends ForegroundService {
 				//
 			}
 		}
-		if (VV) Log.v(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 	}
 
 	/**
 	 * 通知音の読み込み
 	 */
 	private void loadRingSound() {
-		if (VV) Log.v(TAG, M()+": start");
+		if (T) Log.v(TAG, M()+": start");
 		try {
 			if (mSoundPool != null) {
 				mSoundPool.release();
@@ -1245,7 +1281,7 @@ public class IRCService extends ForegroundService {
 		} catch (final Exception ex) {
 			//
 		}
-		if (VV) Log.v(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 	}
 
 	/**
@@ -1253,9 +1289,9 @@ public class IRCService extends ForegroundService {
 	 * @param message 入力メッセージ
 	 */
 	private void pushInputHistoryMessage(String message) {
-		if (VV) Log.v(TAG, M()+": start: message=["+message+"]");
+		if (T) Log.v(TAG, M()+": start: message=["+message+"]");
 		if ((message == null) || message.equals("")) {
-			if (VV) Log.v(TAG, M()+": end: empty");
+			if (T) Log.v(TAG, M()+": end: empty");
 			return;
 		}
 		for (int i=0; i<mInputHistory.size(); i++) {
@@ -1268,7 +1304,7 @@ public class IRCService extends ForegroundService {
 		if (mInputHistory.size() > mInputHistorySize) {
 			mInputHistory.remove(0);
 		}
-		if (VV) Log.v(TAG, M()+": end");
+		if (T) Log.v(TAG, M()+": end");
 	}
 
 	/**
@@ -1277,13 +1313,13 @@ public class IRCService extends ForegroundService {
 	 * @return 履歴内容
 	 */
 	private String getInputHistoryMessage(int pos) {
-		if (VV) Log.v(TAG, M()+": start: pos="+pos);
+		if (T) Log.v(TAG, M()+": start: pos="+pos);
 		if (pos >= mInputHistory.size()) {
-			if (VV) Log.v(TAG, M()+": end: null");
+			if (T) Log.v(TAG, M()+": end: null");
 			return null;
 		}
 		String s = mInputHistory.get(mInputHistory.size()-pos-1);
-		if (VV) Log.v(TAG, M()+": end: s=["+s+"]");
+		if (T) Log.v(TAG, M()+": end: s=["+s+"]");
 		return s;
 	}
 

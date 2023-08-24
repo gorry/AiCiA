@@ -15,6 +15,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -23,6 +24,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import net.gorry.libaicia.BuildConfig;
 import net.gorry.libaicia.R;
 
 /**
@@ -33,10 +35,19 @@ import net.gorry.libaicia.R;
  *
  */
 public class ActivitySystemConfig extends PreferenceActivity {
+	private static final boolean RELEASE = !BuildConfig.DEBUG;
 	private static final String TAG = "ActivitySystemConfig";
-	private static final boolean V = false;
-	private static final boolean D = false;
+	private static final boolean T = !RELEASE;
+	private static final boolean V = !RELEASE;
+	private static final boolean D = !RELEASE;
 	private static final boolean I = true;
+
+	private static String M() {
+		StackTraceElement[] es = new Exception().getStackTrace();
+		int count = 1; while (es[count].getMethodName().contains("$")) count++;
+		return es[count].getFileName()+"("+es[count].getLineNumber()+"): "+es[count].getMethodName()+"(): ";
+	}
+
 	private static Activity me;
 	private boolean noFinishIt = false;
 
@@ -49,7 +60,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 */
 	@Override
 	protected void onSaveInstanceState(final Bundle outState) {
-		if (I) Log.i(TAG, "onSaveInstanceState()");
+		if (T) Log.v(TAG, M()+"@in");
 		noFinishIt = true;
 	}
 
@@ -59,7 +70,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 */
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
-		if (I) Log.i(TAG, "onCreate()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onCreate(savedInstanceState);
 		me = this;
 		setTitle(R.string.pref_sys_title);
@@ -139,6 +150,18 @@ public class ActivitySystemConfig extends PreferenceActivity {
 				}
 			});
 		}
+
+		// [音声で通知]の処理
+		{
+			final String str = "pref_sys_action_alert_ring";
+			CheckBoxPreference ps = (CheckBoxPreference)findPreference(str);
+			String s2 = ps.getSummary().toString();
+			if (s2.contains("%s")) {
+				String path = SystemConfig.getExternalPath() + "ring.ogg";
+				s2 = String.format(s2, path);
+				ps.setSummary(s2);
+			}
+		}
 	}
 
 	/*
@@ -147,7 +170,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 */
 	@Override
 	public void onRestart() {
-		if (I) Log.i(TAG, "onRestart()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onRestart();
 	}
 
@@ -157,7 +180,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 */
 	@Override
 	public void onStart() {
-		if (I) Log.i(TAG, "onStart()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onStart();
 	}
 
@@ -167,7 +190,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 */
 	@Override
 	public synchronized void onResume() {
-		if (I) Log.i(TAG, "onResume()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onResume();
 		if (!noFinishIt) {
 			//
@@ -181,7 +204,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 */
 	@Override
 	public synchronized void onPause() {
-		if (I) Log.i(TAG, "onPause()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onPause();
 		if (!noFinishIt) {
 			//
@@ -194,7 +217,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 */
 	@Override
 	public void onStop() {
-		if (I) Log.i(TAG, "onStop()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onStop();
 	}
 
@@ -205,7 +228,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 */
 	@Override
 	public void onDestroy() {
-		if (I) Log.i(TAG, "onDestroy()");
+		if (T) Log.v(TAG, M()+"@in");
 		super.onDestroy();
 	}
 
@@ -216,7 +239,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	/*
 	@Override
 	public void onConfigurationChanged(final Configuration newConfig) {
-		if (I) Log.i(TAG, "onConfigurationChanged()");
+		if (T) Log.v(TAG, M()+"onConfigurationChanged()");
 		super.onConfigurationChanged(newConfig);
 	}
 	 */
@@ -227,7 +250,8 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 */
 	@Override
 	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
-		if (I) Log.i(TAG, "onConfigurationChanged()");
+		if (T) Log.v(TAG, M()+"@in: keyCode="+keyCode+", event="+event);
+
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			// アクティビティ終了として使う
 			final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(me);
@@ -238,9 +262,12 @@ public class ActivitySystemConfig extends PreferenceActivity {
 			intent.putExtra("rebootlevel", rebootLevel);
 			setResult(RESULT_OK, intent);
 			finish();
+
+			if (T) Log.v(TAG, M()+"@out: true");
 			return true;
 		}
 		super.onKeyDown(keyCode, event);
+		if (T) Log.v(TAG, M()+"@out: false");
 		return false;
 	}
 
@@ -250,7 +277,8 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 * @return true
 	 */
 	public boolean onPreferenceClick_ExternalFontPath(Preference pref) {
-		if (I) Log.i(TAG, "onPreferenceClick_ExternalFontPath()");
+		if (T) Log.v(TAG, M()+"@in: pref="+pref);
+
 		final Intent intent = new Intent(
 				me,
 				ActivitySelectTtfFile.class
@@ -263,7 +291,8 @@ public class ActivitySystemConfig extends PreferenceActivity {
 		final Uri uri = Uri.parse("file://" + lastPath);
 		intent.setData(uri);
 		me.startActivityForResult(intent, ACTIVITY_SELECT_TTF);
-		
+
+		if (T) Log.v(TAG, M()+"@out: true");
 		return true;
 	}
 	
@@ -273,7 +302,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 * @return true
 	 */
 	public boolean onPreferenceClick_ExportConfig(Preference pref) {
-		if (I) Log.i(TAG, "onPreferenceClick_ExportConfig()");
+		if (T) Log.v(TAG, M()+"in: pref="+pref);
 
 		final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(me);
 		final int rebootLevel = SystemConfig.getFromPreferenceActivity(sp);
@@ -284,6 +313,8 @@ public class ActivitySystemConfig extends PreferenceActivity {
 		intent.putExtra("exportconfig", 1);
 		setResult(RESULT_OK, intent);
 		finish();
+
+		if (T) Log.v(TAG, M()+"@out: true");
 		return true;
 	}
 	
@@ -293,7 +324,8 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	 * @return true
 	 */
 	public boolean onPreferenceClick_ImportConfig(Preference pref) {
-		if (I) Log.i(TAG, "onPreferenceClick_ImportConfig()");
+		if (T) Log.v(TAG, M()+"@in: pref="+pref);
+
 		final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(me);
 		final int rebootLevel = SystemConfig.getFromPreferenceActivity(sp);
 		SystemConfig.saveConfig();
@@ -303,6 +335,8 @@ public class ActivitySystemConfig extends PreferenceActivity {
 		intent.putExtra("importconfig", 1);
 		setResult(RESULT_OK, intent);
 		finish();
+
+		if (T) Log.v(TAG, M()+"@out: true");
 		return true;
 	}
 	
@@ -313,7 +347,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 	@Override
 	public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (I) Log.i(TAG, "onActivityResult()");
+		if (T) Log.v(TAG, M()+"@in: requestCode="+requestCode+", resuleCode="+resultCode+", data="+data);
 
 		Bundle extras = null;
 		// int intentResult = 0;
@@ -326,7 +360,7 @@ public class ActivitySystemConfig extends PreferenceActivity {
 
 		switch (requestCode) {
 			case ACTIVITY_SELECT_TTF:
-				if (I) Log.i(TAG, "onActivityResult(): ACTIVITY_SELECT_TTF");
+				if (T) Log.v(TAG, M()+"onActivityResult(): ACTIVITY_SELECT_TTF");
 				if (extras != null) {
 					final String path = extras.getString("path");
 					final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(me);
@@ -336,6 +370,8 @@ public class ActivitySystemConfig extends PreferenceActivity {
 				}
 				break;
 		}
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 
 	public static Activity getActivity() {

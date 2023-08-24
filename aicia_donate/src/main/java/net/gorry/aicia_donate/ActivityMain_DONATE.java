@@ -30,7 +30,7 @@ public class ActivityMain_DONATE extends Activity {
 		super.onCreate(savedInstanceState);
 
 		final Intent i1 = getIntent();
-		i1.setPackage(this.getPackageName());
+		// i1.setPackage(this.getPackageName());
 		String initOpenServerName = null;
 		if (i1 != null) {
 			final Bundle extras = i1.getExtras();
@@ -43,7 +43,7 @@ public class ActivityMain_DONATE extends Activity {
 				this,
 				ActivityMain.class
 		);
-		intent.setPackage(this.getPackageName());
+		// intent.setPackage(this.getPackageName());
 		intent.putExtra("donate", true);
 		intent.putExtra("serverName", initOpenServerName);
 		startActivity(intent);

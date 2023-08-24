@@ -21,6 +21,7 @@ import android.graphics.Typeface;
 import android.os.Environment;
 import android.util.Log;
 
+import net.gorry.libaicia.BuildConfig;
 import net.gorry.libaicia.R;
 
 /**
@@ -31,10 +32,18 @@ import net.gorry.libaicia.R;
  *
  */
 public class SystemConfig {
-	private static final String TAG = "SystemConfig"; //$NON-NLS-1$
-	private static final boolean V = false;
-	private static final boolean D = false;
-	private static final boolean I = false;
+	private static final boolean RELEASE = !BuildConfig.DEBUG;
+	private static final String TAG = "SystemConfig";
+	private static final boolean T = !RELEASE;
+	private static final boolean V = !RELEASE;
+	private static final boolean D = !RELEASE;
+	private static final boolean I = true;
+
+	private static String M() {
+		StackTraceElement[] es = new Exception().getStackTrace();
+		int count = 1; while (es[count].getMethodName().contains("$")) count++;
+		return es[count].getFileName()+"("+es[count].getLineNumber()+"): "+es[count].getMethodName()+"(): ";
+	}
 
 	private static Context me;
 	private static boolean isLandscape = false;
@@ -314,17 +323,21 @@ public class SystemConfig {
 	 * @return バージョン文字列
 	 */
 	public static String getVersionString() {
-		if (I) Log.i(TAG, "getVersionString()");
+		if (T) Log.v(TAG, M()+"@in");
+
+		String ret = "";
 		try {
 			final String packageName = me.getPackageName();
 			PackageInfo packageInfo = me.getPackageManager().getPackageInfo(
 					packageName, PackageManager.GET_META_DATA
 			);
-			return packageInfo.versionName;
+			ret = packageInfo.versionName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
-		return "";
+
+		if (T) Log.v(TAG, M()+"@out: ret="+ret);
+		return ret;
 	}
 
 
@@ -333,7 +346,7 @@ public class SystemConfig {
 	 * @return パス名（末尾の"/"を含む）
 	 */
 	public static String getExternalPath() {
-		String path = Environment.getExternalStorageDirectory().toString();
+		String path = me.getExternalFilesDir(null).toString();
 		path += "/" + SystemConfig.myFolderName + "/";
 		return path;
 	}
@@ -381,7 +394,7 @@ public class SystemConfig {
 	 * 設定消去
 	 */
 	public static void deleteConfig() {
-		if (I) Log.i(TAG, "deleteConfig()");
+		if (T) Log.v(TAG, M()+"@in");
 
 		final SharedPreferences pref = me.getSharedPreferences("system", 0);
 		final SharedPreferences.Editor editor = pref.edit();
@@ -500,6 +513,8 @@ public class SystemConfig {
 		editor.remove("externalfontpath");
 
 		editor.commit();
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 
 	/**
@@ -507,8 +522,12 @@ public class SystemConfig {
 	 * @return 読み込んだ設定のバージョン
 	 */
 	public static String loadConfig() {
-		if (I) Log.i(TAG, "loadConfig()");
-		return loadConfigCore(false);
+		if (T) Log.v(TAG, M()+"@in");
+
+		String ret = loadConfigCore(false);
+
+		if (T) Log.v(TAG, M()+"@out: ret="+ret);
+		return ret;
 	}
 
 	/**
@@ -516,8 +535,12 @@ public class SystemConfig {
 	 * @return 読み込んだ設定のバージョン
 	 */
 	public static String importConfig() {
-		if (I) Log.i(TAG, "importConfig()");
-		return loadConfigCore(true);
+		if (T) Log.v(TAG, M()+"@in");
+
+		String ret = loadConfigCore(true);
+
+		if (T) Log.v(TAG, M()+"@out: ret="+ret);
+		return ret;
 	}
 
 	/**
@@ -526,7 +549,9 @@ public class SystemConfig {
 	 * @return 読み込んだ設定のバージョン
 	 */
 	private static String loadConfigCore(final boolean importing) {
-		if (I) Log.i(TAG, "loadConfigCore()");
+		if (T) Log.v(TAG, M()+"@in: importing="+importing);
+
+		String version = getVersionString();
 
 		String filename;
 		if (importing) {
@@ -540,11 +565,12 @@ public class SystemConfig {
 		}
 		int ret = pref.readSharedPreferences();
 		if (ret < 1) {
-			return getVersionString();
+			if (T) Log.v(TAG, M()+"@out: version="+version);
+			return version;
 		}
 
 		String rawVersion = pref.getString("fileVersion", "");
-		String version = pref.getString("fileVersion", getVersionString());
+		version = pref.getString("fileVersion", version);
 
 		verbose = pref.getInt("verbose", 0);
 
@@ -671,6 +697,12 @@ public class SystemConfig {
 		if (externalFontPath.length() == 0) {
 			externalFontPath = externalFontPathDefault;
 		}
+		if (!externalFontPath.startsWith(SystemConfig.getExternalPath())) {
+			String oldPath = Environment.getExternalStorageDirectory().toString() + "/" + SystemConfig.myFolderName + "/";
+			if (externalFontPath.startsWith(oldPath)) {
+				externalFontPath = SystemConfig.getExternalPath() + externalFontPath.substring(oldPath.length());
+			}
+		}
 		
 		final File userTypefaceFile = new File(externalFontPath);
 		if (userTypefaceFile.exists()) {
@@ -679,6 +711,7 @@ public class SystemConfig {
 
 		setOrientation(isLandscape);
 
+		if (T) Log.v(TAG, M()+"@out: version="+version);
 		return version;
 	}
 
@@ -688,8 +721,12 @@ public class SystemConfig {
 	 * @return 成功ならtrue
 	 */
 	public static boolean saveConfig() {
-		if (I) Log.i(TAG, "saveConfig()");
-		return saveConfigCore(false);
+		if (T) Log.v(TAG, M()+"@in");
+
+		boolean ret = saveConfigCore(false);
+
+		if (T) Log.v(TAG, M()+"@out: ret="+ret);
+		return ret;
 	}
 
 	/**
@@ -697,8 +734,12 @@ public class SystemConfig {
 	 * @return 成功ならtrue
 	 */
 	public static boolean exportConfig() {
-		if (I) Log.i(TAG, "exportConfig()");
-		return saveConfigCore(true);
+		if (T) Log.v(TAG, M()+"@in");
+
+		boolean ret = saveConfigCore(true);
+
+		if (T) Log.v(TAG, M()+"@out: ret="+ret);
+		return ret;
 	}
 
 	/**
@@ -707,9 +748,11 @@ public class SystemConfig {
 	 * @return 成功ならtrue
 	 */
 	private static boolean saveConfigCore(final boolean exporting) {
-		if (I) Log.i(TAG, "saveConfigCore()");
+		if (T) Log.v(TAG, M()+"@in: exporting="+exporting);
 
 		String filename;
+		boolean result = false;
+
 		if (exporting) {
 			filename = SystemConfig.getExternalPath() + SystemConfig.systemConfigExportFileName;
 		} else {
@@ -722,7 +765,8 @@ public class SystemConfig {
 		int ret = pref.readSharedPreferences();
 		if (ret < 1) {
 			ActivityMain.myShortToastShow(me.getString(R.string.activitymain_java_error_saveconfig));
-			return false;
+			if (T) Log.v(TAG, M()+"@out: result="+result);
+			return result;
 		}
 		final MySharedPreferences.Editor editor = pref.edit();
 
@@ -844,7 +888,10 @@ public class SystemConfig {
 
 		editor.putString("externalfontpath", externalFontPath);
 
-		return (editor.commit() >= 1);
+		result = (editor.commit() >= 1);
+
+		if (T) Log.v(TAG, M()+"@out: result="+result);
+		return result;
 	}
 
 	/**
@@ -964,7 +1011,7 @@ public class SystemConfig {
 	 * @return リブートレベル（bit0=要画面再構成、bit1=要サービス再起動、bit2=ログクリア）
 	 */
 	public static int getFromPreferenceActivity(final SharedPreferences sp) {
-		if (I) Log.i(TAG, "getFromForPreferenceActivity()");
+		if (T) Log.v(TAG, M()+"@in: sp="+sp);
 
 		int rebootLevel = 0;
 
@@ -1169,6 +1216,7 @@ public class SystemConfig {
 			}
 		}
 
+		if (T) Log.v(TAG, M()+"@out: rebootLevel="+rebootLevel);
 		return rebootLevel;
 	}
 	private static int sp_getInt(final SharedPreferences sp, final String reg, final int defparam) {
@@ -1192,7 +1240,7 @@ public class SystemConfig {
 	 * @param sp 情報入出力先
 	 */
 	public static void setForPreferenceActivity(final SharedPreferences sp) {
-		if (I) Log.i(TAG, "setForPreferenceActivity()");
+		if (T) Log.v(TAG, M()+"@in: sp="+sp);
 
 
 		final SharedPreferences.Editor spe = sp.edit();
@@ -1258,6 +1306,8 @@ public class SystemConfig {
 		spe_putString(spe, "pref_sys_advanced_externalfontpath", externalFontPath);
 
 		spe.commit();
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 	private static void spe_putInt(final Editor spe, final String reg, final int param) {
 		spe.putString(reg, Integer.toString(param));
@@ -1274,7 +1324,7 @@ public class SystemConfig {
 	 * @param sp 情報入出力先
 	 */
 	public static void clearForPreferenceActivity(final SharedPreferences sp) {
-		if (I) Log.i(TAG, "clearForPreferenceActivity()");
+		if (T) Log.v(TAG, M()+"@in: sp="+sp);
 
 		final SharedPreferences.Editor spe = sp.edit();
 
@@ -1336,6 +1386,8 @@ public class SystemConfig {
 		spe.remove("pref_sys_advanced_externalfontpath");
 
 		spe.commit();
+
+		if (T) Log.v(TAG, M()+"@out");
 	}
 	
 	/**

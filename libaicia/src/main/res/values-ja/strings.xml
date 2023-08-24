@@ -197,8 +197,8 @@
     <string name="ircservice_java_onlowmemory">IRCサービス用メモリが不足しています。</string>
     <string name="ircservice_java_shutdownircservice">IRCサービスを終了しました。</string>
     <string name="ircservice_java_startircservice">IRCサービスを開始しました。</string>
-    <string name="ircservice_java_alert" formatted="true">%s &lt;%s&gt; %s</string>
-    <string name="ircservice_java_alert_title" formatted="true">%sから &lt;%s&gt; %s</string>
+    <string name="ircservice_java_alert" formatted="false">%s &lt;%s&gt; %s</string>
+    <string name="ircservice_java_alert_title" formatted="false">%sから &lt;%s&gt; %s</string>
     <string name="activityircserverconfig_java_error_emptyrealname">[実名]が必要です。</string>
     <string name="activityircserverconfig_java_error_emptyusername">[ユーザー名]が必要です。</string>
     <string name="activityircserverconfig_java_error_emptynick">[Nick]が必要です。</string>
@@ -374,7 +374,7 @@
     <string name="pref_sys_action_alert_notify_title">OSの通知ｼｽﾃﾑで表示</string>
     <string name="pref_sys_action_alert_vibrate_summary">バイブレータを起動します。</string>
     <string name="pref_sys_action_alert_vibrate_title">振動で通知</string>
-    <string name="pref_sys_action_alert_ring_summary">通知音を鳴らします。音声ファイル\"/sdcard/AiCiA/ring.ogg\"があれば、それを鳴らします。</string>
+    <string name="pref_sys_action_alert_ring_summary">通知音を鳴らします。音声ファイル\"\%s\"があれば、それを鳴らします。</string>
     <string name="pref_sys_action_alert_ring_title">音声で通知</string>
     <string name="pref_sys_action_alert_summary">通知キーワードを検出したときの動作を指定します。</string>
     <string name="pref_sys_action_alert_title">通知キーワード</string>
@@ -458,4 +458,6 @@
     <string name="activitymain_java_error_saveconfig">設定保存に失敗しました。</string>
     <string name="activitysystemconfig_not_granted_readexternalstorage">外部メディア読み込み権限が必要です。</string>
     <string name="activitysystemconfig_not_granted_writeexternalstorage">外部メディア書き込み権限が必要です。</string>
+	<string name="title_request_permission_notification">権限の要求</string>
+	<string name="msg_request_permission_notification">このアプリは「通知」の権限が必要です。</string>
 </resources>

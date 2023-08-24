@@ -899,6 +899,7 @@ public class Layout {
 		public boolean onKeyDown(final View view, final Editable text, final int keyCode, final KeyEvent event) {
 			switch (keyCode) {
 			case KeyEvent.KEYCODE_ENTER:
+			case KeyEvent.KEYCODE_NUMPAD_ENTER:
 				if (event.isShiftPressed()) {
 					pushHistoryInputBoxMessage();
 				} else {

@@ -10,7 +10,6 @@ package net.gorry.aicia;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,8 +30,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -45,6 +42,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import net.gorry.libaicia.BuildConfig;
 import net.gorry.libaicia.R;
 
 /**
@@ -56,10 +54,18 @@ import net.gorry.libaicia.R;
  */
 
 public class ActivityMain extends Activity {
+	private static final boolean RELEASE = !BuildConfig.DEBUG;
 	private static final String TAG = "ActivityMain";
-	private static final boolean V = false;
-	private static final boolean D = false;
-	private static final boolean I = false;
+	private static final boolean T = !RELEASE;
+	private static final boolean V = !RELEASE;
+	private static final boolean D = !RELEASE;
+	private static final boolean I = true;
+
+	private static String M() {
+		StackTraceElement[] es = new Exception().getStackTrace();
+		int count = 1; while (es[count].getMethodName().contains("$")) count++;
+		return es[count].getFileName()+"("+es[count].getLineNumber()+"): "+es[count].getMethodName()+"(): ";
+	}
 
 	/** */
 	public static final int ACTIVITY_SYSTEMCONFIG = 1;
@@ -1092,7 +1098,7 @@ public class ActivityMain extends Activity {
 					layout.mSubLogWindow.addMessage("V" + level + ": " + tag + ": " + message, SystemConfig.subLogPaleTextColor[SystemConfig.now_colorSet], IRCMsg.getDateMsg());
 				}
 			}
-			Log.d(tag, message);
+			if (D) Log.d(tag, message);
 		}
 	}
 
@@ -1361,64 +1367,82 @@ public class ActivityMain extends Activity {
 	 * 読み込みパーミッション処理
 	 */
 	public int checkReadPermission(Runnable r) {
+		if (T) Log.v(TAG, M()+"@in: r="+r);
+
+		/*
 		int ret = ContextCompat.checkSelfPermission(me, Manifest.permission.READ_EXTERNAL_STORAGE);
 		if (ret == PackageManager.PERMISSION_GRANTED) {
 			final Handler h = new Handler();
 			h.post(r);
+			if (T) Log.v(TAG, M()+"@out: granted");
 			return 1;
 		}
-		/*
-		if (ActivityCompat.shouldShowRequestPermissionRationale(me, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-			Log.e(TAG, "checkReadPermission(): need permission READ_EXTERNAL_STORAGE");
-			return -1;
-		}
-		*/
 		mRunnableOnRequestPermissionGranted = r;
 		ActivityCompat.requestPermissions(
 				me,
 				new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
 				MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE
 		);
+		if (T) Log.v(TAG, M()+"@out: requested");
 		return 0;
+		*/
+
+		// getExternalFilesDir()のアクセスだけになったので常にgranted
+		final Handler h = new Handler();
+		h.post(r);
+		if (T) Log.v(TAG, M()+"@out: granted");
+		return 1;
 	}
 
 	/**
 	 * 書き込みパーミッション処理
 	 */
 	public int checkWritePermission(Runnable r) {
+		if (T) Log.v(TAG, M()+"@in: r="+r);
+
+		/*
 		int ret = ContextCompat.checkSelfPermission(me, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 		if (ret == PackageManager.PERMISSION_GRANTED) {
 			final Handler h = new Handler();
 			h.post(r);
+			if (T) Log.v(TAG, M()+"@out: granted");
 			return 1;
 		}
-		/*
-		if (ActivityCompat.shouldShowRequestPermissionRationale(me, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-			Log.e(TAG, "MySharedPreferences(): need permission WRITE_EXTERNAL_STORAGE");
-			return -1;
-		}
-		*/
 		mRunnableOnRequestPermissionGranted = r;
 		ActivityCompat.requestPermissions(
 				me,
 				new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
 				MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE
 		);
+		if (T) Log.v(TAG, M()+"@out: requested");
 		return 0;
+		*/
+
+		// getExternalFilesDir()のアクセスだけになったので常にgranted
+		final Handler h = new Handler();
+		h.post(r);
+		if (T) Log.v(TAG, M()+"@out: granted");
+		return 1;
 	}
 
 @Override
 public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+	if (T) Log.v(TAG, M()+"@in: requestCode="+requestCode+", permissions[]="+permissions+", grantResults="+grantResults);
+
 	switch (requestCode) {
 		case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
 			if (grantResults.length > 0) {
 				if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 					final Handler h = new Handler();
 					h.post(mRunnableOnRequestPermissionGranted);
+
+					if (T) Log.v(TAG, M()+"@out: grandted");
 					return;
 				}
 			}
 			ActivityMain.myShortToastShow(me.getString(R.string.activitysystemconfig_not_granted_readexternalstorage));
+
+			if (T) Log.v(TAG, M()+"@out: not granted");
 			return;
 		}
 
@@ -1427,10 +1451,14 @@ public void onRequestPermissionsResult(int requestCode, String permissions[], in
 				if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 					final Handler h = new Handler();
 					h.post(mRunnableOnRequestPermissionGranted);
+
+					if (T) Log.v(TAG, M()+"@out: grandted");
 					return;
 				}
 			}
-			ActivityMain.myShortToastShow(me.getString(R.string.activitysystemconfig_not_granted_readexternalstorage));
+			ActivityMain.myShortToastShow(me.getString(R.string.activitysystemconfig_not_granted_writeexternalstorage));
+
+			if (T) Log.v(TAG, M()+"@out: not granted");
 			return;
 		}
 
