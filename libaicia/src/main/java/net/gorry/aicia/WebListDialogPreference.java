@@ -62,6 +62,7 @@ public class WebListDialogPreference extends DialogPreference  {
 	private LinearLayout mRow1Layout;
 	private LinearLayout mRow2Layout;
 	private TextView mTextWebSiteName;
+	private TextView mTextWebSiteUrl;
 	private EditText mEditWebSiteName;
 	private EditText mEditWebSiteUrl;
 	private Button mButtonChoose;
@@ -178,7 +179,8 @@ public class WebListDialogPreference extends DialogPreference  {
 
 		mButtonChoose = new Button(me);
 		mButtonChoose.setText(R.string.activitymain_java_exweb_button_choose);
-		mButtonChoose.setOnClickListener(onClickButtonChoose);
+		mButtonChoose.setEnabled(false);
+		// mButtonChoose.setOnClickListener(onClickButtonChoose);
 		mBaseLayout.addView(mButtonChoose);
 
 		mRow1Layout = new LinearLayout(me);
@@ -187,6 +189,10 @@ public class WebListDialogPreference extends DialogPreference  {
 		mRow2Layout.setOrientation(LinearLayout.HORIZONTAL);
 		mBaseLayout.addView(mRow1Layout);
 		mBaseLayout.addView(mRow2Layout);
+
+		mTextWebSiteUrl = new TextView(me);
+		mTextWebSiteUrl.setText("URL:");
+		mRow1Layout.addView(mTextWebSiteUrl);
 
 		mEditWebSiteUrl = new EditText(me);
 		mEditWebSiteUrl.setText(mWebSiteUrl);
@@ -339,25 +345,27 @@ public class WebListDialogPreference extends DialogPreference  {
 								"visits", // Browser.BookmarkColumns.VISITS
 						};
 						final Cursor c = me.getContentResolver().query(Uri.parse("content://browser/bookmarks")/* Browser.BOOKMARKS_URI */, projection, "bookmark=1", null, null);
-						if (c.moveToFirst()) {
-							for (int i=0; i<c.getCount(); i++) {
-								int idx;
-								String name = "(no Name)";
-								String url = "(no URL)";
-								idx = c.getColumnIndex("title" /* Browser.BookmarkColumns.TITLE */ );
-								if (idx >= 0) {
-									name = c.getString(idx);
+						if (c != null) {
+							if (c.moveToFirst()) {
+								for (int i=0; i<c.getCount(); i++) {
+									int idx;
+									String name = "(no Name)";
+									String url = "(no URL)";
+									idx = c.getColumnIndex("title" /* Browser.BookmarkColumns.TITLE */ );
+									if (idx >= 0) {
+										name = c.getString(idx);
+									}
+									idx = c.getColumnIndex("url" /* Browser.BookmarkColumns.URL */ );
+									if (idx >= 0) {
+										url = c.getString(idx);
+									}
+									bookmarkUrl.add(url);
+									bookmarkName.add(name);
+									c.moveToNext();
 								}
-								idx = c.getColumnIndex("url" /* Browser.BookmarkColumns.URL */ );
-								if (idx >= 0) {
-									url = c.getString(idx);
-								}
-								bookmarkUrl.add(url);
-								bookmarkName.add(name);
-								c.moveToNext();
 							}
+							c.close();
 						}
-						c.close();
 
 						// 逆順に表示
 						for (int i=bookmarkName.size()-1; i>=0; i--) {
