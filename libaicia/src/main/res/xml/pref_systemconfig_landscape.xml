@@ -175,6 +175,10 @@
 				android:title="@string/pref_sys_input_send_halfkana_title"
 				android:summary="@string/pref_sys_input_send_halfkana_summary"
 			/>
+			<CheckBoxPreference android:key="pref_sys_input_singleline"
+				android:title="@string/pref_sys_input_singleline_title"
+				android:summary="@string/pref_sys_input_singleline_summary"
+			/>
 		</PreferenceScreen>
 	</PreferenceCategory>
 	<PreferenceCategory	android:title="@string/pref_sys_action_category">

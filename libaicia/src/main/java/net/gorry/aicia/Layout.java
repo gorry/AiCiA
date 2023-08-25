@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.os.Vibrator;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.method.KeyListener;
 import android.util.Log;
@@ -28,11 +29,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+import net.gorry.libaicia.BuildConfig;
 import net.gorry.libaicia.R;
 
 /**
@@ -40,10 +44,19 @@ import net.gorry.libaicia.R;
  *
  */
 public class Layout {
+	private static final boolean RELEASE = !BuildConfig.DEBUG;
 	private static final String TAG = "Layout";
-	private static final boolean V = false;
-	private static final boolean D = false;//true;
-	private static final boolean I = false;//true;
+	private static final boolean T = !RELEASE;
+	private static final boolean V = !RELEASE;
+	private static final boolean D = !RELEASE;
+	private static final boolean I = true;
+
+	private static String M() {
+		StackTraceElement[] es = new Exception().getStackTrace();
+		int count = 1; while (es[count].getMethodName().contains("$")) count++;
+		return es[count].getFileName()+"("+es[count].getLineNumber()+"): "+es[count].getMethodName()+"(): ";
+	}
+
 	private static final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
 	private static final int FP = ViewGroup.LayoutParams.FILL_PARENT;
 	private final ActivityMain me;
@@ -103,7 +116,7 @@ public class Layout {
 	 * @param outState 退避先
 	 */
 	public void saveInstanceState(final Bundle outState) {
-		if (I) Log.i(TAG, "saveInstanceState()");
+		if (T) Log.v(TAG, M()+"@in");
 		mMainLogWindow.saveInstanceState(outState);
 		mSubLogWindow.saveInstanceState(outState);
 		outState.putCharSequence("mInputBox", mInputBox.getText());
@@ -116,7 +129,7 @@ public class Layout {
 	 * @param savedInstanceState 復元元
 	 */
 	public void restoreInstanceState(final Bundle savedInstanceState) {
-		if (I) Log.i(TAG, "restoreInstanceState()");
+		if (T) Log.v(TAG, M()+"@in");
 		mMainLogWindow.restoreInstanceState(savedInstanceState);
 		mSubLogWindow.restoreInstanceState(savedInstanceState);
 		mInputBox.setText(savedInstanceState.getCharSequence("mInputBox"));
@@ -131,7 +144,7 @@ public class Layout {
 	 * @return 回転方向が変わったらtrue
 	 */
 	public boolean setOrientation(final boolean isFirst) {
-		if (I) Log.i(TAG, "setOrientation()");
+		if (T) Log.v(TAG, M()+"@in: isFirst="+isFirst);
 		final boolean lastOrientation = SystemConfig.getOrientation();
 		final boolean isLandscape = (me.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
 		switch (SystemConfig.rotateMode) {
@@ -158,7 +171,7 @@ public class Layout {
 	 * 回転モードの設定
 	 */
 	public void setRotateMode() {
-		if (I) Log.i(TAG, "setRotateMode()");
+		if (T) Log.v(TAG, M()+"@in");
 		final boolean isLandscape = SystemConfig.getOrientation();
 		int mode = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 		switch (SystemConfig.rotateMode) {
@@ -184,10 +197,10 @@ public class Layout {
 			if (Build.VERSION.SDK_INT >= 9) {
 				switch (mode) {
 				case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-					mode = 6;  // ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+					mode = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
 					break;
 				case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-					mode = 7;  // ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+					mode = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;
 					break;
 				}
 			}
@@ -199,7 +212,7 @@ public class Layout {
 	 * ベースレイアウトのアップデート
 	 */
 	public void updateBaseLayout() {
-		if (I) Log.i(TAG, "updateBaseLayout()");
+		if (T) Log.v(TAG, M()+"@in");
 		mBaseLayout.updateViewLayout(mLogLayout, new LinearLayout.LayoutParams(FP, FP, 1));
 	}
 
@@ -208,7 +221,7 @@ public class Layout {
 	 * @param isFirst 最初ならtrue
 	 */
 	public synchronized void baseLayout_Create(final boolean isFirst) {
-		if (I) Log.i(TAG, "baseLayout_Create()");
+		if (T) Log.v(TAG, M()+"@in: isFirst="+isFirst);
 		Editable input = null;
 		int selStart = 0;
 		int selEnd = 0;
@@ -225,7 +238,7 @@ public class Layout {
 			mBaseLayout = new LinearLayout(me) {
 				@Override
 				protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
-					if (I) Log.i(TAG, "onSizeChanged() baseLayout");
+					if (T) Log.v(TAG, M()+"onSizeChanged() baseLayout");
 					mBaseLayoutWidth = w;
 					mBaseLayoutHeight = h;
 				}
@@ -264,7 +277,7 @@ public class Layout {
 		private final Runnable mActionLongClick = new Runnable() {
 			public void run() {
 				synchronized (this) {
-					if (I) Log.i(TAG, "LogLinearLayout: mActionLongClick()");
+					if (T) Log.v(TAG, M()+"@in");
 					if (mActionOnLongClick != null) {
 						final Vibrator vib = (Vibrator)me.getSystemService(Context.VIBRATOR_SERVICE);
 						new Thread(new Runnable() {	public void run() {
@@ -272,6 +285,7 @@ public class Layout {
 						} }).start();
 						mActionOnLongClick.run();
 					}
+					if (T) Log.v(TAG, M()+"@out");
 				}
 			}
 		};
@@ -290,7 +304,7 @@ public class Layout {
 		@Override
 		public boolean onTouchEvent(final MotionEvent event) {
 			// ここには届いてないっぽい。ScrollViewのほうに届く
-			if (D) Log.d(TAG, "LogLinearLayout: onTouchEvent()");
+			if (T) Log.v(TAG, M()+"@in");
 			final boolean result = super.onTouchEvent(event);
 			return subOnTouchEvent(event, result);
 		}
@@ -481,13 +495,13 @@ public class Layout {
 	 * @param parentLayout 親レイアウト
 	 */
 	public synchronized void logLayout_Create(final LinearLayout parentLayout) {
-		if (I) Log.i(TAG, "logLayout_Create()");
+		if (T) Log.v(TAG, M()+"@in");
 
 		// logLayout
 		mLogLayout = new LinearLayout(me) {
 			@Override
 			protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
-				if (I) Log.i(TAG, "logLayout_Create(): onSizeChanged(): "+String.format("w=%d, h=%d, oldw=%d, oldh=%d", w, h, oldw, oldh));
+				if (T) Log.v(TAG, M()+"@in: "+String.format("w=%d, h=%d, oldw=%d, oldh=%d", w, h, oldw, oldh));
 				mLogLayoutWidth = w;
 				mLogLayoutHeight = h;
 
@@ -595,7 +609,7 @@ public class Layout {
 		mMainLogLayout = new LogLinearLayout(me) {
 			@Override
 			protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
-				if (I) Log.i(TAG, "onSizeChanged() mainLogLayout");
+				if (T) Log.v(TAG, M()+"@in");
 				mMainLogWindow.registerParentLayout(w, h);
 			}
 		};
@@ -618,7 +632,7 @@ public class Layout {
 		mSubLogLayout = new LogLinearLayout(me) {
 			@Override
 			protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
-				if (I) Log.i(TAG, "onSizeChanged() subLogLayout");
+				if (T) Log.v(TAG, M()+"@in");
 				mSubLogWindow.registerParentLayout(w, h);
 			}
 		};
@@ -656,12 +670,12 @@ public class Layout {
 	}
 
 	private void pushHistoryInputBoxMessage() {
-		if (I) Log.i(TAG, "pushHistoryInputBoxMessage()");
+		if (T) Log.v(TAG, M()+"@in");
 		ActivityMain.doMain.doPushInputHistory();
 	}
 
 	private void getHistoryInputBoxMessage() {
-		if (I) Log.i(TAG, "getHistoryInputBoxMessage()");
+		if (T) Log.v(TAG, M()+"@in");
 		ActivityMain.doMain.doInputHistoryMenu();
 	}
 
@@ -672,7 +686,7 @@ public class Layout {
 				public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 					int disX = (int)(e2.getX()-e1.getX());
 					int disY = (int)(e2.getY()-e1.getY());
-					if (I) Log.i(TAG, "mInputBoxGestureDetector: onFling(): disX=" + disX + " disY=" + disY + " X=" + velocityX + " Y=" + velocityY);
+					if (T) Log.v(TAG, M()+"@in: disX=" + disX + " disY=" + disY + " X=" + velocityX + " Y=" + velocityY);
 					int height = mInputBox.getHeight();
 					if (Math.abs(disY) >= height) {
 						if (disY > 0) {
@@ -686,13 +700,13 @@ public class Layout {
 
 				@Override
 				public boolean onSingleTapConfirmed(MotionEvent e1) {
-					if (I) Log.i(TAG, "mInputBoxGestureDetector: onSingleTapConfirmed()");
+					if (T) Log.v(TAG, M()+"@in");
 					return true;
 				}
 
 				@Override
 				public boolean onDoubleTap(MotionEvent e1) {
-					if (I) Log.i(TAG, "mInputBoxGestureDetector: onDoubleTap()");
+					if (T) Log.v(TAG, M()+"@in");
 					getHistoryInputBoxMessage();
 					return true;
 				}
@@ -705,7 +719,7 @@ public class Layout {
 	 */
 	public final OnTouchListener onTouchInputBox = new OnTouchListener() {
 		public boolean onTouch(View v, MotionEvent event) {
-			if (I) Log.i(TAG, "onTouchInputBox()");
+			if (T) Log.v(TAG, M()+"@in: v="+v+", event="+event);
 			return mInputBoxGestureDetector.onTouchEvent(event);
 		}
 	};
@@ -715,7 +729,7 @@ public class Layout {
 	 * @param parentLayout 親レイアウト
 	 */
 	public synchronized void cmdLayout_Create(final LinearLayout parentLayout) {
-		if (I) Log.i(TAG, "cmdLayout_Create()");
+		if (T) Log.v(TAG, M()+"@in: parentLayout="+parentLayout);
 
 		int w = (int)((SystemConfig.now_buttonWide ? 1.5 : 1.0) *me.getResources().getDimension(R.dimen.button_widthunit)*SystemConfig.now_buttonSize);
 		// cmdLayout;
@@ -737,6 +751,8 @@ public class Layout {
 			mInputBox.setKeyListener(onInputBoxKey);
 			mInputBox.setFreezesText(true);
 			mInputBox.setOnTouchListener(onTouchInputBox);
+			mInputBox.setImeOptions(EditorInfo.IME_ACTION_SEND);
+			mInputBox.setOnEditorActionListener(onEditorAction);
 			mCmdLayout.addView(mInputBox);
 
 			// ChPrevButton
@@ -842,7 +858,7 @@ public class Layout {
 	 * 入力ボックスの保存
 	 */
 	public void saveInputBox() {
-		if (I) Log.i(TAG, "saveInputBox()");
+		if (T) Log.v(TAG, M()+"@in");
 		if ((mInputBox != null) && (iIRCService != null)) {
 			try {
 				iIRCService.saveInputBox(
@@ -860,21 +876,20 @@ public class Layout {
 	 * 入力ボックスの復元
 	 */
 	public void restoreInputBox() {
-		if (I) Log.i(TAG, "restoreInputBox()");
+		if (T) Log.v(TAG, M()+"@in");
 		if (mInputBox != null) {
-			if (mInputBox != null) {
-				me.runOnUiThread(new Runnable(){ public void run() {
-					try {
-						mInputBox.setText(iIRCService.loadInputBox());
-						final int selStart = iIRCService.loadInputBoxSelStart();
-						final int selEnd = iIRCService.loadInputBoxSelEnd();
-						mInputBox.setSelection(selStart, selEnd);
-					} catch (final RemoteException e) {
-						e.printStackTrace();
-					}
-					mInputBox.requestFocus();
-				} });
-			}
+			me.runOnUiThread(new Runnable(){ public void run() {
+				try {
+					mInputBox.setText(iIRCService.loadInputBox());
+					final int selStart = iIRCService.loadInputBoxSelStart();
+					final int selEnd = iIRCService.loadInputBoxSelEnd();
+					mInputBox.setSelection(selStart, selEnd);
+				} catch (final RemoteException e) {
+					e.printStackTrace();
+				}
+				mInputBox.requestFocus();
+				mInputBox.setSingleLine(SystemConfig.inputSingleLine);
+			} });
 		}
 	}
 
@@ -882,11 +897,28 @@ public class Layout {
 	 * 入力メッセージの送信
 	 */
 	private void sendMessageByInputBox() {
-		if (I) Log.i(TAG, "sendMessageByInputBox()");
+		if (T) Log.v(TAG, M()+"@in");
 		final String message = mInputBox.getText().toString();
 		ActivityMain.sendMessageToIRCService(message);
 		mInputBox.setText("");
 	}
+
+	private TextView.OnEditorActionListener onEditorAction = new TextView.OnEditorActionListener() {
+		@Override
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			if (T) Log.v(TAG, M()+"@in: v="+v+", actionId="+actionId+", event="+event);
+			boolean handled = false;
+			if (actionId == EditorInfo.IME_ACTION_SEND) {
+				handled = true;
+				if ((event != null) && (event.isShiftPressed())) {
+					pushHistoryInputBoxMessage();
+				} else {
+					sendMessageByInputBox();
+				}
+			}
+			return handled;
+		}
+	};
 
 	/**
 	 * 入力ボックスのリスナ処理
@@ -937,7 +969,7 @@ public class Layout {
 	 * サービスから復活データを貰う
 	 */
 	public synchronized void reviveLogs() {
-		if (I) Log.i(TAG, "reviveLogs()");
+		if (T) Log.v(TAG, M()+"@in");
 		try {
 			final SpannableStringBuilder subLog = new SpannableStringBuilder(iIRCService.getSpanChannelLog(IRCMsg.sOtherChannelName, null));
 			if (SystemConfig.now_subWindowMode > 0) {
@@ -962,7 +994,7 @@ public class Layout {
 	 * @param newConfig 新内容
 	 */
 	public synchronized void changeConfiguration(final Configuration newConfig) {
-		if (I) Log.i(TAG, "onConfigurationChanged()");
+		if (T) Log.v(TAG, M()+"@in");
 		final boolean isChanged = setOrientation(false);
 		if (isChanged) {
 			setRotateMode();
@@ -976,7 +1008,7 @@ public class Layout {
 	 * レイアウトの再作成処理
 	 */
 	public synchronized void rebootLayout() {
-		if (I) Log.i(TAG, "rebootLayout()");
+		if (T) Log.v(TAG, M()+"@in");
 		// final boolean isChanged = setOrientation(true);
 		// if (isChanged || (SystemConfig.rotateMode == 0)) {
 			setRotateMode();
@@ -990,7 +1022,7 @@ public class Layout {
 	 */
 	private final Runnable mOnMainLogTextViewLongClick = new Runnable() {
 		public void run() {
-			if (I) Log.i(TAG, "onMainLogTextViewLongClick()");
+			if (T) Log.v(TAG, M()+"@in");
 			if (mCancelLongClickView) {
 				mCancelLongClickView = false;
 				return;
@@ -1005,7 +1037,7 @@ public class Layout {
 	 */
 	private final Runnable mOnMainLogTextViewDoubleTap = new Runnable() {
 		public void run() {
-			if (I) Log.i(TAG, "onMainLogTextViewDoubleTap()");
+			if (T) Log.v(TAG, M()+"@in");
 			final int[] i = new int[2];
 			mMainLogLayout.getLocationOnScreen(i);
 			float x = mLastMotionEvent.getRawX();
@@ -1031,7 +1063,7 @@ public class Layout {
 	 */
 	private final Runnable mOnSubLogTextViewLongClick = new Runnable() {
 		public void run() {
-			if (I) Log.i(TAG, "onSubLogTextViewLongClick()");
+			if (T) Log.v(TAG, M()+"@in");
 			if (mCancelLongClickView) {
 				mCancelLongClickView = false;
 				return;
@@ -1046,7 +1078,7 @@ public class Layout {
 	 */
 	private final Runnable mOnSubLogTextViewDoubleTap = new Runnable() {
 		public void run() {
-			if (I) Log.i(TAG, "onSubLogTextViewDoubleTap()");
+			if (T) Log.v(TAG, M()+"@in");
 			final int[] i = new int[2];
 			mSubLogLayout.getLocationOnScreen(i);
 			float x = mLastMotionEvent.getRawX();
@@ -1148,7 +1180,7 @@ public class Layout {
 	 */
 	private final Button.OnClickListener onChannelButtonClick = new Button.OnClickListener() {
 		public void onClick(final View v) {
-			if (I) Log.i(TAG, "onChannelButtonClick: onClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			ActivityMain.doMain.doSelectChannel();
 		}
 	};
@@ -1158,7 +1190,7 @@ public class Layout {
 	 */
 	private final Button.OnLongClickListener onChannelButtonLongClick = new Button.OnLongClickListener() {
 		public boolean onLongClick(final View v) {
-			if (I) Log.i(TAG, "onChannelButtonLongClick: onLongClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			if (SystemConfig.cmdLongPressChannelToNotified) {
 				ActivityMain.doMain.doSelectAlertedChannel();
 			} else {
@@ -1173,7 +1205,7 @@ public class Layout {
 	 */
 	private final Button.OnClickListener onChPrevButtonClick = new Button.OnClickListener() {
 		public void onClick(final View v) {
-			if (I) Log.i(TAG, "onChPrevButtonClick: onClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			final boolean changed = ActivityMain.doMain.doChangeNextChannel(-1, 0, false);
 			if (!changed) {
 				ActivityMain.myShortToastShow(me.getString(R.string.activitymain_java_notchanged));
@@ -1186,7 +1218,7 @@ public class Layout {
 	 */
 	private final Button.OnLongClickListener onChPrevButtonLongClick = new Button.OnLongClickListener() {
 		public boolean onLongClick(final View v) {
-			if (I) Log.i(TAG, "onChPrevButtonLongClick: onLongClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			final boolean updated = ActivityMain.doMain.doChangeNextChannel(-1, 1, false);
 			if (!updated) {
 				ActivityMain.myShortToastShow(me.getString(R.string.activitymain_java_notupdated));
@@ -1200,7 +1232,7 @@ public class Layout {
 	 */
 	private final Button.OnClickListener onChNextButtonClick = new Button.OnClickListener() {
 		public void onClick(final View v) {
-			if (I) Log.i(TAG, "onChNextButtonClick: onClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			final boolean changed = ActivityMain.doMain.doChangeNextChannel(1, 0, false);
 			if (!changed) {
 				ActivityMain.myShortToastShow(me.getString(R.string.activitymain_java_notchanged));
@@ -1213,7 +1245,7 @@ public class Layout {
 	 */
 	private final Button.OnLongClickListener onChNextButtonLongClick = new Button.OnLongClickListener() {
 		public boolean onLongClick(final View v) {
-			if (I) Log.i(TAG, "onChNextButtonLongClick: onLongClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			final boolean updated = ActivityMain.doMain.doChangeNextChannel(1, 1, false);
 			if (!updated) {
 				ActivityMain.myShortToastShow(me.getString(R.string.activitymain_java_notupdated));
@@ -1227,7 +1259,7 @@ public class Layout {
 	 */
 	private final Button.OnClickListener onUserButtonClick = new Button.OnClickListener() {
 		public void onClick(final View v) {
-			if (I) Log.i(TAG, "onUserButtonClick: onClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			ActivityMain.doMain.doUtility(0);
 		}
 	};
@@ -1237,7 +1269,7 @@ public class Layout {
 	 */
 	private final Button.OnLongClickListener onUserButtonLongClick = new Button.OnLongClickListener() {
 		public boolean onLongClick(final View v) {
-			if (I) Log.i(TAG, "onUserButtonLongClick: onLongClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			if (ActivityMain.mCurrentServerName != null) {
 				ActivityMain.doMain.doUtility(1);
 			}
@@ -1250,7 +1282,7 @@ public class Layout {
 	 */
 	private final Button.OnClickListener onAppliButtonClick = new Button.OnClickListener() {
 		public void onClick(final View v) {
-			if (I) Log.i(TAG, "onAppliButtonClick: onClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			ActivityMain.doMain.doExApp();
 		}
 	};
@@ -1260,7 +1292,7 @@ public class Layout {
 	 */
 	private final Button.OnLongClickListener onAppliButtonLongClick = new Button.OnLongClickListener() {
 		public boolean onLongClick(final View v) {
-			if (I) Log.i(TAG, "onAppliButtonLongClick: onLongClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			ActivityMain.doMain.doExApp();
 			return true;
 		}
@@ -1271,7 +1303,7 @@ public class Layout {
 	 */
 	private final Button.OnClickListener onWebsiteButtonClick = new Button.OnClickListener() {
 		public void onClick(final View v) {
-			if (I) Log.i(TAG, "onWebsiteButtonClick: onClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			ActivityMain.doMain.doExWeb();
 		}
 	};
@@ -1281,7 +1313,7 @@ public class Layout {
 	 */
 	private final Button.OnLongClickListener onWebsiteButtonLongClick = new Button.OnLongClickListener() {
 		public boolean onLongClick(final View v) {
-			if (I) Log.i(TAG, "onWebsiteButtonLongClick: onLongClick()");
+			if (T) Log.v(TAG, M()+"@in: v="+v);
 			ActivityMain.doMain.doExWeb();
 			return true;
 		}

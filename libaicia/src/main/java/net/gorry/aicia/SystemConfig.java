@@ -259,6 +259,8 @@ public class SystemConfig {
 
 	/** */
 	public static Boolean allowSendHalfKana;
+	/** */
+	public static Boolean inputSingleLine = true;
 
 	/** */
 	public static final int maxExApp = 8;
@@ -492,6 +494,7 @@ public class SystemConfig {
 		editor.remove("twittersiteismobile");
 
 		editor.remove("allowsendhalfkana");
+		editor.remove("inputsingleline");
 
 		for (int i=0; i<maxExApp; i++) {
 			editor.remove("exAppName"+i);
@@ -673,6 +676,7 @@ public class SystemConfig {
 		twitterSiteIsMobile = pref.getBoolean("twittersiteismobile", true);
 
 		allowSendHalfKana = pref.getBoolean("allowsendhalfkana", false);
+		inputSingleLine = pref.getBoolean("inputsingleline", true);
 
 		for (int i=0; i<maxExApp; i++) {
 			exAppName[i] = pref.getString("exapp_name_"+i, "");
@@ -868,6 +872,7 @@ public class SystemConfig {
 		editor.putBoolean("twittersiteismobile", twitterSiteIsMobile);
 
 		editor.putBoolean("allowsendhalfkana", allowSendHalfKana);
+		editor.putBoolean("inputsingleline", inputSingleLine);
 
 		for (int i=0; i<maxExApp; i++) {
 			editor.putString("exapp_name_"+i, exAppName[i]);
@@ -1042,6 +1047,7 @@ public class SystemConfig {
 		final int back_ringLevel = ringLevel;
 		final boolean back_noSleepMode = noSleepMode;
 		final boolean back_allowSendHalfKana = allowSendHalfKana;
+		final boolean back_inputSingleLine = inputSingleLine;
 		final boolean back_showLowMemoryIcon = showLowMemoryIcon;
 		final boolean back_showServerIcon = showServerIcon;
 		final boolean back_fixSystemIcon = fixSystemIcon;
@@ -1098,6 +1104,7 @@ public class SystemConfig {
 		ringLevel = sp_getInt(sp, "pref_sys_action_alert_ring_level", ringLevel);
 
 		allowSendHalfKana = sp_getBoolean(sp, "pref_sys_input_send_halfkana", allowSendHalfKana);
+		inputSingleLine = sp_getBoolean(sp, "pref_sys_input_singleline", inputSingleLine);
 
 		showLowMemoryIcon = sp_getBoolean(sp, "pref_sys_icon_lowmemory", showLowMemoryIcon);
 		showServerIcon = sp_getBoolean(sp, "pref_sys_icon_showserver", showServerIcon);
@@ -1194,6 +1201,7 @@ public class SystemConfig {
 		if (back_cmdLongPressChannelToNotified != cmdLongPressChannelToNotified) rebootLevel |= 2;
 		if (back_ringLevel != ringLevel) rebootLevel |= 2;
 		if (back_allowSendHalfKana != allowSendHalfKana) rebootLevel |= 2;
+		if (back_inputSingleLine != inputSingleLine) rebootLevel |= 2;
 		if (back_showLowMemoryIcon != showLowMemoryIcon) rebootLevel |= 2;
 		if (back_showServerIcon != showServerIcon) rebootLevel |= 2;
 		if (back_fixSystemIcon != fixSystemIcon) rebootLevel |= 2;
@@ -1285,6 +1293,7 @@ public class SystemConfig {
 		spe_putBoolean(spe, "pref_sys_action_nosleep", noSleepMode);
 
 		spe_putBoolean(spe, "pref_sys_input_send_halfkana", allowSendHalfKana);
+		spe_putBoolean(spe, "pref_sys_input_singleline", inputSingleLine);
 
 		spe_putBoolean(spe, "pref_sys_icon_lowmemory", showLowMemoryIcon);
 		spe_putBoolean(spe, "pref_sys_icon_showserver", showServerIcon);
@@ -1365,6 +1374,7 @@ public class SystemConfig {
 		spe.remove("pref_sys_action_nosleep");
 
 		spe.remove("pref_sys_input_send_halfkana");
+		spe.remove("pref_sys_input_singleline");
 
 		spe.remove("pref_sys_icon_lowmemory");
 		spe.remove("pref_sys_icon_showserver");
