@@ -460,6 +460,6 @@
     <string name="activitysystemconfig_not_granted_writeexternalstorage">外部メディア書き込み権限が必要です。</string>
 	<string name="title_request_permission_notification">権限の要求</string>
 	<string name="msg_request_permission_notification">このアプリは「通知」の権限が必要です。</string>
-    <string name="pref_sys_input_singleline_summary">メッセージ入力エリアの表示を１行に制限します。一部のIMEでは、OFFのとき入力行を送信できません。</string>
+    <string name="pref_sys_input_singleline_summary">IMEの不具合回避のため、入力エリアのメッセージの表示を１行に制限します。一部のIMEでは、OFFのときメッセージを送信できません。</string>
     <string name="pref_sys_input_singleline_title">入力エリアで１行表示を強制する</string>
 </resources>

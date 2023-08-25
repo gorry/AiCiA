@@ -460,6 +460,6 @@
     <string name="activitysystemconfig_not_granted_writeexternalstorage">Not granted to write external storage.</string>
 	<string name="title_request_permission_notification">Request Permission</string>
 	<string name="msg_request_permission_notification">This app requires [Notification] permission.</string>
-    <string name="pref_sys_input_singleline_summary">Limits the display in the message input area to single line. Some IMEs cannot send message when OFF.</string>
+    <string name="pref_sys_input_singleline_summary">Limits the display of sending message in the input area to single line to avoid IME problems. Some IME cannot send message when OFF.</string>
     <string name="pref_sys_input_singleline_title">Force single line display in Input Area</string>
 </resources>
